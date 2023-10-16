@@ -1,0 +1,458 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+{% load static %}
+
+<!-- Carousel Start -->
+<div class="container-fluid p-0 mb-5">
+    <div class="owl-carousel header-carousel position-relative">
+        <div class="owl-carousel-item position-relative">
+            <img class="img-fluid" src="{% static 'assets/img/carousel-1.jpg' %}" alt="">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
+                style="background: rgba(0, 0, 0, .2);">
+                <div class="container">
+                    <div class="row justify-content-start">
+                        <div class="col-10 col-lg-8">
+                            <h1 class="display-2 text-white animated slideInDown mb-4">Platform Terbaik untuk
+                                Mengembangkan Potensi Anak Anda.</h1>
+                            <p class="fs-5 fw-medium text-white mb-4 pb-2">Platform Unggulan yang Memanfaatkan Teknologi
+                                Terkini dan Inovasi untuk Membantu Anak Anda Meraih Potensi Terbaik Mereka.</p>
+                            <a href="#learn-more"
+                                class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">Lebih
+                                Lanjut</a>
+                            <a href="#classes"
+                                class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">Kelas</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="owl-carousel-item position-relative">
+            <img class="img-fluid" src="{% static 'assets/img/carousel-2.jpg' %}" alt="">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center"
+                style="background: rgba(0, 0, 0, .2);">
+                <div class="container">
+                    <div class="row justify-content-start">
+                        <div class="col-10 col-lg-8">
+                            <h1 class="display-2 text-white animated slideInDown mb-4">Ciptakan Masa Depan Yang Lebih
+                                Cerah Untuk Anak Anda.</h1>
+                            <p class="fs-5 fw-medium text-white mb-4 pb-2">Menciptakan Pintu-Pintu Kesuksesan dan
+                                Kebahagiaan yang Dibutuhkan oleh Anak-Anak Anda dalam Perjalanan Menuju Masa Depan yang
+                                Lebih Cemerlang.</p>
+                            <a href="#learn-more"
+                                class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">Lebih
+                                Lanjut</a>
+                            <a href="#classes"
+                                class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">Kelas</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Carousel End -->
+
+
+<!-- Facilities Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <h1 class="mb-3">Fasilitas</h1>
+            <p>Nikmati pelayanan yang kami sediakan kami berupa:</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="facility-item">
+                    <div class="facility-icon bg-primary">
+                        <span class="bg-primary"></span>
+                        <i class="fas fa-user-cog fa-3x text-primary"></i>
+                        <span class="bg-primary"></span>
+                    </div>
+                    <div class="facility-text bg-primary">
+                        <h3 class="text-primary mb-3">Kontrol Orang Tua</h3>
+                        <p class="mb-0">Memberikan kendali penuh kepada orang tua atas anak anda.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="facility-item">
+                    <div class="facility-icon bg-success">
+                        <span class="bg-success"></span>
+                        <i class="fas fa-headset fa-3x text-success"></i>
+                        <span class="bg-success"></span>
+                    </div>
+                    <div class="facility-text bg-success">
+                        <h3 class="text-success mb-3">Dukungan 24/7</h3>
+                        <p class="mb-0">Tim kami siap membantu Anda setiap saat. Jika Anda memiliki pertanyaan atau
+                            mengalami masalah, kami siap memberikan bantuan yang Anda butuhkan.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="facility-item">
+                    <div class="facility-icon bg-warning">
+                        <span class="bg-warning"></span>
+                        <i class="fas fa-user-shield fa-3x text-warning"></i>
+                        <span class="bg-warning"></span>
+                    </div>
+                    <div class="facility-text bg-warning">
+                        <h3 class="text-warning mb-3">Keamanan Transaksi.</h3>
+                        <p class="mb-0">Kami hadir untuk memberikan Anda kenyamanan dalam bertransaksi, sehingga Anda
+                            tidak perlu khawatir tentang masalah keamanan.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                <div class="facility-item">
+                    <div class="facility-icon bg-info">
+                        <span class="bg-info"></span>
+                        <i class="fa fa-chalkboard-teacher fa-3x text-info"></i>
+                        <span class="bg-info"></span>
+                    </div>
+                    <div class="facility-text bg-info">
+                        <h3 class="text-info mb-3">Pembelajaran Positif</h3>
+                        <p class="mb-0">Kami menciptakan pengalaman yang positif bagi semua anggota keluarga. Platform
+                            kami adalah tempat yang cocok untuk belajar dan bersenang-senang bersama.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Facilities End -->
+
+
+<!-- About Start -->
+<div class="container-xxl py-5" id="learn-more">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <h1 class="mb-4">Yuk Kenali Lebih Jauh Tentang Platform Kami.</h1>
+                <p>Kami menghadirkan SkillUpKids sebagai tempat yang penuh dengan aktivitas kreatif dan edukatif untuk
+                    anak-anak. Di sini, kami mengutamakan kualitas dan keamanan dalam setiap langkah perjalanan mereka.
+                    Bergabunglah bersama kami untuk menjelajahi dunia pembelajaran yang menyenangkan!</p>
+                <p class="mb-4">Kami memahami betapa pentingnya pengembangan anak-anak Anda. Dengan SkillUpKids, Anda
+                    akan menemukan beragam kegiatan yang dirancang untuk merangsang kreativitas dan pengetahuan mereka.
+                    Kami berkomitmen untuk menciptakan pengalaman yang bermanfaat dan menyenangkan, sehingga Anda dapat
+                    merasa yakin tentang masa depan cerah buah hati Anda.</p>
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm-6">
+                        <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url 'about' %}">Baca Selengkapnya <i
+                                class="fas fa-external-link-alt ms-1"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 about-img wow fadeInUp" data-wow-delay="0.5s">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <img class="img-fluid w-75 rounded-circle bg-light p-3" src="{% static 'assets/img/about-1.jpg' %}"
+                            alt="">
+                    </div>
+                    <div class="col-6 text-start" style="margin-top: -150px;">
+                        <img class="img-fluid w-100 rounded-circle bg-light p-3" src="{% static 'assets/img/about-2.jpg' %}"
+                            alt="">
+                    </div>
+                    <div class="col-6 text-end" style="margin-top: -150px;">
+                        <img class="img-fluid w-100 rounded-circle bg-light p-3" src="{% static 'assets/img/about-3.jpg' %}"
+                            alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About End -->
+
+
+<!-- Call To Action Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="bg-light rounded">
+            <div class="row g-0">
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s" style="min-height: 400px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute w-100 h-100 rounded" src="{% static 'assets/img/call-to-action.jpg' %}"
+                            style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                    <div class="h-100 d-flex flex-column justify-content-center p-5">
+                        <h1 class="mb-4">Jadilah Mitra Kami</h1>
+                        <p class="mb-4">Bergabunglah dengan kami dan jadilah bagian dari perubahan yang kami ciptakan.
+                            Dalam perjalanan ini, kami
+                            akan bersama-sama merangkul inovasi, keberagaman, dan kolaborasi. Bersama-sama, kita bisa
+                            mencapai hasil yang luar
+                            biasa untuk masa depan yang lebih baik.</p>
+                        <a class="btn btn-primary py-3 px-5" href="/join-mitra/">Mau jadi mitra? Yuk mulai..<i
+                                class="fa fa-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Call To Action End -->
+
+
+<!-- Classes Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <h1 class="mb-3">Kelas Kami</h1>
+            <p>Temukan beragam kelas berkualitas yang kami tawarkan untuk pengembangan diri anak anda. Setiap kelas
+                dirancang untuk
+                memberikan pengalaman belajar yang berharga.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="classes-item" id="seni">
+                    <div class="bg-light rounded-circle w-75 mx-auto p-3">
+                        <img class="img-fluid rounded-circle" src="{% static 'assets/img/art.jpg' %}" alt="">
+                    </div>
+                    <div class="bg-light rounded p-4 pt-5 mt-n5">
+                        <a class="d-block text-center h3 mt-3 mb-4" href="#!">Seni</a>
+                        <div class="row g-1">
+                            <div class="col-4">
+                                <div class="border-top border-3 border-primary pt-2">
+                                    <h6 class="text-primary mb-1">Age:</h6>
+                                    <small>3-5 Years</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border-top border-3 border-success pt-2">
+                                    <h6 class="text-success mb-1">Time:</h6>
+                                    <small>9-10 AM</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border-top border-3 border-warning pt-2">
+                                    <h6 class="text-warning mb-1">Capacity:</h6>
+                                    <small>30 Kids</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="classes-item" id="olahraga">
+                    <div class="bg-light rounded-circle w-75 mx-auto p-3">
+                        <img class="img-fluid rounded-circle" src="{% static 'assets/img/sport.jpg' %}" alt="">
+                    </div>
+                    <div class="bg-light rounded p-4 pt-5 mt-n5">
+                        <a class="d-block text-center h3 mt-3 mb-4" href="#!">Olahraga</a>
+                        <div class="row g-1">
+                            <div class="col-4">
+                                <div class="border-top border-3 border-primary pt-2">
+                                    <h6 class="text-primary mb-1">Age:</h6>
+                                    <small>3-5 Years</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border-top border-3 border-success pt-2">
+                                    <h6 class="text-success mb-1">Time:</h6>
+                                    <small>9-10 AM</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border-top border-3 border-warning pt-2">
+                                    <h6 class="text-warning mb-1">Capacity:</h6>
+                                    <small>30 Kids</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="classes-item" id="musik">
+                    <div class="bg-light rounded-circle w-75 mx-auto p-3">
+                        <img class="img-fluid rounded-circle" src="{% static 'assets/img/music.jpg' %}" alt="">
+                    </div>
+                    <div class="bg-light rounded p-4 pt-5 mt-n5">
+                        <a class="d-block text-center h3 mt-3 mb-4" href="#!">Musik</a>
+                        <div class="row g-1">
+                            <div class="col-4">
+                                <div class="border-top border-3 border-primary pt-2">
+                                    <h6 class="text-primary mb-1">Age:</h6>
+                                    <small>3-5 Years</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border-top border-3 border-success pt-2">
+                                    <h6 class="text-success mb-1">Time:</h6>
+                                    <small>9-10 AM</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border-top border-3 border-warning pt-2">
+                                    <h6 class="text-warning mb-1">Capacity:</h6>
+                                    <small>30 Kids</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="classes-item" id="keagamaan">
+                    <div class="bg-light rounded-circle w-75 mx-auto p-3">
+                        <img class="img-fluid rounded-circle" src="{% static 'assets/img/religy.jpg' %}" alt="">
+                    </div>
+                    <div class="bg-light rounded p-4 pt-5 mt-n5">
+                        <a class="d-block text-center h3 mt-3 mb-4" href="#!">Keagamaan</a>
+                        <div class="row g-1">
+                            <div class="col-4">
+                                <div class="border-top border-3 border-primary pt-2">
+                                    <h6 class="text-primary mb-1">Age:</h6>
+                                    <small>3-5 Years</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border-top border-3 border-success pt-2">
+                                    <h6 class="text-success mb-1">Time:</h6>
+                                    <small>9-10 AM</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border-top border-3 border-warning pt-2">
+                                    <h6 class="text-warning mb-1">Capacity:</h6>
+                                    <small>30 Kids</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="classes-item" id="teknologi">
+                    <div class="bg-light rounded-circle w-75 mx-auto p-3">
+                        <img class="img-fluid rounded-circle" src="{% static 'assets/img/tech.jpg' %}" alt="">
+                    </div>
+                    <div class="bg-light rounded p-4 pt-5 mt-n5">
+                        <a class="d-block text-center h3 mt-3 mb-4" href="#!">Teknologi</a>
+                        <div class="row g-1">
+                            <div class="col-4">
+                                <div class="border-top border-3 border-primary pt-2">
+                                    <h6 class="text-primary mb-1">Age:</h6>
+                                    <small>3-5 Years</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border-top border-3 border-success pt-2">
+                                    <h6 class="text-success mb-1">Time:</h6>
+                                    <small>9-10 AM</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border-top border-3 border-warning pt-2">
+                                    <h6 class="text-warning mb-1">Capacity:</h6>
+                                    <small>30 Kids</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="classes-item" id="memasak">
+                    <div class="bg-light rounded-circle w-75 mx-auto p-3">
+                        <img class="img-fluid rounded-circle" src="{% static 'assets/img/cooking.jpg' %}" alt="">
+                    </div>
+                    <div class="bg-light rounded p-4 pt-5 mt-n5">
+                        <a class="d-block text-center h3 mt-3 mb-4" href="#!">Memasak</a>
+                        <div class="row g-1">
+                            <div class="col-4">
+                                <div class="border-top border-3 border-primary pt-2">
+                                    <h6 class="text-primary mb-1">Age:</h6>
+                                    <small>3-5 Years</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border-top border-3 border-success pt-2">
+                                    <h6 class="text-success mb-1">Time:</h6>
+                                    <small>9-10 AM</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border-top border-3 border-warning pt-2">
+                                    <h6 class="text-warning mb-1">Capacity:</h6>
+                                    <small>30 Kids</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="classes-item" id="stem">
+                    <div class="bg-light rounded-circle w-75 mx-auto p-3">
+                        <img class="img-fluid rounded-circle" src="{% static 'assets/img/STEM.jpg' %}" alt="">
+                    </div>
+                    <div class="bg-light rounded p-4 pt-5 mt-n5">
+                        <a class="d-block text-center h3 mt-3 mb-4" href="#!">Science Technology & Math (STEM)</a>
+                        <div class="row g-1">
+                            <div class="col-4">
+                                <div class="border-top border-3 border-primary pt-2">
+                                    <h6 class="text-primary mb-1">Age:</h6>
+                                    <small>3-5 Years</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border-top border-3 border-success pt-2">
+                                    <h6 class="text-success mb-1">Time:</h6>
+                                    <small>9-10 AM</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="border-top border-3 border-warning pt-2">
+                                    <h6 class="text-warning mb-1">Capacity:</h6>
+                                    <small>30 Kids</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Classes End -->
+
+<!-- Testimonial Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <h1 class="mb-3">Apa yang mereka katakan?</h1>
+            <p>Kami sangat senang mendengar apa yang orang tua katakan tentang pengalaman mereka dengan SkillUpKids.
+                Mari kita lihat apa yang
+                mereka katakan!</p>
+        </div>
+        <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+            <div class="testimonial-item bg-light rounded p-5">
+                <h3 class="mb-3">Nana Handayani</h3>
+                <hr>
+                <p class="fs-5">Saya sangat terkesan dengan SkillUpKids! Platform ini telah membantu anak saya dalam
+                    belajar dengan cara yang menyenangkan dan bermanfaat. Anak-anak saya sangat antusias tentang setiap
+                    kelas.</p>
+            </div>
+            <div class="testimonial-item bg-light rounded p-5">
+                <h3 class="mb-3">Erik Wijaya</h3>
+                <hr>
+                <p class="fs-5">Saya telah mencari platform yang cocok untuk anak-anak saya, dan SkillUpKids adalah
+                    jawabannya. Mereka menawarkan beragam kelas yang berkualitas dan mudah diakses, membuat belajar
+                    menjadi pengalaman yang menyenangkan.</p>
+            </div>
+            <div class="testimonial-item bg-light rounded p-5">
+                <h3 class="mb-3">Arif Abidin</h3>
+                <hr>
+                <p class="fs-5">SkillUpKids benar-benar membantu meningkatkan kemampuan anak-anak saya dalam berbagai
+                    bidang. Dengan bimbingan dan dukungan dari instruktur yang ahli, anak-anak saya semakin percaya diri
+                    dan bersemangat untuk belajar.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Testimonial End -->
+
+{% endblock %}

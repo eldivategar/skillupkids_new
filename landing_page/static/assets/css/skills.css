@@ -1,0 +1,13 @@
+.font-skills {
+    color: var(--primary);
+}
+
+.class-icon {
+    width: 1.5em;
+    height: auto;
+}
+
+.dropdown-item.active {
+    color: var(--primary);
+  }
+  
