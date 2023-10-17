@@ -1,0 +1,47 @@
+Tabel "Admin":
+
+admin_id (Kunci utama)
+nama
+email
+kata sandi
+
+Tabel "Mitra":
+
+mitra_id (Kunci utama)
+nama mitra
+email
+kata sandi
+nomor telepon
+alamat
+daerah operasi (jika diperlukan)
+informasi lain yang relevan tentang mitra
+
+Tabel "Kegiatan":
+
+kegiatan_id (Kunci utama)
+mitra_id (Kunci asing mengacu ke "Mitra")
+nama kegiatan/kelas
+target siswa
+manfaat peserta
+detail jadwal (bisa dalam format JSON atau sejenisnya)
+harga
+syarat & ketentuan
+informasi tambahan (juga bisa dalam format JSON atau sejenisnya)
+status kegiatan (misalnya, aktif atau tidak aktif)
+
+Tabel "Pelanggan":
+
+pelanggan_id (Kunci utama)
+nama
+email
+kata sandi
+nomor telepon
+alamat
+
+
+Tabel "Pendaftaran Kegiatan" (untuk melacak kegiatan yang telah dipilih oleh pelanggan):
+
+pendaftaran_id (Kunci utama)
+pelanggan_id (Kunci asing mengacu ke "Pelanggan")
+kegiatan_id (Kunci asing mengacu ke "Kegiatan")
+tanggal pendaftaran

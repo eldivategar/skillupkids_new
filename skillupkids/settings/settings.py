@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'landing_page',
+    'main_platform',
 ]
 
 MIDDLEWARE = [
@@ -70,13 +70,17 @@ WSGI_APPLICATION = 'skillupkids.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'skillupkids_db',
+        'USER': 'root',
+        'PASSWORD': 'skillupkidsid',
+        'HOST':'193.203.161.35',
+        'PORT':'3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
