@@ -1,7 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    
+
 <head>
     <meta charset="utf-8">
     <title>SkillUpKids.id</title>
@@ -23,6 +23,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
+    <!-- Iconscout CSS -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
     <!-- Font Awesome Stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
@@ -37,11 +40,14 @@
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
     <link href="{% static 'assets/css/skills.css' %}" rel="stylesheet">
 
+    <!-- Custom style -->
+    {% block custom_css %}{% endblock %}
+
 </head>
 
 <body>
 
-    <div class="container-xxl bg-white p-0">
+    <div class="container-xxl p-0">
 
         <!-- Spinner Start -->
         <div id="spinner"
@@ -52,147 +58,8 @@
         </div>
         <!-- Spinner End -->
 
-        <!-- Navbar Start -->
-        <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5 py-lg-0">
-            <a href="{% url 'home' %}" class="navbar-brand">
-                <h1 class="m-0 text-primary"><img src="{% static 'assets/img/logo.jpg' %}" alt="logo" class="logo">SkillUpKids
-                </h1> <!-- <i class="fa fa-book-reader me-3"></i> -->
-            </a>
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav mx-auto">
-                    <a href="{% url 'home' %}" class="nav-item nav-link {% if request.path == '/' %} active{% endif %}">Beranda</a>
-                    <a href="{% url 'about' %}" class="nav-item nav-link {% if request.path == '/about/' %} active{% endif %}">Tentang</a>
-                    <!-- <a href="" class="nav-item nav-link">Classes</a> -->
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Kelas</a>
-                        <div class="dropdown-menu rounded-0 rounded-bottom border-0 shadow-sm m-0">
-                            <a href="/#seni" class="dropdown-item">
-                                <img src="{% static 'assets/img/art.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
-                                    alt="art">
-                                Seni
-                            </a>
-                            <a href="/#olahraga" class="dropdown-item">
-                                <img src="{% static 'assets/img/sport.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
-                                    alt="sports">
-                                Olahraga
-                            </a>
-                            <a href="/#musik" class="dropdown-item">
-                                <img src="{% static 'assets/img/music.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
-                                    alt="music">
-                                Musik
-                            </a>
-                            <a href="/#stem" class="dropdown-item">
-                                <img src="{% static 'assets/img/STEM.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
-                                    alt="STEM">
-                                STEM
-                            </a>
-                            <a href="/#keagamaan" class="dropdown-item">
-                                <img src="{% static 'assets/img/religy.jpg' %}"
-                                    class="img-fluid rounded-circle me-2 class-icon" alt="religy">
-                                Keagamaan
-                            </a>
-                            <a href="/#teknologi" class="dropdown-item">
-                                <img src="{% static 'assets/img/tech.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
-                                    alt="tech">
-                                Teknologi
-                            </a>
-                            <a href="/#memasak" class="dropdown-item">
-                                <img src="{% static 'assets/img/cooking.jpg' %}"
-                                    class="img-fluid rounded-circle me-2 class-icon" alt="cooking">
-                                Memasak
-                            </a>
-                        </div>
-                    </div>
-                    <a href="{% url 'contact' %}" class="nav-item nav-link {% if request.path == '/contact/' %} active{% endif %}">Hubungi kami</a>
-                </div>
-                <a href="/join/" class="btn btn-primary rounded-pill px-3 d-lg-block">Gabung<i class="fa fa-arrow-right ms-3"></i></a>
-            </div>
-        </nav>
-        <!-- Navbar End -->
-
-
-
-    {% block content %}
-    {% endblock %}
-
-
-        <!-- Footer Start -->
-        <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-            <div class="container py-5">
-                <div class="row g-5">
-                    <div class="col-lg-3 col-md-6">
-                        <h3 class="text-white mb-4">Tentang Kami</h3>
-                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Jl. Ring Road Utara, Ngringin,
-                            Condongcatur, Kec. Depok,
-                            Kabupaten Sleman, Daerah Istimewa Yogyakarta</p>
-                        <!-- <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p> -->
-                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>skillupkidscontact@gmail.com</p>
-                        <div class="d-flex pt-2">
-                            <a class="btn btn-outline-light btn-social" href="https://www.tiktok.com/@skillupkids"><i
-                                    class="fab fa-tiktok"></i></a>
-                            <a class="btn btn-outline-light btn-social"
-                                href="https://www.instagram.com/skillupkids.id/"><i class="fab fa-instagram"></i></a>
-                            <!-- <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a> -->
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 text-center">
-                        <h1 class="text-white">SkillUpKids</h1>
-                        <p>Platform Digital Inovatif untuk Meningkatkan Potensi Anak Melalui Aktivitas Pilihan.</p>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <h3 class="text-white mb-4">Galeri</h3>
-                        <div class="row g-2 pt-2">
-                            <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="{% static 'assets/img/classes-1.jpg' %}"
-                                    alt="">
-                            </div>
-                            <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="{% static 'assets/img/classes-2.jpg' %}"
-                                    alt="">
-                            </div>
-                            <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="{% static 'assets/img/classes-3.jpg' %}"
-                                    alt="">
-                            </div>
-                            <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="{% static 'assets/img/classes-4.jpg' %}"
-                                    alt="">
-                            </div>
-                            <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="{% static 'assets/img/classes-5.jpg' %}"
-                                    alt="">
-                            </div>
-                            <div class="col-4">
-                                <img class="img-fluid rounded bg-light p-1" src="{% static 'assets/img/classes-6.jpg' %}"
-                                    alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="copyright">
-                    <div class="row">
-                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            &copy; <a class="border-bottom" href="{% url 'home' %}">SkillUpKids.id</a>, All Right Reserved.
-                        </div>
-                        <div class="col-md-6 text-center text-md-end">
-                            <div class="footer-menu">
-                                <a href="{% url 'home' %}">Home</a>
-                                <a href="#!">Cookies</a>
-                                <a href="#!">Help</a>
-                                <a href="#!">FQAs</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer End -->
+        {% block content %}
+        {% endblock %}
 
 
         <!-- Back to Top -->

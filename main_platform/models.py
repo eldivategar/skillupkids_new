@@ -6,7 +6,6 @@ class Customer(models.Model):
     email = models.EmailField(unique=True)
     number = models.CharField(max_length=13, unique=True)
     password = models.CharField(max_length=100)
-    address = models.TextField()
 
     def __str__(self):
         return self.name

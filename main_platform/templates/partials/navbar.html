@@ -1,0 +1,68 @@
+{% load static %}
+<!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5 py-lg-0">
+    <a href="{% url 'home' %}" class="navbar-brand">
+        <h1 class="m-0 text-primary"><img src="{% static 'assets/img/logo.jpg' %}" alt="logo" class="logo">SkillUpKids
+        </h1> <!-- <i class="fa fa-book-reader me-3"></i> -->
+    </a>
+    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav mx-auto">
+            <a href="{% url 'home' %}"
+                class="nav-item nav-link {% if request.path == '/' %} active{% endif %}">Beranda</a>
+            <a href="{% url 'about' %}"
+                class="nav-item nav-link {% if request.path == '/about/' %} active{% endif %}">Tentang</a>
+            <!-- <a href="" class="nav-item nav-link">Classes</a> -->
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Kelas</a>
+                <div class="dropdown-menu rounded-0 rounded-bottom border-0 shadow-sm m-0">
+                    <a href="/#seni" class="dropdown-item">
+                        <img src="{% static 'assets/img/art.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
+                            alt="art">
+                        Seni
+                    </a>
+                    <a href="/#olahraga" class="dropdown-item">
+                        <img src="{% static 'assets/img/sport.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
+                            alt="sports">
+                        Olahraga
+                    </a>
+                    <a href="/#musik" class="dropdown-item">
+                        <img src="{% static 'assets/img/music.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
+                            alt="music">
+                        Musik
+                    </a>
+                    <a href="/#stem" class="dropdown-item">
+                        <img src="{% static 'assets/img/STEM.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
+                            alt="STEM">
+                        STEM
+                    </a>
+                    <a href="/#keagamaan" class="dropdown-item">
+                        <img src="{% static 'assets/img/religy.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
+                            alt="religy">
+                        Keagamaan
+                    </a>
+                    <a href="/#teknologi" class="dropdown-item">
+                        <img src="{% static 'assets/img/tech.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
+                            alt="tech">
+                        Teknologi
+                    </a>
+                    <a href="/#memasak" class="dropdown-item">
+                        <img src="{% static 'assets/img/cooking.jpg' %}"
+                            class="img-fluid rounded-circle me-2 class-icon" alt="cooking">
+                        Memasak
+                    </a>
+                </div>
+            </div>
+            <a href="{% url 'contact' %}"
+                class="nav-item nav-link {% if request.path == '/contact/' %} active{% endif %}">Hubungi kami</a>
+        </div>
+        {% if request.path != '/register/' and request.path != '/login/' %}
+        <a href="{% url 'register' %}" class="btn btn-primary rounded-pill px-3 d-lg-block">Gabung<i
+                class="fa fa-arrow-right ms-3"></i></a>
+        {% endif %}
+
+    </div>
+</nav>
+<!-- Navbar End -->

@@ -1,0 +1,55 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'assets/css/login.css' %}">
+{% endblock %}
+{% block content %}
+{% include 'partials/navbar.html' %}
+<div class="h-100">
+
+    <div class="container-form mt-2 mx-auto d-grid gap-3">
+        <div class="form-header">
+            <header class="text-center mb-2">Daftar</header>
+            <p class="text-center fst-normal">Bergabung dan mari bersama-sama menciptakan masa depan cerah bagi generasi
+                mendatang.</p>
+            <hr>
+        </div>
+
+        <form action="#">
+            <div class="form-registration">
+                <div class="fields">
+                    <div class="input-field">
+                        <label>Nama Lengkap</label>
+                        <input type="text" placeholder="nama lengkap" required>
+                    </div>
+
+                    <div class="input-field">
+                        <label>Email</label>
+                        <input type="text" placeholder="email@email.com" required>
+                    </div>
+
+                    <div class="input-field">
+                        <label>Nomor Whatsapp</label>
+                        <input type="number" placeholder="whatsapp number" required>
+                    </div>
+
+                    <div class="input-field">
+                        <label>Password</label>
+                        <input type="text" placeholder="password" required>
+                    </div>
+
+                    <div class="input-field">
+                        <label>Ulangi Password</label>
+                        <input type="text" placeholder="confirm password" required>
+                    </div>
+                    <button class="submit mx-auto">
+                        <span class="btnText">Daftar</span>
+                        <i class="uil uil-navigator"></i>
+                    </button>
+                    <p class="mt-2">Sudah punya akun? <a href="{% url 'login' %}" class="fw-bold">Login</a></p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

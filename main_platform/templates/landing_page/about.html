@@ -1,131 +1,149 @@
 {% extends 'layout/base.html' %}
-{% block content %}
 {% load static %}
-<!-- About Start -->
-<div class="container-xxl py-5" id="learn-more" style="border-style: inset;">
-    <div class="container">
-        <div class="row g-5 justify-content-center">
-            <div class="wow fadeInUp" data-wow-delay="0.1s">
-                <h1 class="mb-4 text-center">Yuk Kenali Lebih Jauh Tentang SkillUpKids.</h1>
-                <p style="text-align: justify;">"Platform SkillUpKids dibangun bersama
-                    <a href="https://www.instagram.com/kemahasiswaan.dikti" target="_blank">@kemahasiswaan.dikti</a>
-                    <a href="https://www.instagram.com/kemdikbud.ri" target="_blank">@kemdikbud.ri</a>
-                    untuk memberikan dukungan terbaik dalam pengembangan anak-anak. Bersama kami, Anda dapat yakin bahwa anak-anak Anda
-                    akan menerima pendidikan terbaik dan peluang terluas. Kami berkomitmen untuk terus berinovasi,
-                    menghadirkan sumber daya terbaik, dan menciptakan suasana yang mendukung pertumbuhan mereka.
-                    Bergabunglah dengan SkillUpKids sekarang, dan mari bersama-sama menciptakan masa depan cerah bagi
-                    generasi mendatang."
-                </p>
-                <p style="text-align: justify;">Kami menghadirkan SkillUpKids sebagai tempat yang penuh dengan aktivitas kreatif
-                    dan edukatif untuk
-                    anak-anak. Di sini, kami mengutamakan kualitas dan keamanan dalam setiap langkah perjalanan mereka.
-                    Bergabunglah bersama kami untuk menjelajahi dunia pembelajaran yang menyenangkan!</p>
-                <p style="text-align: justify;">Kami memahami betapa pentingnya pengembangan anak-anak Anda. Dengan SkillUpKids, Anda
-                    akan menemukan beragam kegiatan yang dirancang untuk merangsang kreativitas dan pengetahuan mereka.
-                    Kami berkomitmen untuk menciptakan pengalaman yang bermanfaat dan menyenangkan, sehingga Anda dapat
-                    merasa yakin tentang masa depan cerah buah hati Anda.</p>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- About End -->
 
-<!-- Team Start -->
-<div class="container-xxl py-5" style="border-style: outset;">
-    <div class="container">
-        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-            <h1 class="mb-3">Founder SkillUpKids</h1>
-            <p>Kenalan lebih dekat dengan sosok yang menciptakan SkillUpKids! Pendiri kami adalah seseorang yang
-                bersemangat
-                tentang pendidikan anak-anak dan kreativitas.</p>
+{% block content %}
+{% include 'partials/navbar.html' %}
+<div class="bg-white">
+    <!-- About Start -->
+    <div class="container-xxl py-5" id="learn-more" style="border-style: inset;">
+        <div class="container">
+            <div class="row g-5 justify-content-center">
+                <div class="wow fadeInUp" data-wow-delay="0.1s">
+                    <h1 class="mb-4 text-center">Yuk Kenali Lebih Jauh Tentang SkillUpKids.</h1>
+                    <p style="text-align: justify;">"Platform SkillUpKids dibangun bersama
+                        <a href="https://www.instagram.com/kemahasiswaan.dikti" target="_blank">@kemahasiswaan.dikti</a>
+                        <a href="https://www.instagram.com/kemdikbud.ri" target="_blank">@kemdikbud.ri</a>
+                        untuk memberikan dukungan terbaik dalam pengembangan anak-anak. Bersama kami, Anda dapat yakin
+                        bahwa anak-anak Anda
+                        akan menerima pendidikan terbaik dan peluang terluas. Kami berkomitmen untuk terus berinovasi,
+                        menghadirkan sumber daya terbaik, dan menciptakan suasana yang mendukung pertumbuhan mereka.
+                        Bergabunglah dengan SkillUpKids sekarang, dan mari bersama-sama menciptakan masa depan cerah
+                        bagi
+                        generasi mendatang."
+                    </p>
+                    <p style="text-align: justify;">Kami menghadirkan SkillUpKids sebagai tempat yang penuh dengan
+                        aktivitas kreatif
+                        dan edukatif untuk
+                        anak-anak. Di sini, kami mengutamakan kualitas dan keamanan dalam setiap langkah perjalanan
+                        mereka.
+                        Bergabunglah bersama kami untuk menjelajahi dunia pembelajaran yang menyenangkan!</p>
+                    <p style="text-align: justify;">Kami memahami betapa pentingnya pengembangan anak-anak Anda. Dengan
+                        SkillUpKids, Anda
+                        akan menemukan beragam kegiatan yang dirancang untuk merangsang kreativitas dan pengetahuan
+                        mereka.
+                        Kami berkomitmen untuk menciptakan pengalaman yang bermanfaat dan menyenangkan, sehingga Anda
+                        dapat
+                        merasa yakin tentang masa depan cerah buah hati Anda.</p>
+                </div>
+            </div>
         </div>
-        <div class="row g-4 d-flex align-items-center justify-content-center">
-            <div class="col-lg-4 col-md-6 wow fadeInUp ms-3" data-wow-delay="0.1s">
-                <div class="team-item position-relative">
-                    <img class="img-fluid rounded-circle w-75" src="{% static 'assets/team-img/ceo.png' %}" alt="">
-                    <div class="team-text">
-                        <h4 class="text-center" style="font-family: 'Lobster Two', cursive;">Rachmat Fachrurrozi</h4>
-                        <p class="text-center">CEO & Founder <br>
-                        </p>
-                        <div class="d-flex align-items-center">
-                            <a class="btn btn-square btn-primary mx-1" href="#!"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary  mx-1" href="#!"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary  mx-1" href="https://www.instagram.com/cari.rachmat"><i
-                                    class="fab fa-instagram"></i></a>
+    </div>
+    <!-- About End -->
+
+    <!-- Team Start -->
+    <div class="container-xxl py-5" style="border-style: outset;">
+        <div class="container">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <h1 class="mb-3">Founder SkillUpKids</h1>
+                <p>Kenalan lebih dekat dengan sosok yang menciptakan SkillUpKids! Pendiri kami adalah seseorang yang
+                    bersemangat
+                    tentang pendidikan anak-anak dan kreativitas.</p>
+            </div>
+            <div class="row g-4 d-flex align-items-center justify-content-center">
+                <div class="col-lg-4 col-md-6 wow fadeInUp ms-3" data-wow-delay="0.1s">
+                    <div class="team-item position-relative">
+                        <img class="img-fluid rounded-circle w-75" src="{% static 'assets/team-img/ceo.png' %}" alt="">
+                        <div class="team-text">
+                            <h4 class="text-center" style="font-family: 'Lobster Two', cursive;">Rachmat Fachrurrozi
+                            </h4>
+                            <p class="text-center">CEO & Founder <br>
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <a class="btn btn-square btn-primary mx-1" href="#!"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary  mx-1" href="#!"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-primary  mx-1"
+                                    href="https://www.instagram.com/cari.rachmat"><i class="fab fa-instagram"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="team-item position-relative">
-                    <img class="img-fluid rounded-circle w-55" src="{% static 'assets/team-img/cto.png' %}" alt="">
-                    <div class="team-text">
-                        <h4>Eldiva Tegar I.</h4>
-                        <p class="text-center">CTO <br>
-                            (Chief Technology Officer)
-                        </p>
-                        <div class="d-flex align-items-center">
-                            <a class="btn btn-square btn-primary mx-1" href="#!"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary  mx-1" href="#!"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary  mx-1" href="https://www.instagram.com/eldivaa_"><i
-                                    class="fab fa-instagram"></i></a>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="team-item position-relative">
+                        <img class="img-fluid rounded-circle w-55" src="{% static 'assets/team-img/cto.png' %}" alt="">
+                        <div class="team-text">
+                            <h4>Eldiva Tegar I.</h4>
+                            <p class="text-center">CTO <br>
+                                (Chief Technology Officer)
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <a class="btn btn-square btn-primary mx-1" href="#!"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary  mx-1" href="#!"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-primary  mx-1" href="https://www.instagram.com/eldivaa_"><i
+                                        class="fab fa-instagram"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="team-item position-relative">
-                    <img class="img-fluid rounded-circle w-43" src="{% static 'assets/team-img/cfo.png' %}" alt="">
-                    <div class="team-text">
-                        <h3>Diva Cahya</h3>
-                        <p class="text-center">CFO <br>
-                            (Chief Financial Officer)
-                        </p>
-                        <div class="d-flex align-items-center">
-                            <a class="btn btn-square btn-primary mx-1" href="#!"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary  mx-1" href="#!"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary  mx-1"
-                                href="https://www.instagram.com/divaacahyaa__"><i class="fab fa-instagram"></i></a>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="team-item position-relative">
+                        <img class="img-fluid rounded-circle w-43" src="{% static 'assets/team-img/cfo.png' %}" alt="">
+                        <div class="team-text">
+                            <h3>Diva Cahya</h3>
+                            <p class="text-center">CFO <br>
+                                (Chief Financial Officer)
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <a class="btn btn-square btn-primary mx-1" href="#!"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary  mx-1" href="#!"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-primary  mx-1"
+                                    href="https://www.instagram.com/divaacahyaa__"><i class="fab fa-instagram"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                <div class="team-item position-relative">
-                    <img class="img-fluid rounded-circle w-45" src="{% static 'assets/team-img/coo.png' %}" alt=""
-                        width="1000px">
-                    <div class="team-text">
-                        <h3>Arini Ayu</h3>
-                        <p class="text-center">COO <br>
-                            (Chief Operating Officer)
-                        </p>
-                        <div class="d-flex align-items-center">
-                            <a class="btn btn-square btn-primary mx-1" href="#!"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary  mx-1" href="#!"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary  mx-1" href="https://www.instagram.com/arinii.aa"><i
-                                    class="fab fa-instagram"></i></a>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="team-item position-relative">
+                        <img class="img-fluid rounded-circle w-45" src="{% static 'assets/team-img/coo.png' %}" alt=""
+                            width="1000px">
+                        <div class="team-text">
+                            <h3>Arini Ayu</h3>
+                            <p class="text-center">COO <br>
+                                (Chief Operating Officer)
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <a class="btn btn-square btn-primary mx-1" href="#!"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary  mx-1" href="#!"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-primary  mx-1"
+                                    href="https://www.instagram.com/arinii.aa"><i class="fab fa-instagram"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                <div class="team-item position-relative">
-                    <img class="img-fluid rounded-circle w-60" src="{% static 'assets/team-img/cmo.png' %}" alt="">
-                    <div class="team-text">
-                        <h3>Dhea Laudya</h3>
-                        <p class="text-center">CMO <br>
-                            (Chief Marketing Officer)
-                        </p>
-                        <div class="d-flex align-items-center">
-                            <a class="btn btn-square btn-primary mx-1" href="#!"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-primary  mx-1" href="#!"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-primary  mx-1" href=""><i class="fab fa-instagram"></i></a>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="team-item position-relative">
+                        <img class="img-fluid rounded-circle w-60" src="{% static 'assets/team-img/cmo.png' %}" alt="">
+                        <div class="team-text">
+                            <h3>Dhea Laudya</h3>
+                            <p class="text-center">CMO <br>
+                                (Chief Marketing Officer)
+                            </p>
+                            <div class="d-flex align-items-center">
+                                <a class="btn btn-square btn-primary mx-1" href="#!"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary  mx-1" href="#!"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-primary  mx-1" href=""><i class="fab fa-instagram"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Team End -->
+    {% include 'partials/footer.html' %}
 </div>
-<!-- Team End -->
 {% endblock %}
