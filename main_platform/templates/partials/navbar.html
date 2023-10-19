@@ -58,11 +58,23 @@
             <a href="{% url 'contact' %}"
                 class="nav-item nav-link {% if request.path == '/contact/' %} active{% endif %}">Hubungi kami</a>
         </div>
-        {% if request.path != '/register/' and request.path != '/login/' %}
-        <a href="{% url 'login' %}" class="btn btn-primary rounded-pill px-3 d-lg-block">Gabung<i
-                class="fa fa-arrow-right ms-3"></i></a>
-        {% endif %}
 
+        <div class="d-flex align-items-center">
+            {% if request.session.customer_id %}
+                <a href="#!" class="btn px-3 d-lg-block me-3" style="color: white; background-color: #002763;">Kegiatan</a>
+                <div class="vertical-line"></div>
+                <button class="btn rounded" data-bs-toggle="modal" data-bs-target="#profileModal">
+                    <img src="{% static 'assets/img/avatar-profile.jpg' %}" alt="" class="avatar-profile">
+                </button>
+            {% else %}
+            {% if "/register/" not in request.path and "/login/" not in request.path and "/verify/auth/" not in request.path %}
+                <a href="{% url 'login' %}" class="btn btn-primary rounded-pill px-3 d-lg-block">Gabung<i class="fa fa-arrow-right ms-3"></i></a>
+            {% endif %}
+
+            {% endif %}
+        </div>
     </div>
 </nav>
+{% include 'partials/profile.html' %}
+
 <!-- Navbar End -->

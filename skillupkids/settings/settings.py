@@ -136,3 +136,6 @@ MESSAGE_TAGS = {
     messages.WARNING: 'bg-warning',
     messages.ERROR: 'bg-danger',
 }
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True

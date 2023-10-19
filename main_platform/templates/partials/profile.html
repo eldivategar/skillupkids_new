@@ -1,0 +1,17 @@
+{% load static %}
+
+<div class="modal fade" id="profileModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-right">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="{% static 'assets/img/avatar-profile.jpg' %}" alt="" class="avatar-profile">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Isi modal di sini -->
+                <a href="{% url 'logout' %}" class="btn btn-dark">Logout</a>
+                <!-- Tambahkan konten lainnya sesuai kebutuhan -->
+            </div>
+        </div>
+    </div>
+</div>

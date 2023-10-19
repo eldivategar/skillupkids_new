@@ -12,17 +12,18 @@
     <hr />
   </div>
 
-  <form action="#">
+  <form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
     <div class="form-registration">
       <div class="fields">
         <div class="input-field">
           <label>Email</label>
-          <input type="text" placeholder="email@email.com" required />
+          <input type="text" placeholder="email@email.com" name="email" required />
         </div>
 
         <div class="input-field">
           <label>Password</label>
-          <input type="text" placeholder="password" required />
+          <input type="text" placeholder="password" name="password" required />
         </div>
 
         <a href="#!" class="fs-6 fst-italic mb-4 mt-2">Forgot password?</a>

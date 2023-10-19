@@ -1,0 +1,65 @@
+{% extends "layout/base.html" %}
+{% load static %}
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'assets/css/verify.css' %}" />
+{% endblock %}
+{% block content %} {% include 'partials/navbar.html' %}
+
+{% include 'partials/notify.html' %}
+
+<div class="container-fluid d-flex justify-content-center align-items-center">
+    <form class="form-verify mt-5 shadow-lg" action="{% url 'verify' unique_code=request.session.unique_code %}" method="post">
+        {% csrf_token %}
+        <div class="info">
+            <span class="title">Verifikasi Email</span>
+            <p class="description">Periksa kotak masuk email anda untuk mendapatkan kode yang kami kirimkan.</p>
+        </div>
+        <div class="input-fields">
+            <input type="tel" maxlength="1" name="otp1" oninput="moveToNextOrPreviousInput(this, -1, 1)">
+            <input type="tel" maxlength="1" name="otp2" oninput="moveToNextOrPreviousInput(this, 1, 2)">
+            <input type="tel" maxlength="1" name="otp3" oninput="moveToNextOrPreviousInput(this, 2, 3)">
+            <input type="tel" maxlength="1" name="otp4" oninput="moveToNextOrPreviousInput(this, 3, 4)">
+            <input type="tel" maxlength="1" name="otp5" oninput="moveToNextOrPreviousInput(this, 4, 5)">
+            <input type="tel" maxlength="1" name="otp6" oninput="moveToNextOrPreviousInput(this, 5, 6)">
+        </div>
+        <div class="action-btns">
+            <button class="verify" type="submit">Verify</button>
+            <a class="clear" href="#" onclick="clearInputs()">Clear</a>
+        </div>
+
+    </form>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+<script>
+function moveToNextOrPreviousInput(input, direction, nextInput) {
+    if (input.value.length === input.maxLength) {
+        if (nextInput <= 6) {
+            const nextInputElem = document.querySelector(`input[type="tel"][maxlength="1"]:nth-child(${nextInput + 1}`);
+            if (nextInputElem) {
+                nextInputElem.focus();
+            } else {
+                // Jika semua input sudah terisi, Anda bisa menambahkan kode lain di sini
+                // Misalnya, mengaktifkan tombol verifikasi otomatis.
+            }
+        }
+    } else if (direction === -1 && input.value.length === 0) {
+        if (nextInput >= 1) {
+            const prevInputElem = document.querySelector(`input[type="tel"][maxlength="1"]:nth-child(${nextInput - 1}`);
+            if (prevInputElem) {
+                prevInputElem.focus();
+            }
+        }
+    }
+}
+
+
+function clearInputs() {
+    const inputextements = document.querySelectorAll('input[type="tel"][maxlength="1"]');
+    inputextements.forEach(input => (input.value = ''));
+    inputextements[0].focus();
+}
+</script>
+
+{% endblock %}

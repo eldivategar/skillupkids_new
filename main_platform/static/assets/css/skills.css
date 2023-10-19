@@ -9,5 +9,15 @@
 
 .dropdown-item.active {
     color: var(--primary);
-  }
-  
+}
+
+.avatar-profile {
+    width: 3rem;
+    border-radius: 50%;
+}
+
+.vertical-line {
+    border-left: 1px solid #000;
+    height: 40px;
+    margin: 0 20px;
+}
