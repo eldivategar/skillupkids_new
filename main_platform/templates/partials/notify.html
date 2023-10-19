@@ -1,0 +1,17 @@
+{% if messages %}
+{% for message in messages %}
+<div class="toast" id="success-toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="1500" style="position: fixed; top: 20px; right: 20px; z-index: 10000;">
+  <div class="toast-body {{ message.tags }} text-white rounded">
+      <i class="fas fa-check-circle me-2"></i>
+    {{ message }}
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var successToast = new bootstrap.Toast(document.getElementById('success-toast'));
+    successToast.show();
+  });
+</script>

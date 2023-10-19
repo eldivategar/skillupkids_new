@@ -1,43 +1,43 @@
-{% extends 'layout/base.html' %}
-{% load static %}
-{% block custom_css %}
-<link rel="stylesheet" href="{% static 'assets/css/login.css' %}">
-{% endblock %}
-{% block content %}
-{% include 'partials/navbar.html' %}
-<div class="h-100">
+{% extends 'layout/base.html' %} {% load static %} {% block custom_css %}
+<link rel="stylesheet" href="{% static 'assets/css/login.css' %}" />
+{% endblock %} {% block content %} {% include 'partials/navbar.html' %} 
+{% include 'partials/notify.html' %}
 
-    <div class="container-form mt-2 mx-auto d-grid gap-3">
-        <div class="form-header">
-            <header class="text-center mb-2">Masuk</header>
-            <p class="text-center fst-normal">Selamat datang <b>SkillUpKids</b>. Tempat belajar yang menyenangkan!</p>
-            <hr>
+<div class="container-form mt-2 mx-auto d-grid gap-3">
+  <div class="form-header">
+    <header class="text-center mb-2">Masuk</header>
+    <p class="text-center fst-normal">
+      Selamat datang <b>SkillUpKids</b>. Tempat belajar yang menyenangkan!
+    </p>
+    <hr />
+  </div>
+
+  <form action="#">
+    <div class="form-registration">
+      <div class="fields">
+        <div class="input-field">
+          <label>Email</label>
+          <input type="text" placeholder="email@email.com" required />
         </div>
 
-        <form action="#">
-            <div class="form-registration">
-                <div class="fields">
-                    <div class="input-field">
-                        <label>Email</label>
-                        <input type="text" placeholder="email@email.com" required>
-                    </div>
+        <div class="input-field">
+          <label>Password</label>
+          <input type="text" placeholder="password" required />
+        </div>
 
-                    <div class="input-field">
-                        <label>Password</label>
-                        <input type="text" placeholder="password" required>
-                    </div>
+        <a href="#!" class="fs-6 fst-italic mb-4 mt-2">Forgot password?</a>
 
-                    <a href="#!" class="fs-6 fst-italic  mb-4 mt-2">Forgot password?</a>
-
-                    <button class="submit mx-auto">
-                        <span class="btnText">Masuk</span>
-                        <i class="uil uil-navigator"></i>
-                    </button>
-                    <p class="mt-2">Belum punya akun? <a href="{% url 'register' %}" class="fw-bold">Daftar</a></p>
-                </div>
-            </div>
-
-        </form>
+        <button class="submit mx-auto">
+          <span class="btnText">Masuk</span>
+          <i class="uil uil-navigator"></i>
+        </button>
+        <p class="mt-2">
+          Belum punya akun?
+          <a href="{% url 'register' %}" class="fw-bold">Daftar</a>
+        </p>
+      </div>
     </div>
+  </form>
 </div>
+
 {% endblock %}

@@ -40,7 +40,7 @@
 .container-form form {
     position: relative;
     margin-top: 16px;
-    min-height: 490px;
+    /* min-height: 490px; */
     background-color: #fff;
     overflow: hidden;
 }
@@ -91,13 +91,50 @@ form.secActive .form.first {
     margin: 4px 0;
 }
 
-.input-field label {
+.input-box {
+    display: flex;
+    flex-direction: column;
+    margin: 4px 0;
+    position: relative;
+}
+
+.input-box input {
+    position: relative;
+    outline: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+    border: 1px solid #aaa;
+    padding: 0 15px;
+    height: 42px;
+    margin: 8px 0;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.input-box i {
+    position: absolute;
+    top: 65%;
+    transform: translateY(-50%);
+    color: #a6a6a6;
+    transition: all 0.3s ease;
+}
+
+.input-box i{
+    right: 15px;
+    cursor: pointer;
+    padding: 8px;
+  }
+
+.input-field label,
+.input-box label {
     font-size: 16px;
     font-weight: 1000;
     color: #2e2e2e;
 }
 
 .input-field input {
+    position: relative;
     outline: none;
     font-size: 14px;
     font-weight: 400;
@@ -131,8 +168,8 @@ form.secActive .form.first {
 }
 
 .container-form .form-registration .btnText {
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 17px;
+    font-weight: 700;
 }
 
 .form-registration button:hover {
@@ -164,12 +201,13 @@ form.secActive .form.first {
     color: #333;
 }
 
-/* .form-registration .fp {
+#confirm-error {
+    color: #ff0000;
     font-size: 14px;
-    font-weight: 700;
-    color: #FF8C5A;
-    text-decoration: none;
-} */
+    font-weight: 500;
+    display: none;
+}
+
 
 @media (max-width: 750px) {
     .container-form form {

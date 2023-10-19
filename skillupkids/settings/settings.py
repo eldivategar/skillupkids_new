@@ -44,6 +44,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 ]
 
 ROOT_URLCONF = 'skillupkids.urls'
@@ -76,8 +77,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'skillupkids_db',
         'USER': 'root',
-        'PASSWORD': 'skillupkidsid',
-        'HOST':'193.203.161.35',
+        'PASSWORD': '',
+        'HOST':'localhost',
         'PORT':'3306',
     }
 }
@@ -122,3 +123,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TWILIO_ACCOUNT_SID = 'AC7742402e0f3b5cd7d1df2f0bed137a49'
+TWILIO_AUTH_TOKEN = '88e666b15da63008442a90ca3f4ce246'
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'bg-info',
+    messages.INFO: 'bg-info',
+    messages.SUCCESS: 'bg-success',
+    messages.WARNING: 'bg-warning',
+    messages.ERROR: 'bg-danger',
+}
