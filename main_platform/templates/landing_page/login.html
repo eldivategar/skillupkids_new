@@ -16,14 +16,15 @@
     {% csrf_token %}
     <div class="form-registration">
       <div class="fields">
-        <div class="input-field">
+        <div class="input-box">
           <label>Email</label>
           <input type="text" placeholder="email@email.com" name="email" required />
         </div>
 
-        <div class="input-field">
+        <div class="input-box">
           <label>Password</label>
-          <input type="text" placeholder="password" name="password" required />
+          <input type="password" id="password" placeholder="password" name="password" required />
+          <i class="far fa-eye show-pw"></i>
         </div>
 
         <a href="#!" class="fs-6 fst-italic mb-4 mt-2">Forgot password?</a>
@@ -41,4 +42,20 @@
   </form>
 </div>
 
+{% endblock %}
+{% block custom_js %}
+<script>
+  const password = document.getElementById("password");
+  const showPassword = document.querySelector(".show-pw");
+
+  showPassword.addEventListener("click", () => {
+    if (password.type === "password") {
+      password.type = "text";
+      showPassword.classList.replace("fa-eye-slash", "fa-eye");
+    } else {
+      password.type = "password";
+      showPassword.classList.replace("fa-eye", "fa-eye-slash");
+    }
+  });
+</script>
 {% endblock %}
