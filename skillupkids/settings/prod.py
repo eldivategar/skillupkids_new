@@ -10,7 +10,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'skillupkids_db',
         'USER': 'root',
-        'PASSWORD': 'skillupkidsid',
+        'PASSWORD': '',
         'HOST':'localhost',
         'PORT':'3306',
     }
