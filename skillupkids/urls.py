@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import handler404
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 handler404 = 'main_platform.views.page_not_found'
@@ -24,4 +26,7 @@ handler404 = 'main_platform.views.page_not_found'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("main_platform.urls")),
+    path('member/', include("user_pages.urls")),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

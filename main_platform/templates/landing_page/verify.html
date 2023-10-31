@@ -8,7 +8,7 @@
 {% include 'partials/notify.html' %}
 
 <div class="container-fluid d-flex justify-content-center align-items-center">
-    <form class="form-verify mt-5 shadow-lg" action="{% url 'verify' unique_code=request.session.unique_code %}" method="post">
+    <form class="form-verify mt-5 shadow-lg" action="{% url 'verify' %}" method="post">
         {% csrf_token %}
         <div class="info">
             <span class="title">Verifikasi Email</span>

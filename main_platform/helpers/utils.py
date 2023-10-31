@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import pyotp
 import smtplib
+from user_pages.models import Member, Mitra
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -8,7 +9,7 @@ def send_otp(request, email):
     
     totp = pyotp.TOTP(pyotp.random_base32(), interval=60)
     otp = totp.now()
-
+    
     request.session['otp_secret_key'] = totp.secret
     valid_date = datetime.now() + timedelta(minutes=1)
     request.session['otp_valid_until'] = str(valid_date)
@@ -35,3 +36,20 @@ def send_otp(request, email):
     except Exception as e:
         print(f'Gagal mengirim email: {str(e)}')
 
+
+def get_customer_data(request):
+    customer_id = request.session['customer_id']
+    try:
+        data = Member.objects.get(uuid=customer_id)
+        customer_data = {
+            'name': data.name,
+            'email': data.email,
+            'number': data.number,
+            'password': data.password,
+            'address': data.address,
+            'profile_image': data.profile_image,
+        }
+    except Member.DoesNotExist:
+        return 'Pengguna tidak ditemukan!'
+    
+    return customer_data

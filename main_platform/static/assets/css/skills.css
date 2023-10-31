@@ -21,3 +21,40 @@
     height: 40px;
     margin: 0 20px;
 }
+
+.modal-dialog.modal-lg.modal-dialog-right {
+    width: 100%;
+    max-width: 450px;
+    margin-left: auto;
+}
+
+.avatar-profile {
+    max-width: 100%;
+    height: auto;
+}
+
+.btn-logout {
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.breadcrumb-item.active a {
+    color: var(--primary);
+}
+
+.breadcrumb-item:not(.active) a {
+    color: black;
+}
+
+.profile input {
+    border: none;
+    background-color: transparent;
+}
+
+.save-btn {
+    background-color: var(--primary);
+    color: white;
+    border-radius: 5px;
+}

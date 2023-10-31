@@ -20,6 +20,7 @@ Tabel "Kegiatan":
 
 kegiatan_id (Kunci utama)
 mitra_id (Kunci asing mengacu ke "Mitra")
+
 nama kegiatan/kelas
 target siswa
 manfaat peserta
@@ -45,3 +46,4 @@ pendaftaran_id (Kunci utama)
 pelanggan_id (Kunci asing mengacu ke "Pelanggan")
 kegiatan_id (Kunci asing mengacu ke "Kegiatan")
 tanggal pendaftaran
+status : 

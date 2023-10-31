@@ -1,17 +1,18 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.contrib.auth.hashers import check_password
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .helpers.decorators import user_must_be_registered
-from .models import Customer
-from .helpers.utils import send_otp
+from user_pages.models import Member, Mitra
+from .helpers.utils import send_otp, get_customer_data
 from datetime import datetime
 import pyotp
 
 def home(request):
-    return render(request, 'landing_page/index.html')
+    if 'customer_id' not in request.session:
+        return render(request, 'landing_page/index.html')
+
+    data = get_customer_data(request)
+    return render(request, 'landing_page/index.html', {'data': data})
 
 def about(request):
     return render(request, 'landing_page/about.html')
@@ -28,16 +29,30 @@ def login(request):
         password = request.POST.get('password')
 
         if email and password:
-            customer = Customer.objects.filter(email=email).first()
-            if customer:
-                if check_password(password, customer.password):
-                    request.session['customer_id'] = customer.uuid_str()
+            member = Member.objects.filter(email=email).first()
+            mitra = Mitra.objects.filter(email=email).first()
+
+            if member:
+                if check_password(password, member.password):
+                    request.session['customer_id'] = member.uuid_str()
+                    # request.session['user_type'] = 'member'
+                    return redirect('user_pages:member_activity')
+                else:
+                    messages.error(request, 'Ups, Password salah!')
+                    return redirect('login')
+
+            if mitra:
+                if check_password(password, mitra.password):
+                    request.session['customer_id'] = mitra.uuid_str()
+                    # request.session['user_type'] = 'mitra'
                     return redirect('home')
-                messages.error(request, 'Ups, Password salah!')
-                return redirect('login')            
-            
-            messages.error(request, 'Email belum terdaftar di SkillUpKids!')
-            return redirect('login')
+                else:
+                    messages.error(request, 'Ups, Password salah!')
+                    return redirect('login')
+                                
+            else: 
+                messages.error(request, 'Email belum terdaftar di SkillUpKids!')
+                return redirect('login')
 
 def register(request):
     if request.method == 'GET':        
@@ -50,34 +65,38 @@ def register(request):
         password = request.POST.get('confirm-password')
         
         if name and email and number and password:            
-            if Customer.objects.filter(email=email).exists():
+            if Member.objects.filter(email=email).exists():
                 messages.error(request, 'Email sudah terdaftar!')
                 return redirect('register')
                         
-            if Customer.objects.filter(number=number).exists():
+            if Member.objects.filter(number=number).exists():
                 messages.error(request, 'Nomor whatsapp sudah terdaftar!')
                 return redirect('register')
             
+            request.session.flush()
             import uuid
             unique_code = str(uuid.uuid4())
             request.session['unique_code'] = unique_code 
             
-            request.session['name'] = email
+            request.session['name'] = name
             request.session['email'] = email
             request.session['number'] = number
             request.session['password'] = password
+            request.session.set_expiry(300)
 
             send_otp(request, email)          
             messages.success(request, 'Kode berhasil dikirim ke email anda!')
 
-            return redirect('verify', unique_code=unique_code)
+            return redirect('verify')
         else:
             return redirect('register')
     
 @user_must_be_registered
-def verify(request, unique_code):
+def verify(request):
+    print(request.session['unique_code'])
     
     if request.method == 'GET':
+        print(request.session['otp_secret_key'])        
         return render(request, 'landing_page/verify.html')
 
     if request.method == 'POST':
@@ -97,7 +116,7 @@ def verify(request, unique_code):
                     number = request.session['number']
                     password = request.session['password']
 
-                    customer = Customer(name=name, email=email, number=number, password=password, is_verified=True)
+                    customer = Member(name=name, email=email, number=number, password=password, is_verified=True)
                     customer.save()
 
                     request.session.clear()
