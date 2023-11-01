@@ -8,10 +8,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'skillupkids_db',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST':'127.0.0.1',
-        'PORT':'3306',
+        'OPTIONS': {
+            'read_default_file': '/etc/mysql/my.cnf',
+        },
     }
 }
