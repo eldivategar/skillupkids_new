@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 
 def send_otp(request, email):
     
-    totp = pyotp.TOTP(pyotp.random_base32(), interval=60)
+    totp = pyotp.TOTP(pyotp.random_base32(), digits=4, interval=60)
     otp = totp.now()
     
     request.session['otp_secret_key'] = totp.secret

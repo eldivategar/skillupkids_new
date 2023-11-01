@@ -1,81 +1,190 @@
 {% load static %}
-<!-- Navbar Start -->
-<nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5 py-lg-0">
-    <a href="{% url 'home' %}" class="navbar-brand">
-        <h1 class="m-0 text-primary"><img src="{% static 'assets/img/logo.jpg' %}" alt="logo" class="logo">SkillUpKids
-        </h1> <!-- <i class="fa fa-book-reader me-3"></i> -->
-    </a>
-    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav mx-auto">
-            <a href="{% url 'home' %}"
-                class="nav-item nav-link {% if request.path == '/' %} active{% endif %}">Beranda</a>
-            <a href="{% url 'about' %}"
-                class="nav-item nav-link {% if request.path == '/about/' %} active{% endif %}">Tentang</a>
-            <!-- <a href="" class="nav-item nav-link">Classes</a> -->
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Kelas</a>
-                <div class="dropdown-menu rounded-0 rounded-bottom border-0 shadow-sm m-0">
-                    <a href="/#seni" class="dropdown-item">
-                        <img src="{% static 'assets/img/art.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
-                            alt="art">
-                        Seni
+<header class="header-page header-three">
+    <div class="header-fixed-three header-fixed">
+        <nav class="navbar navbar-expand-lg header-nav-three scroll-sticky">
+            <div class="container">
+                <div class="navbar-header">
+                    <a id="mobile_btn" href="javascript:void(0);">
+                        <span class="bar-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
                     </a>
-                    <a href="/#olahraga" class="dropdown-item">
-                        <img src="{% static 'assets/img/sport.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
-                            alt="sports">
-                        Olahraga
-                    </a>
-                    <a href="/#musik" class="dropdown-item">
-                        <img src="{% static 'assets/img/music.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
-                            alt="music">
-                        Musik
-                    </a>
-                    <a href="/#stem" class="dropdown-item">
-                        <img src="{% static 'assets/img/STEM.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
-                            alt="STEM">
-                        STEM
-                    </a>
-                    <a href="/#keagamaan" class="dropdown-item">
-                        <img src="{% static 'assets/img/religy.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
-                            alt="religy">
-                        Keagamaan
-                    </a>
-                    <a href="/#teknologi" class="dropdown-item">
-                        <img src="{% static 'assets/img/tech.jpg' %}" class="img-fluid rounded-circle me-2 class-icon"
-                            alt="tech">
-                        Teknologi
-                    </a>
-                    <a href="/#memasak" class="dropdown-item">
-                        <img src="{% static 'assets/img/cooking.jpg' %}"
-                            class="img-fluid rounded-circle me-2 class-icon" alt="cooking">
-                        Memasak
+                    <a href="{% url 'home' %}" class="navbar-brand logo">
+                        <img src="{% static 'assets/img/logo/logo.png' %}" class="img-fluid" alt="Logo">
                     </a>
                 </div>
+                <div class="main-menu-wrapper">
+                    <div class="menu-header">
+                        <a href="{% url 'home' %}" class="menu-logo">
+                            <img src="{% static 'assets/img/logo/logo.svg' %}" class="img-fluid" alt="Logo">
+                        </a>
+                        <a id="menu_close" class="menu-close" href="javascript:void(0);">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    </div>
+                    <ul class="main-nav">
+                        <li class="{% if request.path == '/' %} active{% endif %}">
+                            <a href="{% url 'home' %}">Beranda</a>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#!">Daftar Kegiatan</a>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="">Menu <i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu first-submenu">
+                                <li><a href="{% url 'about' %}">Tentang Kami</a></li>
+                                <li><a href="{% url 'contact' %}">Kontak</a></li>
+                            </ul>
+                        </li>
+                        <li class="login-link">
+                            {% if request.session.customer_id %}
+                            <span class="user-img mx-3 mt-3 mb-3">
+                                <img src="{{ data.profile_image.url }}" alt="">
+                                <span class="status online" style="color: #ffffff;">{{ data.name }}</span>
+                                <span class="d-grid gap-2 d-flex mt-3">
+                                    <a href="{% url 'user_pages:member_profile' %}" style="color: #ffffff;"
+                                        class="btn btn-primary me-md-2"><i class="feather-user me-1"></i>Profile</a>
+                                    <a href="#!" style="color: #ffffff;" class="btn btn-info"><i
+                                            class="feather-shopping-cart me-1"></i>Cart</a>
+                                </span>
+                            </span>
+                            {% else %}
+                            <a href="{% url 'login' %}">Masuk</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+
+                {% if request.session.customer_id %}
+                <ul class="nav header-navbar-rht">
+
+                    <li class="nav-item cart-nav me-2">
+                        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+                            <img src="{% static 'assets/img/icon/cart.svg' %}" alt="img">
+                        </a>
+                        <div class="wishes-list dropdown-menu dropdown-menu-right">
+                            <div class="wish-header">
+                                <a href="#">View Cart</a>
+                                <a href="javascript:void(0)" class="float-end">Checkout</a>
+                            </div>
+                            <div class="wish-content">
+                                <ul>
+                                    <li>
+                                        <div class="media">
+                                            <div class="d-flex media-wide">
+                                                <div class="avatar">
+                                                    <a href="#!">
+                                                        <img alt=""
+                                                            src="{% static 'assets/img/course/course-04.jpg' %}">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6><a href="#!">Learn Angular...</a></h6>
+                                                    <p>By Dave Franco</p>
+                                                    <h5>$200 <span>$99.00</span></h5>
+                                                </div>
+                                            </div>
+                                            <div class="remove-btn">
+                                                <a href="#" class="btn">Remove</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <div class="d-flex media-wide">
+                                                <div class="avatar">
+                                                    <a href="#!">
+                                                        <img alt=""
+                                                            src="{% static 'assets/img/course/course-14.jpg' %}">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6><a href="#!">Build Responsive Real...</a></h6>
+                                                    <p>Jenis R.</p>
+                                                    <h5>$200 <span>$99.00</span></h5>
+                                                </div>
+                                            </div>
+                                            <div class="remove-btn">
+                                                <a href="#" class="btn">Remove</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <div class="d-flex media-wide">
+                                                <div class="avatar">
+                                                    <a href="#!">
+                                                        <img alt=""
+                                                            src="{% static 'assets/img/course/course-15.jpg' %}">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6><a href="#!">C# Developers Double ...</a></h6>
+                                                    <p>Jesse Stevens</p>
+                                                    <h5>$200 <span>$99.00</span></h5>
+                                                </div>
+                                            </div>
+                                            <div class="remove-btn">
+                                                <a href="#" class="btn">Remove</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="total-item">
+                                    <h6>Subtotal : $ 600</h6>
+                                    <h5>Total : $ 600</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="nav-item user-nav">
+                        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+                            <span class="user-img">
+                                <img src="{{ data.profile_image.url }}" alt="">
+                                <span class="status online"></span>
+                            </span>
+                        </a>
+                        <div class="users dropdown-menu dropdown-menu-right" data-popper-placement="bottom-end">
+                            <div class="user-header">
+                                <div class="avatar avatar-sm">
+                                    <img src="{{ data.profile_image.url }}" alt="User Image"
+                                        class="avatar-img rounded-circle">
+                                </div>
+                                <div class="user-text">
+                                    <h6>{{ data.name }}</h6>
+                                    <!-- <p class="text-muted mb-0">Student</p> -->
+                                </div>
+                            </div>
+                            <a class="dropdown-item" href="{% url 'user_pages:member_profile' %}"><i
+                                    class="feather-user me-1"></i>
+                                Profile</a>
+                            <a class="dropdown-item" href="#!"><i class="feather-star me-1"></i> Subscription</a>
+                            <div class="dropdown-item night-mode">
+                                <span><i class="feather-moon me-1"></i> Night Mode </span>
+                                <div class="form-check form-switch check-on m-0">
+                                    <input class="form-check-input" type="checkbox" id="night-mode">
+                                </div>
+                            </div>
+                            <a class="dropdown-item" href="{% url 'logout' %}"><i class="feather-log-out me-1"></i>
+                                Logout</a>
+                        </div>
+                    </li>
+                </ul>
+
+                {% else %}
+                <ul class="nav header-navbar-rht align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link login-three-head button" href="{% url 'login' %}"><span>Login</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link signin-three-head" href="{% url 'register' %}">Register</a>
+                    </li>
+                </ul>
+                {% endif %}
             </div>
-            <a href="{% url 'contact' %}"
-                class="nav-item nav-link {% if request.path == '/contact/' %} active{% endif %}">Hubungi kami</a>
-        </div>
-
-        <div class="d-flex align-items-center">
-            {% if request.session.customer_id %}
-            <a href="{% url 'user_pages:member_activity' %}" class="btn px-3 d-lg-block me-3"
-                style="color: white; background-color: #002763;">Kegiatan</a>
-            <div class="vertical-line"></div>
-            <button class="btn rounded" data-bs-toggle="modal" data-bs-target="#profileModal">
-                <img src="{{ data.profile_image.url }}" alt="" class="avatar-profile">
-            </button>           
-            {% else %}
-            {% if "/register/" not in request.path and "/login/" not in request.path and "/verify/auth/" not in request.path %}
-            <a href="{% url 'login' %}" class="btn btn-primary rounded-pill px-3 d-lg-block">Gabung<i
-                    class="fa fa-arrow-right ms-3"></i></a>
-            {% endif %}
-
-            {% endif %}
-        </div>
+        </nav>
     </div>
-</nav>
-{% include 'partials/profile.html' %}
-<!-- Navbar End -->
+</header>

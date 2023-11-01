@@ -1,90 +1,75 @@
-{% extends 'layout/base.html' %}
+{% extends "member/layout/base.html" %}
 {% load static %}
-
 {% block content %}
-{% include 'partials/navbar.html' %}
-{% include 'partials/notify.html' %}
 
-<div class="bg-white">
-  <div class="container py-5">
-    {% include 'partials/breadcrumb.html' %}
-
-    <!-- start content  -->
-
-    <div class="row">
-      <div class="col-lg-4">
-        <div class="card mb-4">
-          <div class="card-body text-center">
-            <img src="{{ data.profile_image.url }}" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-            <h5 class="my-3">{{ data.name }}</h5>
-            <div class="d-flex justify-content-center mb-2">
-              <!-- <button type="button" class="btn btn-primary">Follow</button>
-              <button type="button" class="btn btn-outline-primary ms-1">Message</button> -->
+<!-- Profile Details -->
+<div class="col-xl-9 col-md-8">
+    <div class="settings-widget profile-details">
+        <div class="settings-menu p-0">
+            <div class="profile-heading">
+                <h3>Profile Details</h3>
+                <p>Lengkapi informasi dirimu.</p>
             </div>
-          </div>
-        </div>
-        <!-- <div class="card mb-4 mb-lg-0">
-          <div class="card-body p-0">
-            <ul class="list-group list-group-flush rounded-3">
-              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
-                <p class="mb-0">@mdbootstrap</p>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
-                <p class="mb-0">mdbootstrap</p>
-              </li>
-            </ul>
-          </div>
-        </div> -->
-      </div>
-      <div class="col-lg-8">
-        <div class="card mb-4">
-          <div class="card-body">
-            <form action="{% url 'user_pages:member_profile_update' %}" class="profile" method="post">
-              {% csrf_token %}
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Nama Lengkap</p>
+            <form action="{% url 'user_pages:member_profile_update' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="course-group mb-0 d-flex">
+                    <div class="course-group-img d-flex align-items-center">
+                        <div class="course-name">
+                            <h3>Avatar</h3>
+                            <p>PNG or JPG no bigger than 800px wide and tall.</p>
+                        </div>
+                    </div>
+                    <div class="profile-share d-flex align-items-center justify-content-center">
+                        <button type="submit" class="btn btn-success">Update</button>
+                        <input type="file" name="profile_image" accept=".jpg, .jpeg, .png" />
+                        <!-- <a href="javascript:;" class="btn btn-danger">Delete</a> -->
+                    </div>
                 </div>
-                <div class="col-sm-9">
-                  <input type="text" class="text-muted mb-0" name="name" value="{{ data.name }}" id="name">
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Email</p>
-                </div>
-                <div class="col-sm-9">
-                  <input type="email" class="text-muted mb-0" name="email" value="{{ data.email }}" id="email">
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Nomor Whatsapp</p>
-                </div>
-                <div class="col-sm-9">
-                  <input type="number" class="text-muted mb-0" name="num_wa" value="{{ data.number }}" id="num_wa">
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Alamat</p>
-                </div>
-                <div class="col-sm-9">
-                  <input type="text" class="text-muted mb-0" name="address" value="{{ data.address }}" id="address">
-                </div>
-              </div>
-              <hr>
-              <button class="btn save-btn" type="submit">Simpan</button>
+
+                <div class="checkout-form personal-address add-course-info ">
+                    <div class="personal-info-head">
+                        <h4>Detail Informasi</h4>
+                        <p>Edit your personal information and address.</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" placeholder="Enter your first Name" name="name"
+                                    value="{{ data.name }}" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Nomor Whatsapp</label>
+                                <input type="text" class="form-control" placeholder="Enter your Phone" name="num_wa"
+                                    value="{{ data.number }}" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Email</label>
+                                <input type="text" class="form-control" placeholder="Enter your Email" name="email"
+                                    value="{{ data.email }}" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Alamat</label>
+                                <input type="text" class="form-control" placeholder="Address" name="address"
+                                    value="{{ data.address}}" required>
+                            </div>
+                        </div>
+                        <div class="update-profile">
+                            <button type="submit" class="btn btn-primary">Update Profile</button>
+                        </div>
+                    </div>
             </form>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
+</div>
+<!-- Profile Details -->
+
 {% endblock %}

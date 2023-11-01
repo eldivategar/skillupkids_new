@@ -8,7 +8,7 @@ class Member(models.Model):
     email = models.EmailField(unique=True)
     number = models.CharField(max_length=13, unique=True)
     password = models.CharField(max_length=100)
-    address = models.TextField(null=True, blank=True)
+    address = models.TextField(default='', null=True, blank=True)
     is_verified = models.BooleanField(default=False)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     profile_image = models.ImageField(upload_to='member/', default='member/avatar-profile.jpg', null=True, blank=True)

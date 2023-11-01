@@ -1,61 +1,57 @@
-{% extends 'layout/base.html' %} {% load static %} {% block custom_css %}
-<link rel="stylesheet" href="{% static 'assets/css/login.css' %}" />
-{% endblock %} {% block content %} {% include 'partials/navbar.html' %} 
-{% include 'partials/notify.html' %}
+{% extends 'layout/base-auth.html' %}
+{% block title %}Login{% endblock %}
+{% load static %}
+{% block content %}
 
-<div class="container-form mt-2 mx-auto d-grid gap-3">
-  <div class="form-header">
-    <header class="text-center mb-2">Masuk</header>
-    <p class="text-center fst-normal">
-      Selamat datang <b>SkillUpKids</b>. Tempat belajar yang menyenangkan!
-    </p>
-    <hr />
-  </div>
+<div class="col-md-6 login-wrap-bg">
 
-  <form action="{% url 'login' %}" method="post">
-    {% csrf_token %}
-    <div class="form-registration">
-      <div class="fields">
-        <div class="input-box">
-          <label>Email</label>
-          <input type="text" placeholder="email@email.com" name="email" required />
-        </div>
-
-        <div class="input-box">
-          <label>Password</label>
-          <input type="password" id="password" placeholder="password" name="password" required />
-          <i class="far fa-eye show-pw"></i>
-        </div>
-
-        <a href="#!" class="fs-6 fst-italic mb-4 mt-2">Forgot password?</a>
-
-        <button class="submit mx-auto">
-          <span class="btnText">Masuk</span>
-          <i class="uil uil-navigator"></i>
-        </button>
-        <p class="mt-2">
-          Belum punya akun?
-          <a href="{% url 'register' %}" class="fw-bold">Daftar</a>
-        </p>
-      </div>
+    <!-- Login -->
+    <div class="login-wrapper">
+        <div class="loginbox">
+            <div class="w-100">
+                <div class="img-logo">
+                    <img src="{% static 'assets/img/logo.svg' %}" class="img-fluid" alt="Logo">
+                    <div class="back-home">
+                        <a href="{% url 'home' %}">Back to Home</a>
+                    </div>
+                </div>
+                <h1>Masuk</h1>
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="form-control-label">Email</label>
+                        <input type="email" class="form-control" placeholder="Enter your email address" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Password</label>
+                        <div class="pass-group">
+                            <input type="password" class="form-control pass-input" placeholder="Enter your password" name="password" required>
+                            <span class="feather-eye toggle-password"></span>
+                        </div>
+                    </div>
+                    <div class="forgot">
+                        <span><a class="forgot-link" href="#!">Forgot Password ?</a></span>
+                    </div>
+                    <div class="remember-me">
+                        <label class="custom_check mr-2 mb-0 d-inline-flex remember-me"> Remember me
+                            <input type="checkbox" name="remember-me">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-primary btn-start" type="submit">Masuk</button>
+                    </div>
+                    <p class="mb-0 mt-4">Belum punya akun ? <a href="{% url 'register' %}" style="color: #FF875A;">Daftar</a></p>
+                </form>
+            </div>
+        </div>        
     </div>
-  </form>
+    <!-- /Login -->
+
 </div>
 
-{% endblock %}
-{% block custom_js %}
-<script>
-  const password = document.getElementById("password");
-  const showPassword = document.querySelector(".show-pw");
+</div>
 
-  showPassword.addEventListener("click", () => {
-    if (password.type === "password") {
-      password.type = "text";
-      showPassword.classList.replace("fa-eye-slash", "fa-eye");
-    } else {
-      password.type = "password";
-      showPassword.classList.replace("fa-eye", "fa-eye-slash");
-    }
-  });
-</script>
+</div>
+<!-- /Main Wrapper -->
 {% endblock %}

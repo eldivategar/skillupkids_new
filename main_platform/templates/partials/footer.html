@@ -1,75 +1,115 @@
 {% load static %}
-<!-- Footer Start -->
-<div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-    <div class="container py-5">
-        <div class="row g-5">
-            <div class="col-lg-3 col-md-6">
-                <h3 class="text-white mb-4">Tentang Kami</h3>
-                <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Jl. Ring Road Utara, Ngringin,
-                    Condongcatur, Kec. Depok,
-                    Kabupaten Sleman, Daerah Istimewa Yogyakarta</p>
-                <!-- <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p> -->
-                <p class="mb-2"><i class="fa fa-envelope me-3"></i>skillupkidscontact@gmail.com</p>
-                <div class="d-flex pt-2">
-                    <a class="btn btn-outline-light btn-social" href="https://www.tiktok.com/@skillupkids"><i
-                            class="fab fa-tiktok"></i></a>
-                    <a class="btn btn-outline-light btn-social" href="https://www.instagram.com/skillupkids.id/"><i
-                            class="fab fa-instagram"></i></a>
-                    <!-- <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a> -->
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 text-center">
-                <h1 class="text-white">SkillUpKids</h1>
-                <p>Platform Digital Inovatif untuk Meningkatkan Potensi Anak Melalui Aktivitas Pilihan.</p>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <h3 class="text-white mb-4">Galeri</h3>
-                <div class="row g-2 pt-2">
-                    <div class="col-4">
-                        <img class="img-fluid rounded bg-light p-1" src="{% static 'assets/img/classes-1.jpg' %}"
-                            alt="">
-                    </div>
-                    <div class="col-4">
-                        <img class="img-fluid rounded bg-light p-1" src="{% static 'assets/img/classes-2.jpg' %}"
-                            alt="">
-                    </div>
-                    <div class="col-4">
-                        <img class="img-fluid rounded bg-light p-1" src="{% static 'assets/img/classes-3.jpg' %}"
-                            alt="">
-                    </div>
-                    <div class="col-4">
-                        <img class="img-fluid rounded bg-light p-1" src="{% static 'assets/img/classes-4.jpg' %}"
-                            alt="">
-                    </div>
-                    <div class="col-4">
-                        <img class="img-fluid rounded bg-light p-1" src="{% static 'assets/img/classes-5.jpg' %}"
-                            alt="">
-                    </div>
-                    <div class="col-4">
-                        <img class="img-fluid rounded bg-light p-1" src="{% static 'assets/img/classes-6.jpg' %}"
-                            alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="copyright">
+
+
+<footer class="footer">
+
+    <!-- Footer Top -->
+    <div class="footer-top aos" data-aos="fade-up">
+        <div class="container">
             <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="{% url 'home' %}">SkillUpKids.id</a>, All Right Reserved.
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <div class="footer-menu">
-                        <a href="{% url 'home' %}">Home</a>
-                        <a href="#!">Cookies</a>
-                        <a href="#!">Help</a>
-                        <a href="#!">FQAs</a>
+                <div class="col-lg-4 col-md-6">
+
+                    <!-- Footer Widget -->
+                    <div class="footer-widget footer-about">
+                        <div class="footer-logo">
+                            <img src="{% static 'assets/img/logo/logo.png' %}" alt="logo">
+                        </div>
+                        <div class="footer-about-content">
+                            <p class="fw-bold fst-italic">Platform Unggulan yang Memanfaatkan
+                                Teknologi Terkini dan Inovasi untuk Membantu Anak Anda Meraih Potensi Terbaik Mereka.
+                            </p>
+                        </div>
+                        <div class="social-icon-three my-2">
+                            <a href="https://www.tiktok.com/@skillupkids" target="_blank" class="btn btn-dark me-2 rounded-circle"><i class="fab fa-tiktok"></i></a>
+                            <a href="https://instagram.com/skillupkids.id" target="_blank" class="btn btn-dark me-2 rounded-circle"><i class="fab fa-instagram"></i></a>
+                        </div>
                     </div>
+                    <!-- /Footer Widget -->
+
                 </div>
+
+                <div class="col-lg-2 col-md-6">
+
+                    <!-- Footer Widget -->
+                    <div class="footer-widget footer-menu">
+                        <h2 class="footer-title">Tentang</h2>
+                        <ul>
+                            <li><a href="{% url 'about' %}">Tentang Kami</a></li>
+                            <li><a href="{% url 'contact' %}">Hubungi Kami</a></li>
+                        </ul>
+                    </div>
+                    <!-- /Footer Widget -->
+
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+
+                    <!-- Footer Widget -->
+                    <div class="footer-widget footer-menu">
+                        <h2 class="footer-title">News & Events</h2>
+                        <ul>
+                            <li><a href="#!">Blog</a></li>
+                        </ul>
+                    </div>
+                    <!-- /Footer Widget -->
+
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+
+                    <!-- Footer Widget -->
+                    <div class="footer-widget footer-contact">
+                        <div class="footer-contact-info">
+                            <div class="footer-address">
+                                <img src="{% static 'assets/img/icon/icon-20.svg' %}" alt="" class="img-fluid">
+                                <p>Jl. Ring Road Utara, Ngringin, Condongcatur, Kec. Depok, Kabupaten Sleman, Daerah
+                                    Istimewa Yogyakarta</p>
+                            </div>
+                            <p>
+                                <img src="{% static 'assets/img/icon/icon-19.svg' %}" alt="" class="img-fluid">
+                                skillupkidscontact@gmail.com
+                            </p>
+                            <p class="mb-0">
+                                <img src="{% static 'assets/img/icon/icon-21.svg' %}" alt="" class="img-fluid">
+                                0822-5576-9655
+                            </p>
+                        </div>
+                    </div>
+                    <!-- /Footer Widget -->
+
+                </div>
+
             </div>
         </div>
     </div>
-</div>
-<!-- Footer End -->
+    <!-- /Footer Top -->
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+        <div class="container">
+
+            <!-- Copyright -->
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="privacy-policy">
+                            <ul>
+                                <li><a href="term-condition.html">Terms</a></li>
+                                <li><a href="privacy-policy.html">Privacy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="copyright-text">
+                            <p class="mb-0">&copy; 2023 SkillUpKids. All rights reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Copyright -->
+
+        </div>
+    </div>
+    <!-- /Footer Bottom -->
+
+</footer>

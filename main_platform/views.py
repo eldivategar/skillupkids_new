@@ -15,10 +15,18 @@ def home(request):
     return render(request, 'landing_page/index.html', {'data': data})
 
 def about(request):
-    return render(request, 'landing_page/about.html')
+    if 'customer_id' not in request.session:
+        return render(request, 'landing_page/about.html')
+    
+    data = get_customer_data(request)
+    return render(request, 'landing_page/about.html', {'data': data})
 
 def contact(request):
-    return render(request, 'landing_page/contact.html')
+    if 'customer_id' not in request.session:
+        return render(request, 'landing_page/contact.html')
+    
+    data = get_customer_data(request)
+    return render(request, 'landing_page/contact.html', {'data': data})
 
 def login(request):
     if request.method == 'GET':
@@ -36,7 +44,7 @@ def login(request):
                 if check_password(password, member.password):
                     request.session['customer_id'] = member.uuid_str()
                     # request.session['user_type'] = 'member'
-                    return redirect('user_pages:member_activity')
+                    return redirect('user_pages:member_profile')
                 else:
                     messages.error(request, 'Ups, Password salah!')
                     return redirect('login')
@@ -62,7 +70,7 @@ def register(request):
         name = request.POST.get('name')
         email = request.POST.get('email')
         number = request.POST.get('num_wa')
-        password = request.POST.get('confirm-password')
+        password = request.POST.get('password')
         
         if name and email and number and password:            
             if Member.objects.filter(email=email).exists():
@@ -93,14 +101,12 @@ def register(request):
     
 @user_must_be_registered
 def verify(request):
-    print(request.session['unique_code'])
     
     if request.method == 'GET':
-        print(request.session['otp_secret_key'])        
         return render(request, 'landing_page/verify.html')
 
     if request.method == 'POST':
-        user_otp = request.POST.get('otp1') + request.POST.get('otp2') + request.POST.get('otp3') + request.POST.get('otp4') + request.POST.get('otp5') + request.POST.get('otp6')
+        user_otp = request.POST.get('digit-1') + request.POST.get('digit-2') + request.POST.get('digit-3') + request.POST.get('digit-4')
         otp_secret_key = request.session['otp_secret_key']
         otp_valid_until = request.session['otp_valid_until']
 
@@ -108,7 +114,7 @@ def verify(request):
             valid_until = datetime.fromisoformat(otp_valid_until)
 
             if valid_until > datetime.now():
-                totp = pyotp.TOTP(otp_secret_key, interval=60)
+                totp = pyotp.TOTP(otp_secret_key, digits=4, interval=60)
 
                 if totp.verify(user_otp):
                     name = request.session['name']
@@ -140,5 +146,8 @@ def logout(request):
     request.session.flush()
     return redirect('home')
 
-def page_not_found(request, exception):
-    return render(request, 'errors/404.html')
+def _404(request, exception):
+    return render(request, 'errors/error-404.html')
+
+def _500(request):
+    return render(request, 'errors/error-500.html')
