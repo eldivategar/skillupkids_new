@@ -1,0 +1,267 @@
+{% extends "member/dashboard/layout/base.html" %}
+{% load static %}
+{% block main_content %}
+
+<!-- Activity -->
+<section class="course-content purchase-widget">
+    <div class="container">
+        <div class="student-widget">
+            <div class="student-widget-group">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+
+                            <div class="d-flex justify-content-center align-items-center">
+                                <h5>Belum ada kegiatan yang diikuti.</h5>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <!-- Recommended Activity -->
+    <div class="container">
+        <div class="student-widget">
+            <h5 class="d-flex justify-content-center align-items-center mt-3" style="font-weight: 600;"><i
+                    class="feather-zap me-1 rounded-circle fs-6 p-1"
+                    style="color: #ffffff; background-color: #06D755;"></i>Rekomendasi Kegiatan</h5>
+            <div class="student-widget-group">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+
+                            <!-- Col -->
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                                <div class="course-box-three">
+                                    <div class="course-three-item">
+                                        <div class="course-three-img">
+                                            <a href="course-details.html">
+                                                <img class="img-fluid" alt=""
+                                                    src="{% static 'assets/img/course/course-26.jpg' %}">
+                                            </a>
+                                            <div class="heart-three">
+                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="course-three-content">
+                                            <div class="course-group-three">
+                                                <div class="group-three-img">
+                                                    <a href="instructor-profile.html"><img
+                                                            src="{% static 'assets/img/user/user1.jpg' %}" alt=""
+                                                            class="img-fluid"></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="course-three-text">
+                                                <a href="course-details.html">
+                                                    <p>Personalized Learning</p>
+                                                    <h3 class="title instructor-text">Build Responsive
+                                                        Websites with HTML</h3>
+                                                </a>
+                                            </div>
+
+                                            <div class="student-counts-info d-flex align-items-center">
+                                                <div class="students-three-counts d-flex align-items-center">
+                                                    <img src="{% static 'assets/img/icon-three/student.svg' %}" alt="">
+                                                    <p>450 Students</p>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
+                                                <div class="price-three-view d-flex align-items-center">
+                                                    <div class="course-price-three">
+                                                        <h3>$650 <span>$99.00</span></h3>
+                                                    </div>
+                                                </div>
+                                                <div class="price-three-time d-inline-flex align-items-center">
+                                                    <i class="fa-regular fa-clock me-2"></i>
+                                                    <span>6hr 30min</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Col -->
+
+                            <!-- Col -->
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                                <div class="course-box-three">
+                                    <div class="course-three-item">
+                                        <div class="course-three-img">
+                                            <a href="course-details.html">
+                                                <img class="img-fluid" alt=""
+                                                    src="{% static 'assets/img/course/course-27.jpg' %}">
+                                            </a>
+                                            <div class="heart-three">
+                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="course-three-content">
+                                            <div class="course-group-three">
+                                                <div class="group-three-img">
+                                                    <a href="instructor-profile.html"><img
+                                                            src="{% static 'assets/img/user/user2.jpg' %}" alt=""
+                                                            class="img-fluid"></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="course-three-text">
+                                                <a href="course-details.html">
+                                                    <p>Pyhton Development</p>
+                                                    <h3 class="title instructor-text">The Complete Web
+                                                        Developer PHP Course</h3>
+                                                </a>
+                                            </div>
+
+                                            <div class="student-counts-info d-flex align-items-center">
+                                                <div class="students-three-counts d-flex align-items-center">
+                                                    <img src="{% static 'assets/img/icon-three/student.svg' %}" alt="">
+                                                    <p>500 Students</p>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                class="price-three-group d-flex align-items-center justify-content-between">
+                                                <div class="price-three-view d-flex align-items-center">
+                                                    <div class="course-price-three">
+                                                        <h3>$650 <span>$99.00</span></h3>
+                                                    </div>
+                                                </div>
+                                                <div class="price-three-time d-inline-flex align-items-center">
+                                                    <i class="fa-regular fa-clock me-2"></i>
+                                                    <span>6hr 30min</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Col -->
+
+                            <!-- Col -->
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                                <div class="course-box-three">
+                                    <div class="course-three-item">
+                                        <div class="course-three-img">
+                                            <a href="course-details.html">
+                                                <img class="img-fluid" alt=""
+                                                    src="{% static 'assets/img/course/course-20.jpg' %}">
+                                            </a>
+                                            <div class="heart-three">
+                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="course-three-content">
+                                            <div class="course-group-three">
+                                                <div class="group-three-img">
+                                                    <a href="instructor-profile.html"><img
+                                                            src="{% static 'assets/img/user/user3.jpg' %}" alt=""
+                                                            class="img-fluid"></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="course-three-text">
+                                                <a href="course-details.html">
+                                                    <p>Business Management</p>
+                                                    <h3 class="title instructor-text">The Complete Business
+                                                        Management Course</h3>
+                                                </a>
+                                            </div>
+
+                                            <div class="student-counts-info d-flex align-items-center">
+                                                <div class="students-three-counts d-flex align-items-center">
+                                                    <img src="{% static 'assets/img/icon-three/student.svg' %}" alt="">
+                                                    <p>400 Students</p>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                class="price-three-group d-flex align-items-center justify-content-between">
+                                                <div class="price-three-view d-flex align-items-center">
+                                                    <div class="course-price-three">
+                                                        <h3>$300 <span>$99.00</span></h3>
+                                                    </div>
+                                                </div>
+                                                <div class="price-three-time d-inline-flex align-items-center">
+                                                    <i class="fa-regular fa-clock me-2"></i>
+                                                    <span>6hr 30min</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Col -->
+
+                            <!-- Col -->
+                            <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                                <div class="course-box-three">
+                                    <div class="course-three-item">
+                                        <div class="course-three-img">
+                                            <a href="course-details.html">
+                                                <img class="img-fluid" alt=""
+                                                    src="{% static 'assets/img/course/course-21.jpg' %}">
+                                            </a>
+                                            <div class="heart-three">
+                                                <a href="#"><i class="fa-regular fa-heart"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="course-three-content">
+                                            <div class="course-group-three">
+                                                <div class="group-three-img">
+                                                    <a href="instructor-profile.html"><img
+                                                            src="{% static 'assets/img/user/user4.jpg' %}" alt=""
+                                                            class="img-fluid"></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="course-three-text">
+                                                <a href="course-details.html">
+                                                    <p>Creative Arts & media</p>
+                                                    <h3 class="title instructor-text">Build Creative Arts &
+                                                        media Course Completed</h3>
+                                                </a>
+                                            </div>
+
+                                            <div class="student-counts-info d-flex align-items-center">
+                                                <div class="students-three-counts d-flex align-items-center">
+                                                    <img src="{% static 'assets/img/icon-three/student.svg' %}" alt="">
+                                                    <p>250 Students</p>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                class="price-three-group d-flex align-items-center justify-content-between">
+                                                <div class="price-three-view d-flex align-items-center">
+                                                    <div class="course-price-three">
+                                                        <h3>$700 <span>$99.00</span></h3>
+                                                    </div>
+                                                </div>
+                                                <div class="price-three-time d-inline-flex align-items-center">
+                                                    <i class="fa-regular fa-clock me-2"></i>
+                                                    <span>6hr 30min</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Col -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Recommended Activity -->
+</section>
+<!-- /Activity -->
+
+{% endblock %}

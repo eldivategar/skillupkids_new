@@ -21,13 +21,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-handler404 = 'main_platform.views._404'
-# handler500 = 'main_platform.views._500'
+handler404 = 'app.views._404'
+handler500 = 'app.views._500'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include("main_platform.urls")),
-    path('member/', include("user_pages.urls")),
+    path('', include("app.landing_page.urls")),
+    path('member/', include("app.member.urls")),
+    # path('mitra/', include("app.mitra.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

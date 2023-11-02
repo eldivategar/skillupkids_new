@@ -32,8 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main_platform',
-    'user_pages',
+    'app',
 ]
 
 MIDDLEWARE = [
@@ -53,7 +52,7 @@ ROOT_URLCONF = 'skillupkids.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join( BASE_DIR, 'main_platform/templates' ), os.path.join( BASE_DIR, 'user_pages/templates' )],
+        'DIRS': [os.path.join( BASE_DIR, 'app/templates' )],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,18 +71,6 @@ ALLOWED_HOSTS = ['*']
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'skillupkids_db',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST':'localhost',
-        'PORT':'3306',
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
