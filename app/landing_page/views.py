@@ -58,7 +58,7 @@ def login(request):
                     messages.error(request, 'Ups, Password salah!')
                     return redirect('login')
                                 
-            else: 
+            else:
                 messages.error(request, 'Email belum terdaftar di SkillUpKids!')
                 return redirect('login')
 
