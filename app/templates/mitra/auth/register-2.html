@@ -1,0 +1,192 @@
+{% extends 'mitra/auth/base-auth.html' %}
+{% block title %}Registrasi{% endblock %}
+{% load static %}
+{% block content %}
+
+<div class="col-lg-8 col-md-2 login-wrap-bg">
+
+    <!-- Login -->
+    <div class="login-wrapper">
+        <div class="loginbox register-box">
+            <div class="img-logo">
+                <img src="{% static 'assets/img/logo.svg' %}" class="img-fluid" alt="Logo">
+                <div class="back-home">
+                    <a href="{% url 'home' %}">Back to Home</a>
+                </div>
+            </div>
+            <h1>Daftar Mitra</h1>
+            <div class="row">
+
+                <div class="col-lg-5">
+                    <div class="profile-box">
+                        <div class="personal-detail d-flex align-items-center">
+                            <span class="active-color" id="step-1-index"><i class="fa-solid fa-check"></i></span>
+                            <div class="personal-text">
+                                <h4>Daftar Akun</h4>
+                            </div>
+                        </div>
+                        <div class="personal-detail d-flex align-items-center">
+                            <span class="active-color" id="step-2-index"><i class="fa-solid fa-check"></i></span>
+                            <div class="personal-text">
+                                <h4>Verifikasi Akun</h4>
+                            </div>
+                        </div>
+                        <div class="personal-detail d-flex align-items-center">
+                            <span class="active-color active-bar" id="step-3-index">3</span>
+                            <div class="personal-text">
+                                <h4>Informasi Detail</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <form action="{% url 'app.mitra:register_2' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Step 2 -->
+                        <div class="personal-form" id="step-2-form">
+                            <h4>Informasi Detail</h4>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Kota</label>
+                                        <input type="text" class="form-control" placeholder="Kota"
+                                            name="city" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Alamat Lengkap</label>
+                                        <input type="text" class="form-control" placeholder="Alamat Lengkap" name="address"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Jam Operasional Mulai</label>
+                                        <input type="time" class="form-control"
+                                            name="start_time" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Jam Operasional Selesai</label>
+                                        <input type="time" class="form-control"
+                                            name="end_time" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Deskripsi Singkat</label>                                        
+                                        <textarea class="form-control" name="description" placeholder="Deskripsikan Singkat Tentang Mitra Kamu" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Logo Mitra</label>
+                                        <input type="file" name="logo" id="profile_image" accept=".jpg, .jpeg, .png"
+                                            required onchange="previewImage(event)" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6" id="container-image-preview" style="display: none;">
+                                    <div class="form-group">
+                                        <label class="form-control-label" id="label-image-preview"
+                                            style="display: none;">Preview
+                                            Gambar</label>
+                                        <img class="img-fluid rounded-circle" id="image-preview" style="display: none;"
+                                            width="100">
+                                    </div>
+                                </div>
+                                <h4>Sosial Media (Opsional)</h4>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Twitter</label>
+                                        <input type="text" class="form-control" placeholder="Twitter Profile URL"
+                                            name="twitter_site">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Facebook</label>
+                                        <input type="text" class="form-control" placeholder="Facebook Profile URL"
+                                            name="fb_site">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Instagram</label>
+                                        <input type="text" class="form-control" placeholder="Instagram Profile URL"
+                                            name="ig_site">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">LinkedIn Profile URL</label>
+                                        <input type="text" class="form-control" placeholder="LinkedIn Profile URL"
+                                            name="linkedin_site">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">YouTube</label>
+                                        <input type="text" class="form-control" placeholder="Youtube URL"
+                                            name="yt_site">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="btn-group d-flex">
+                                        <div class="next-btn">
+                                            <button type="button" class="btn btn-primary btn-start" onclick="confirmSave()">Simpan</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Login -->
+
+</div>
+
+{% block custom_js %}
+<script>
+    function previewImage(event) {
+        const img_input = document.getElementById('profile_image');
+        const label_preview = document.getElementById('label-image-preview');
+        const container_preview = document.getElementById('container-image-preview');
+        const preview = document.getElementById('image-preview');
+        if (img_input.files && img_input.files[0]) {
+            label_preview.style.display = "block";
+            container_preview.style.display = "block";
+            preview.style.display = "block";
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(img_input.files[0]);
+        }
+    }
+
+    function confirmSave() {
+        Swal.fire({
+            title: "Apakah data sudah benar?",
+            icon: "question",
+            text: "Anda dapat mengubah data ini nanti di dashboard.",
+            showCancelButton: true,
+            confirmButtonText: "Ya, Kirim",
+            cancelButtonText: "Batal",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.querySelector("form").submit();
+            }
+        });
+    }
+
+</script>
+{% endblock %}
+
+{% endblock %}

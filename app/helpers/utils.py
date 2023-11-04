@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
-import pyotp
-import smtplib
 from app.models import Member, Mitra
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from datetime import datetime
+import pyotp
+import smtplib
 
 def send_otp(request, email):
     
@@ -37,7 +38,33 @@ def send_otp(request, email):
         print(f'Gagal mengirim email: {str(e)}')
 
 
-def get_customer_data(request):
+def get_mitra_data(request):
+    customer_id = request.session['customer_id']
+    try:
+        data = Mitra.objects.get(uuid=customer_id)
+        customer_data = {
+            'name': data.name,
+            'email': data.email,
+            'number': data.number,
+            'password': data.password,
+            'address': data.address,
+            'city': data.city,
+            'description': data.description,
+            'start_time': data.start_time.strftime('%H:%M'),
+            'end_time': data.end_time.strftime('%H:%M'),
+            'twitter_site': data.twitter_site,
+            'fb_site': data.fb_site,
+            'ig_site': data.ig_site,
+            'linkedin_site': data.linkedin_site,
+            'yt_site': data.yt_site,
+            'profile_image': data.profile_image,
+        }
+    except Mitra.DoesNotExist:
+        return 'Pengguna tidak ditemukan!'
+    
+    return customer_data
+
+def get_member_data(request):
     customer_id = request.session['customer_id']
     try:
         data = Member.objects.get(uuid=customer_id)

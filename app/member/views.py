@@ -1,18 +1,18 @@
 from django.shortcuts import render
-from app.helpers.decorators import cek_user_session
-from app.helpers.utils import get_customer_data
+from app.helpers.decorators import cek_member_session
+from app.helpers.utils import get_member_data
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from app.models import Member
 
 
-@cek_user_session
+@cek_member_session
 def member_profile(request):
-    data = get_customer_data(request)
+    data = get_member_data(request)
     return render(request, 'member/profile.html', {'data': data})
 
-@cek_user_session
+@cek_member_session
 def member_profile_update(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -36,7 +36,6 @@ def member_profile_update(request):
         customer.email = email
         
         if profile_image:
-            print(customer.profile_image.name)
             if customer.profile_image.name != 'member/avatar-profile.jpg':
                 customer.profile_image.delete()
 
@@ -48,13 +47,13 @@ def member_profile_update(request):
     else:
         return HttpResponse('Method not allowed!')
 
-@cek_user_session
+@cek_member_session
 def member_profile_security(request):
     if request.method == 'GET':
-        data = get_customer_data(request)
+        data = get_member_data(request)
         return render(request, 'member/security.html', {'data': data})
 
-@cek_user_session
+@cek_member_session
 def member_dashboard_activity(request):
-    data = get_customer_data(request)
+    data = get_member_data(request)
     return render(request, 'member/dashboard/activity.html', {'data': data})

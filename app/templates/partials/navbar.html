@@ -1,4 +1,9 @@
 {% load static %}
+{% if request.session.user_type == 'mitra' %}
+    {% url 'app.mitra:mitra_profile' as dynamic_url %}
+{% elif request.session.user_type == 'member' %}
+    {% url 'app.member:member_profile' as dynamic_url %}
+{% endif %}
 <header class="header-page header-three">
     <div class="header-fixed-three header-fixed">
         <nav class="navbar navbar-expand-lg header-nav-three scroll-sticky">
@@ -28,15 +33,16 @@
                         <li class="{% if request.path == '/' %} active{% endif %}">
                             <a href="{% url 'home' %}">Beranda</a>
                         </li>
-                        <li class="has-submenu">
-                            <a href="#!">Daftar Kegiatan</a>
+                        <li class="has-submenu {% if request.path == '/class-list/' %} active{% endif %}">
+                            <a href="{% url 'class_list' %}">Daftar Kegiatan</a>
                         </li>
                         <li class="has-submenu">
-                            <a href="">Menu <i class="fas fa-chevron-down"></i></a>
+                            <a href="#">Menu <i class="fas fa-chevron-down"></i></a>
                             <ul class="submenu first-submenu">
                                 {% comment %} <li><a href="{% url 'about' %}">Tentang Kami</a></li> {% endcomment %}
                                 <li><a href="#!">Blog</a></li>
                                 <li><a href="{% url 'contact' %}">Kontak</a></li>
+                                <li><a href="{% url 'app.mitra:login' %}">Masuk sebagai Mitra</a></li>
                             </ul>
                         </li>
                         <li class="login-link">
@@ -45,14 +51,14 @@
                                 <img src="{{ data.profile_image.url }}" alt="">
                                 <span class="status online" style="color: #ffffff;">{{ data.name }}</span>
                                 <span class="d-grid gap-2 d-flex mt-3">
-                                    <a href="{% url 'app.member:member_profile' %}" style="color: #ffffff;"
+                                    <a href="{{ dynamic_url }}" style="color: #ffffff;"
                                         class="btn btn-primary me-md-2"><i class="feather-user me-1"></i>Profile</a>
                                     <a href="#!" style="color: #ffffff;" class="btn btn-info"><i
                                             class="feather-shopping-cart me-1"></i>Cart</a>
                                 </span>
                             </span>
                             {% else %}
-                            <a href="{% url 'login' %}">Masuk</a>
+                            <a href="{% url 'app.member:login' %}">Masuk</a>
                             {% endif %}
                         </li>
                     </ul>
@@ -159,7 +165,7 @@
                                     <!-- <p class="text-muted mb-0">Student</p> -->
                                 </div>
                             </div>
-                            <a class="dropdown-item" href="{% url 'app.member:member_profile' %}"><i
+                            <a class="dropdown-item" href="{{ dynamic_url }}"><i
                                     class="feather-user me-1"></i>
                                 Profile</a>
                             <a class="dropdown-item" href="#!"><i class="feather-star me-1"></i> Subscription</a>
@@ -178,10 +184,10 @@
                 {% else %}
                 <ul class="nav header-navbar-rht align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link login-three-head button" href="{% url 'login' %}"><span>Login</span></a>
+                        <a class="nav-link login-three-head button" href="{% url 'app.member:login' %}"><span>Masuk</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link signin-three-head" href="{% url 'register' %}">Register</a>
+                        <a class="nav-link signin-three-head" href="{% url 'app.member:register' %}">Daftar</a>
                     </li>
                 </ul>
                 {% endif %}

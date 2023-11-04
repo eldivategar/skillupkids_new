@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>{% block title %}{% endblock %} | SkillUpKids</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.svg' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome/css/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome/css/all.min.css' %}">
+
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.theme.default.min.css' %}">
+
+    <!-- Feathericon CSS -->
+    <link rel="stylesheet" href="{% static 'assets/plugins/feather/feather.css' %}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+</head>
+
+<body>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper log-wrap">
+        <div class="row">
+
+            <!-- Register/Login Banner -->
+            <div class="col-lg-4 col-md-6 login-bg">
+                <div class="owl-carousel login-slide owl-theme">
+                    <div class="welcome-login register-step">
+                        <div class="login-banner">
+                            <img src="{% static 'assets/img/register-img.png' %}" class="img-fluid" alt="Logo">
+                        </div>
+                        <div class="mentor-course text-center">
+                            <h2>Selamat Datang di <br>SkillUpKids.</h2>
+                            <p>Bergabunglah dengan kami dan jadilah bagian dari perubahan yang kami ciptakan. Bersama-sama, kita bisa mencapai hasil yang luar biasa untuk masa depan yang lebih baik.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Register/Login Banner -->
+
+                {% block content %}
+                {% endblock %}
+
+        </div>
+    </div>
+    <!-- /Main Wrapper -->
+
+    <!-- jQuery -->
+    <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Owl Carousel -->
+    <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+
+    <!-- Validation-->
+    <script src="{% static 'assets/js/validation.js' %}"></script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {% block custom_js %}
+    {% endblock %}
+</body>
+
+</html>

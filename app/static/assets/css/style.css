@@ -11884,8 +11884,9 @@ textarea:focus {
     justify-content: center;
 }
 .verification-code .form-control {
-	min-height: 70px;
-    width: 70px;
+	/* min-height: 70px; */
+    width: 3.5em;
+    height: 3.5em;
 	text-align: center;
 	margin-right: 35px;
 	margin-bottom: 20px;

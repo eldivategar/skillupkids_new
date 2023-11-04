@@ -1,0 +1,55 @@
+{% extends "mitra/layout/base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- Student Security -->
+<div class="col-xl-9 col-md-8">
+    <div class="settings-widget profile-details">
+        <div class="settings-menu p-0">
+            <div class="profile-heading">
+                <h3>Security</h3>
+                <p>Ubah password mu disini.</p>
+            </div>            
+            <div class="checkout-form personal-address">
+                <div class="personal-info-head">
+                    <h4>Ubah Password</h4>
+                    <p>Gunakan password yang kuat untuk akunmu.</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <form action="#">
+                            <div class="form-group">
+                                <label class="form-control-label">Current password</label>
+                                <input type="password" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">New Password</label>
+                                <div class="pass-group" id="passwordInput">
+                                    <input type="password" class="form-control pass-input"
+                                        placeholder="Enter your password">
+                                </div>
+                                <div class="password-strength" id="passwordStrength">
+                                    <span id="poor"></span>
+                                    <span id="weak"></span>
+                                    <span id="strong"></span>
+                                    <span id="heavy"></span>
+                                </div>
+                                <div id="passwordInfo"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Confirm New Password</label>
+                                <input type="password" class="form-control">
+                            </div>
+                            <div class="update-profile save-password">
+                                <button type="button" class="btn btn-primary">Simpan Password</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Student Security -->
+
+{% endblock %}

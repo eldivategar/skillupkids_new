@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>SkillUpKids | Platform untuk meningkatkan potensi anak</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.svg' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome/css/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome/css/all.min.css' %}">
+
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.theme.default.min.css' %}">
+
+    <!-- Feathericon CSS -->
+    <link rel="stylesheet" href="{% static 'assets/plugins/feather/feather.css' %}">
+
+    <!-- Slick CSS -->
+    <link rel="stylesheet" href="{% static 'assets/plugins/slick/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/plugins/slick/slick-theme.css' %}">
+
+    <!-- Select2 CSS -->
+    <link rel="stylesheet" href="{% static 'assets/plugins/select2/css/select2.min.css' %}">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="{% static 'assets/plugins/swiper/css/swiper.min.css' %}">
+
+    <!-- Aos CSS -->
+    <link rel="stylesheet" href="{% static 'assets/plugins/aos/aos.css' %}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+</head>
+
+<body class="home-three">
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+
+        <!-- Header -->
+        {% include 'partials/navbar.html' %}
+        <!-- /Header -->
+
+        <!--Dashbord Student -->
+        <div class="page-content">
+            <div class="container">
+                <div class="row">
+                    {% block navbar %}
+                    <!-- sidebar -->
+                    {% include 'mitra/partials/sidebar.html' %}
+                    <!-- /sidebar -->
+                    {% endblock %}
+
+                    {% block content %}
+                    {% endblock %}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Main Wrapper -->
+
+    <!-- jQuery -->
+    <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Owl Carousel JS -->
+    <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+
+    <!-- Aos -->
+    <script src="{% static 'assets/plugins/aos/aos.js' %}"></script>
+
+    <!-- counterup JS -->
+    <script src="{% static 'assets/js/jquery.waypoints.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.counterup.min.js' %}"></script>
+
+    <!-- Select2 JS -->
+    <script src="{% static 'assets/plugins/select2/js/select2.min.js' %}"></script>
+
+    <!-- Slick Slider -->
+    <script src="{% static 'assets/plugins/slick/slick.js' %}"></script>
+
+    <!-- Swiper Slider -->
+    <script src="{% static 'assets/plugins/swiper/js/swiper.min.js' %}"></script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'assets/js/script.js' %}"></script>
+
+</body>
+
+</html>

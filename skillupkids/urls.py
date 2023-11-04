@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.conf.urls import handler404, handler500
 from django.conf import settings
 from django.conf.urls.static import static
+from app import views
 
 
 handler404 = 'app.views._404'
@@ -28,7 +29,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("app.landing_page.urls")),
     path('member/', include("app.member.urls")),
-    # path('mitra/', include("app.mitra.urls")),
+    path('mitra/', include("app.mitra.urls")),
+    path('logout/', views.logout, name='logout')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
