@@ -989,7 +989,7 @@ Version      : 1.0
 					if(prev.length) {
 						$(prev).select();
 					}
-				} else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+				} else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105)) {
 					var next = parent.find('input#' + $(this).data('next'));
 					
 					if(next.length) {
@@ -1005,7 +1005,7 @@ Version      : 1.0
 	
 	$('.digit-group input').on('keyup', function(){
 		var self = $(this);
-		if ( self.val() != '' ) {
+		if ( self.val().length > 0 ) {
 			self.addClass('active');
 		} else {
 			self.removeClass('active');

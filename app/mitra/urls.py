@@ -8,6 +8,7 @@ urlpatterns = [
     path('register/', authentications.register, name='register'),
     path('verify/auth/', authentications.verify_account, name='verify'),
     path('register/2/', authentications.register_2, name='register_2'),
+    path('resend_code/', authentications.resend_code, name='resend_code'),
 
     path('dashboard/activity/', views.mitra_dashboard_activity, name='mitra_dashboard_activity'),
     path('profile/', views.mitra_profile, name='mitra_profile'),

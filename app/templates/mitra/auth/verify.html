@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                                 <div class="send-code">
-                                    <!-- <a href="verification-code.html">Send the code again</a> -->
+                                    <a href="{% url 'app.mitra:resend_code' %}" id="resend-code">Kirim ulang kode</a>
                                 </div>
                                 <div class="d-grid">
                                     <button class="btn btn-primary btn-start" type="submit">Submit</button>
@@ -78,4 +78,29 @@
     <!-- /Login -->
 
 </div>
+
+{% block custom_js %}
+
+<script>    
+    let countdown_resend_code = 50;
+    function updateCountdown() {
+        const button = document.getElementById("resend-code");
+
+        if (countdown_resend_code > 0) {
+            button.textContent = `Kirim ulang kode (${countdown_resend_code} detik)`;
+            countdown_resend_code--;
+            button.style.pointerEvents = "none";
+            setTimeout(updateCountdown, 1000);
+        } else {
+            button.textContent = "Kirim ulang kode";
+            button.style.pointerEvents = "auto";
+        }
+    }
+
+    updateCountdown();
+</script>
+
+
+{% endblock %}
+
 {% endblock %}

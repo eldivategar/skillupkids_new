@@ -153,3 +153,11 @@ def verify_account(request):
         else:
             messages.error(request, 'Ups...terjadi kesalahan, silahkan coba lagi!')
             return redirect('app.mitra:verify')
+        
+@user_must_be_registered
+def resend_code(request):
+    if request.method == 'GET':
+        email = request.session['email']
+        send_otp(request, email)
+        messages.success(request, 'Kode berhasil dikirim ke email anda!')
+        return redirect('app.mitra:verify')
