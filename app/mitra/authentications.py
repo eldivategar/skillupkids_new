@@ -101,7 +101,8 @@ def register_2(request):
         
         if logo:
             mitra.profile_image.save(logo.name, logo, save=True)
-            mitra.save()
+        
+        mitra.save()
 
         request.session.flush()
         customer_uuid = f'mi{mitra.uuid_str()}'
