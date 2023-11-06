@@ -21,34 +21,39 @@
     
     <div class="settings-widget account-settings">
         <div class="settings-menu">
-            <h3>ACCOUNT SETTINGS</h3>
+            <h3>PENGATURAN AKUN</h3>
             <ul>
                 <li class="nav-item {% if request.path == '/mitra/profile/' %} active{% endif %}">
                     <a href="{% url 'app.mitra:mitra_profile' %}" class="nav-link">
                         <i class="feather-settings"></i> Edit Profile
                     </a>
                 </li>
+                <li class="nav-item {% if request.path == '/mitra/sosmed/' %} active{% endif %}">
+                    <a href="{% url 'app.mitra:mitra_sosmed' %}" class="nav-link">
+                        <i class="feather-refresh-cw"></i> Sosial Media
+                    </a>
+                </li>
                 <li class="nav-item {% if request.path == '/mitra/password/' %} active{% endif %}">
                     <a href="{% url 'app.mitra:mitra_profile_security' %}" class="nav-link">
-                        <i class="feather-user"></i> Security
+                        <i class="feather-user"></i> Keamanan
                     </a>
                 </li>
                 <li class="nav-item {% if request.path == '/mitra/del/profile/' %} active{% endif %}">
                     <a href="#!" class="nav-link">
-                        <i class="feather-trash-2"></i> Delete Profile
+                        <i class="feather-trash-2"></i> Hapus Akun
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{% url 'logout' %}" class="nav-link">
-                        <i class="feather-power"></i> Sign Out
+                        <i class="feather-power"></i> Keluar
                     </a>
                 </li>
             </ul>
-            <h3>HISTORY</h3>
+            <h3>HISTORI</h3>
             <ul>                
                 <li class="nav-item {% if request.path == '/mitra/payment/' %} active{% endif %}">
                     <a href="#!" class="nav-link">
-                        <i class="feather-credit-card"></i> Payment
+                        <i class="feather-credit-card"></i> Pembayaran
                     </a>
                 </li>
                 <li class="nav-item">

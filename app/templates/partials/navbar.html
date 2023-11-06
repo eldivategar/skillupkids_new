@@ -1,9 +1,10 @@
 {% load static %}
-{% if request.session.user_type == 'mitra' %}
-    {% url 'app.mitra:mitra_profile' as dynamic_url %}
-{% elif request.session.user_type == 'member' %}
-    {% url 'app.member:member_profile' as dynamic_url %}
+{% if request.session.customer_id|slice:":2" == 'mi' %}
+{% url 'app.mitra:mitra_profile' as dynamic_url %}
+{% elif request.session.customer_id|slice:":2" == 'me' %}
+{% url 'app.member:member_profile' as dynamic_url %}
 {% endif %}
+
 <header class="header-page header-three">
     <div class="header-fixed-three header-fixed">
         <nav class="navbar navbar-expand-lg header-nav-three scroll-sticky">
@@ -165,8 +166,7 @@
                                     <!-- <p class="text-muted mb-0">Student</p> -->
                                 </div>
                             </div>
-                            <a class="dropdown-item" href="{{ dynamic_url }}"><i
-                                    class="feather-user me-1"></i>
+                            <a class="dropdown-item" href="{{ dynamic_url }}"><i class="feather-user me-1"></i>
                                 Profile</a>
                             <a class="dropdown-item" href="#!"><i class="feather-star me-1"></i> Subscription</a>
                             <div class="dropdown-item night-mode">
@@ -184,7 +184,8 @@
                 {% else %}
                 <ul class="nav header-navbar-rht align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link login-three-head button" href="{% url 'app.member:login' %}"><span>Masuk</span></a>
+                        <a class="nav-link login-three-head button"
+                            href="{% url 'app.member:login' %}"><span>Masuk</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link signin-three-head" href="{% url 'app.member:register' %}">Daftar</a>

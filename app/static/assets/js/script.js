@@ -989,7 +989,7 @@ Version      : 1.0
 					if(prev.length) {
 						$(prev).select();
 					}
-				} else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105)) {
+				} else if(this.value !== '') {
 					var next = parent.find('input#' + $(this).data('next'));
 					
 					if(next.length) {

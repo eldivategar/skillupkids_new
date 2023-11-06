@@ -39,7 +39,7 @@ class Mitra(models.Model):
     ig_site = models.URLField(max_length=200, null=True)
     linkedin_site = models.URLField(max_length=200, null=True)
     yt_site = models.URLField(max_length=200, null=True)
-    profile_image = models.ImageField(upload_to='mitra/', default='mitra/avatar-profile.jpg', null=True, blank=True)
+    profile_image = models.ImageField(upload_to='mitra/', default='mitra/default-logo.png', null=True, blank=True)
     is_verified = models.BooleanField(default=False)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
 

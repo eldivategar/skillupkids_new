@@ -8,13 +8,11 @@ from datetime import datetime
 import pyotp
 
 def login(request):
-    if request.method == 'GET':
-        if 'customer_id' in request.session:
-            return redirect('app.mitra:mitra_profile')
-        else:
-            return render(request, 'mitra/auth/login.html')
+    if request.method == 'GET':        
+        return render(request, 'mitra/auth/login.html')
     
     if request.method == 'POST':
+        request.session.flush()
         email = request.POST.get('email')
         password = request.POST.get('password')
 
@@ -23,8 +21,8 @@ def login(request):
 
             if mitra:
                 if check_password(password, mitra.password):
-                    request.session['customer_id'] = mitra.uuid_str()
-                    request.session['user_type'] = 'mitra'
+                    customer_uuid = f'mi{mitra.uuid_str()}'
+                    request.session['customer_id'] = customer_uuid
                     return redirect('app.mitra:mitra_profile')
                 else:
                     messages.error(request, 'Ups, Password salah!')
@@ -88,23 +86,26 @@ def register_2(request):
         yt_site = request.POST.get('yt_site')                
         logo = request.FILES.get('logo')
 
-        customer = Mitra.objects.get(uuid=request.session['customer_uuid'])
-        customer.city = city
-        customer.address = address
-        customer.description = description
-        customer.start_time = start_time    
-        customer.end_time = end_time
-        customer.twitter_site = twitter_site
-        customer.fb_site = fb_site
-        customer.ig_site = ig_site
-        customer.linkedin_site = linkedin_site
-        customer.yt_site = yt_site
-        customer.profile_image.save(logo.name, logo, save=True)
-        customer.save()
+        uuid = request.session.get('customer_id')[2:]
+        mitra = Mitra.objects.get(uuid=uuid)
+        mitra.city = city
+        mitra.address = address
+        mitra.description = description
+        mitra.start_time = start_time    
+        mitra.end_time = end_time
+        mitra.twitter_site = twitter_site
+        mitra.fb_site = fb_site
+        mitra.ig_site = ig_site
+        mitra.linkedin_site = linkedin_site
+        mitra.yt_site = yt_site
+        
+        if logo:
+            mitra.profile_image.save(logo.name, logo, save=True)
+            mitra.save()
 
         request.session.flush()
-        request.session['customer_id'] = customer.uuid_str()
-        request.session['user_type'] = 'mitra'
+        customer_uuid = f'mi{mitra.uuid_str()}'
+        request.session['customer_id'] = customer_uuid
         return redirect('app.mitra:mitra_profile')         
 
 @user_must_be_registered
@@ -115,8 +116,8 @@ def verify_account(request):
 
     if request.method == 'POST':
         user_otp = request.POST.get('digit-1') + request.POST.get('digit-2') + request.POST.get('digit-3') + request.POST.get('digit-4')
-        otp_secret_key = request.session['otp_secret_key']
-        otp_valid_until = request.session['otp_valid_until']
+        otp_secret_key = request.session.get('otp_secret_key')
+        otp_valid_until = request.session.get('otp_valid_until')
 
         if otp_secret_key and otp_valid_until is not None:
             valid_until = datetime.fromisoformat(otp_valid_until)
@@ -126,19 +127,20 @@ def verify_account(request):
 
                 if totp.verify(user_otp):
 
-                    name = request.session['name']
-                    email = request.session['email']
-                    number = request.session['number']
-                    password = request.session['password']                    
+                    name = request.session.get('name')
+                    email = request.session.get('email')
+                    number = request.session.get('number')
+                    password = request.session.get('password')
 
-                    customer = Mitra(name=name, email=email, number=number, password=password, is_verified=True)
-                    customer.save()
+                    mitra = Mitra(name=name, email=email, number=number, password=password, is_verified=True)
+                    mitra.save()
 
                     request.session.flush()
                     import uuid
                     unique_code = str(uuid.uuid4())
+                    customer_uuid = f'mi{mitra.uuid_str()}'
                     request.session['unique_code'] = unique_code
-                    request.session['customer_uuid'] = customer.uuid_str()
+                    request.session['customer_id'] = customer_uuid
                     
                     return redirect('app.mitra:register_2')
                 
@@ -157,7 +159,7 @@ def verify_account(request):
 @user_must_be_registered
 def resend_code(request):
     if request.method == 'GET':
-        email = request.session['email']
+        email = request.session.get('email')
         send_otp(request, email)
         messages.success(request, 'Kode berhasil dikirim ke email anda!')
         return redirect('app.mitra:verify')

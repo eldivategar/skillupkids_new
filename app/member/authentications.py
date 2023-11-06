@@ -12,6 +12,7 @@ def login(request):
         return render(request, 'member/auth/login.html')
     
     if request.method == 'POST':
+        request.session.flush()
         email = request.POST.get('email')
         password = request.POST.get('password')
 
@@ -20,8 +21,8 @@ def login(request):
 
             if member:
                 if check_password(password, member.password):
-                    request.session['customer_id'] = member.uuid_str()
-                    request.session['user_type'] = 'member'
+                    customer_uuid = f'me{member.uuid_str()}'
+                    request.session['customer_id'] = customer_uuid                   
                     return redirect('app.member:member_dashboard_activity')
                 else:
                     messages.error(request, 'Ups, Password salah!')
@@ -59,7 +60,7 @@ def register(request):
             request.session['email'] = email
             request.session['number'] = number
             request.session['password'] = password
-            request.session.set_expiry(300)
+            # request.session.set_expiry(300)
 
             send_otp(request, email)          
             messages.success(request, 'Kode berhasil dikirim ke email anda!')
@@ -91,12 +92,12 @@ def verify(request):
                     number = request.session['number']
                     password = request.session['password']
 
-                    customer = Member(name=name, email=email, number=number, password=password, is_verified=True)
-                    customer.save()
+                    member = Member(name=name, email=email, number=number, password=password, is_verified=True)
+                    member.save()
 
-                    request.session.clear()
-                    request.session['customer_id'] = customer.uuid_str()
-                    request.session['user_type'] = 'member'
+                    request.session.flush()
+                    customer_uuid = f'me{member.uuid_str()}'
+                    request.session['customer_id'] = customer_uuid
                     return redirect('app.member:member_dashboard_activity')
                 
                 else:
@@ -110,3 +111,11 @@ def verify(request):
         else:
             messages.error(request, 'Ups...terjadi kesalahan, silahkan coba lagi!')
             return redirect('app.member:verify')
+        
+@user_must_be_registered
+def resend_code(request):
+    if request.method == 'GET':
+        email = request.session.get('email')
+        send_otp(request, email)
+        messages.success(request, 'Kode berhasil dikirim ke email anda!')
+        return redirect('app.member:verify')

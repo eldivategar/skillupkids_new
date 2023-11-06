@@ -1,0 +1,59 @@
+{% extends "mitra/layout/base.html" %}
+{% load static %}
+{% block content %}
+{% include 'partials/notify.html' %}
+
+<!-- Profile Details -->
+<div class="col-xl-9 col-md-8">	
+    <div class="settings-widget profile-details">
+        <div class="settings-menu p-0">
+            <div class="profile-heading">
+                <h3>Sosial Media</h3>
+                <p>Tambahkan akun sosmed kamu agar dapat terhubung.</p>
+            </div>
+            <div class="checkout-form personal-address">
+                <form action="{% url 'app.mitra:mitra_sosmed_update' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-control-label">Twitter</label>
+                                <input type="text" class="form-control" placeholder="Twitter Profile Name" value="{{ data.twitter_site }}" name="twitter_">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-control-label">Facebook</label>
+                                <input type="text" class="form-control" placeholder="Facebook Profile Name" value="{{ data.fb_site }}" name="fb_">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-control-label">Instagram</label>
+                                <input type="text" class="form-control" placeholder="Instagram Profile Name" value="{{ data.ig_site }}" name="ig_">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-control-label">LinkedIn Profile URL</label>
+                                <input type="text" class="form-control" placeholder="LinkedIn Profile URL" value="{{ data.linkedin_site }}" name="linkedin_">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label class="form-control-label">YouTube</label>
+                                <input type="text" class="form-control" placeholder="YouTube" value="{{ data.yt_site }}" name="yt_">
+                            </div>
+                        </div>
+                        <div class="update-profile save-social">
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>	
+<!-- Profile Details -->
+
+{% endblock %}

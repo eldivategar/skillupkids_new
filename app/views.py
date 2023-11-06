@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-def _404(request, exception):
+def _404(request, exception=None, requested_url=None):
     return render(request, 'errors/error-404.html')
 
 def _500(request):

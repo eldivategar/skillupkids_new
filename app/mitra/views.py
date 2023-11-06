@@ -27,30 +27,68 @@ def mitra_profile_update(request):
         profile_image = request.FILES.get('profile_image')
 
         customer_id = request.session.get('customer_id')
+        uuid = customer_id[2:]
 
         try:
-            customer = Mitra.objects.get(uuid=customer_id)
+            mitra = Mitra.objects.get(uuid=uuid)
 
         except Mitra.DoesNotExist:
             messages.error(request, 'Terjadi kesalahan saat update profile!')
             return redirect('app.mitra:mitra_profile')
 
-        customer.name = name
-        customer.number = number
-        customer.address = address
-        customer.email = email
-        customer.city = city
-        customer.description = description
-        customer.start_time = start_time
-        customer.end_time = end_time
+        mitra.name = name
+        mitra.number = number
+        mitra.address = address
+        mitra.email = email
+        mitra.city = city
+        mitra.description = description
+        mitra.start_time = start_time
+        mitra.end_time = end_time
         
-        if profile_image:            
-            customer.profile_image.delete()
-            customer.profile_image.save(profile_image.name, profile_image, save=True)
+        if profile_image:
+            if mitra.profile_image.name != 'mitra/default-logo.png':
+                mitra.profile_image.delete()
+            mitra.profile_image.save(profile_image.name, profile_image, save=True)
 
-        customer.save()
+        mitra.save()
         messages.success(request, 'Profile berhasil diupdate!')
         return redirect('app.mitra:mitra_profile')        
+    else:
+        return HttpResponse('Method not allowed!')
+
+@cek_mitra_session
+def mitra_sosmed(request):
+    data = get_mitra_data(request)
+    return render(request, 'mitra/sosmed.html', {'data': data})
+
+@cek_mitra_session
+def mitra_sosmed_update(request):
+    if request.method == 'POST':
+        twitter = request.POST.get('twitter_')
+        fb = request.POST.get('fb_')
+        ig = request.POST.get('ig_')
+        linkedin = request.POST.get('linkedin_')
+        yt = request.POST.get('yt_')
+
+        customer_id = request.session.get('customer_id')
+        uuid = customer_id[2:]
+
+        try:
+            mitra = Mitra.objects.get(uuid=uuid)
+
+        except Mitra.DoesNotExist:
+            messages.error(request, 'Terjadi kesalahan saat update profile!')
+            return redirect('app.mitra:mitra_sosmed')
+
+        mitra.twitter_site = twitter
+        mitra.fb_site = fb
+        mitra.ig_site = ig
+        mitra.linkedin_site = linkedin
+        mitra.yt_site = yt
+
+        mitra.save()
+        messages.success(request, 'Profile berhasil diupdate!')
+        return redirect('app.mitra:mitra_sosmed')        
     else:
         return HttpResponse('Method not allowed!')
 

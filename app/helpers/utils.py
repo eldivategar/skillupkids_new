@@ -40,8 +40,9 @@ def send_otp(request, email):
 
 def get_mitra_data(request):
     customer_id = request.session['customer_id']
+    uuid = customer_id[2:]
     try:
-        data = Mitra.objects.get(uuid=customer_id)
+        data = Mitra.objects.get(uuid=uuid)
         customer_data = {
             'name': data.name,
             'email': data.email,
@@ -66,8 +67,9 @@ def get_mitra_data(request):
 
 def get_member_data(request):
     customer_id = request.session['customer_id']
+    uuid = customer_id[2:]
     try:
-        data = Member.objects.get(uuid=customer_id)
+        data = Member.objects.get(uuid=uuid)
         customer_data = {
             'name': data.name,
             'email': data.email,

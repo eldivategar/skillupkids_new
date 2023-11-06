@@ -81,8 +81,9 @@
 
 {% block custom_js %}
 
-<script>    
-    let countdown_resend_code = 50;
+<script>        
+    let countdown_resend_code = localStorage.getItem('countdown_resend_code') || 50;
+
     function updateCountdown() {
         const button = document.getElementById("resend-code");
 
@@ -91,9 +92,11 @@
             countdown_resend_code--;
             button.style.pointerEvents = "none";
             setTimeout(updateCountdown, 1000);
+            localStorage.setItem('countdown_resend_code', countdown_resend_code);
         } else {
             button.textContent = "Kirim ulang kode";
             button.style.pointerEvents = "auto";
+            localStorage.removeItem('countdown_resend_code');
         }
     }
 

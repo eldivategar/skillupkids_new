@@ -7,6 +7,7 @@ urlpatterns = [
     path('login/', authentications.login, name='login'),
     path('register/', authentications.register, name='register'),
     path('verify/auth/', authentications.verify, name='verify'),
+    path('resend_code/', authentications.resend_code, name='resend_code'),
     
 
     path('dashboard/activity/', views.member_dashboard_activity, name='member_dashboard_activity'),

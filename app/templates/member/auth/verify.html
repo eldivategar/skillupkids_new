@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="send-code">
-                        <!-- <a href="verification-code.html">Send the code again</a> -->
+                        <a href="{% url 'app.member:resend_code' %}" id="resend-code">Kirim ulang kode</a>
                     </div>
                     <div class="d-grid">
                         <button class="btn btn-primary btn-start" type="submit">Submit</button>
@@ -48,4 +48,31 @@
 </div>
 
 </div>
+
+{% block custom_js %}
+
+<script>        
+    let countdown_resend_code = localStorage.getItem('countdown_resend_code') || 50;
+
+    function updateCountdown() {
+        const button = document.getElementById("resend-code");
+
+        if (countdown_resend_code > 0) {
+            button.textContent = `Kirim ulang kode (${countdown_resend_code} detik)`;
+            countdown_resend_code--;
+            button.style.pointerEvents = "none";
+            setTimeout(updateCountdown, 1000);
+            localStorage.setItem('countdown_resend_code', countdown_resend_code);
+        } else {
+            button.textContent = "Kirim ulang kode";
+            button.style.pointerEvents = "auto";
+            localStorage.removeItem('countdown_resend_code');
+        }
+    }
+
+    updateCountdown();
+</script>
+
+
+{% endblock %}
 {% endblock %}

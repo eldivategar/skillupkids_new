@@ -22,26 +22,27 @@ def member_profile_update(request):
         profile_image = request.FILES.get('profile_image')
 
         customer_id = request.session.get('customer_id')
+        uuid = customer_id[2:]
 
         try:
-            customer = Member.objects.get(uuid=customer_id)
+            member = Member.objects.get(uuid=uuid)
 
         except Member.DoesNotExist:
             messages.error(request, 'Terjadi kesalahan saat update profile!')
             return redirect('app.member:member_profile')
 
-        customer.name = name
-        customer.number = number
-        customer.address = address
-        customer.email = email
+        member.name = name
+        member.number = number
+        member.address = address
+        member.email = email
         
         if profile_image:
-            if customer.profile_image.name != 'member/avatar-profile.jpg':
-                customer.profile_image.delete()
+            if member.profile_image.name != 'member/avatar-profile.jpg':
+                member.profile_image.delete()
 
-            customer.profile_image.save(profile_image.name, profile_image, save=True)
+            member.profile_image.save(profile_image.name, profile_image, save=True)
 
-        customer.save()
+        member.save()
         messages.success(request, 'Profile berhasil diupdate!')
         return redirect('app.member:member_profile')        
     else:
