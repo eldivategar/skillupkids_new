@@ -117,13 +117,13 @@ def verify_account(request):
 
     if request.method == 'POST':
         user_otp = request.POST.get('digit-1') + request.POST.get('digit-2') + request.POST.get('digit-3') + request.POST.get('digit-4')
+        user_otp = int(user_otp)
         otp_secret_key = request.session.get('otp_secret_key')
         otp_valid_until = request.session.get('otp_valid_until')
 
         if otp_secret_key and otp_valid_until is not None:
             valid_until = datetime.fromisoformat(otp_valid_until)
-
-            if valid_until > datetime.now():
+            if valid_until > datetime.now():                
                 totp = pyotp.TOTP(otp_secret_key, digits=4, interval=60)
 
                 if totp.verify(user_otp):
