@@ -31,14 +31,14 @@
                         </div>
                     </div>
                     <div class="forgot">
-                        <span><a class="forgot-link" href="#!">Forgot Password ?</a></span>
+                        <span><a class="forgot-link" href="{% url 'app.member:forgot_password' %}">Forgot Password ?</a></span>
                     </div>
-                    <div class="remember-me">
+                    {% comment %} <div class="remember-me">
                         <label class="custom_check mr-2 mb-0 d-inline-flex remember-me"> Remember me
                             <input type="checkbox" name="remember-me">
                             <span class="checkmark"></span>
                         </label>
-                    </div>
+                    </div> {% endcomment %}
                     <div class="d-grid">
                         <button class="btn btn-primary btn-start" type="submit">Masuk</button>
                     </div>

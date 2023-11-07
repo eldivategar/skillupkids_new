@@ -1311,4 +1311,28 @@ Version      : 1.0
         });
     });
 	  
+	// Forgot Password
+
+	$(document).ready(function() {
+		var passwordInput = $("#forgot-form input[name='password']");
+		var confirmPasswordInput = $("#forgot-form input[name='confirm_password']");
+		var submitButton = $("#forgot-form button[type='submit']");
+		var warningText = $("#forgot-form #warning-text");
+	
+		function checkPasswordMatch() {
+			var password = passwordInput.val();
+			var confirmPassword = confirmPasswordInput.val();
+	
+			if (password === confirmPassword) {
+				submitButton.prop("disabled", false);
+				warningText.hide();
+			} else {
+				submitButton.prop("disabled", true);
+				warningText.show();
+			}
+		}
+		warningText.hide();
+		// passwordInput.on("input", checkPasswordMatch);
+		confirmPasswordInput.on("input", checkPasswordMatch);
+	});
 })(jQuery);

@@ -9,6 +9,7 @@ urlpatterns = [
     path('verify/auth/', authentications.verify_account, name='verify'),
     path('register/2/', authentications.register_2, name='register_2'),
     path('resend_code/', authentications.resend_code, name='resend_code'),
+    path('forgot-password/', authentications.forgot_password, name='forgot_password'),
 
     path('dashboard/list-of-activity/', views.mitra_dashboard_activity_list, name='mitra_dashboard_activity_list'),
     path('dashboard/create-new-activity/', views.mitra_create_new_activity, name='mitra_create_new_activity'),

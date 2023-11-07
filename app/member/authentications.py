@@ -120,3 +120,29 @@ def resend_code(request):
         send_otp(request, email)
         messages.success(request, 'Kode berhasil dikirim ke email anda!')
         return redirect('app.member:verify')
+
+def forgot_password(request):
+    if request.method == 'GET':
+        return render(request, 'member/auth/forgot-password.html')
+
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+        if email:
+            if Member.objects.filter(email=email).exists():
+                if password == confirm_password:
+                    member = Member.objects.get(email=email)
+                    member.password = password
+                    member.save()
+                    messages.success(request, 'Password berhasil diubah!')
+                    return redirect('app.member:login')
+                else:
+                    messages.error(request, 'Password tidak sama!')                
+                return redirect('app.member:forgot_password')
+            else:
+                messages.error(request, 'Email belum terdaftar!')
+                return redirect('app.member:forgot_password')
+        else:
+            messages.error(request, 'Ups...terjadi kesalahan, silahkan coba lagi!')
+            return redirect('app.member:forgot_password')
