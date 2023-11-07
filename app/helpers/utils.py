@@ -11,6 +11,11 @@ def send_otp(request, email):
     totp = pyotp.TOTP(pyotp.random_base32(), digits=4, interval=60)
     otp = totp.now()
     
+    if 'otp_secret_key' in request.session:
+        del request.session['otp_secret_key']
+    if 'otp_valid_until' in request.session:
+        del request.session['otp_valid_until']
+    
     request.session['otp_secret_key'] = totp.secret
     valid_date = datetime.now() + timedelta(minutes=1)
     request.session['otp_valid_until'] = str(valid_date)

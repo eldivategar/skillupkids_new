@@ -59,14 +59,14 @@ class ActivityList(models.Model):
 
     # Basic Information
     activity_name = models.CharField(max_length=100)    
-    mitra_activity = models.ForeignKey(Mitra, on_delete=models.CASCADE, to_field='uuid', related_name='mitra_activity')    
+    mitra_activity = models.ForeignKey(Mitra, to_field='uuid', related_name='mitra_activity', on_delete=models.CASCADE)
     category = models.CharField(max_length=50)
 
     # Activity Information
     day = models.TextField(default='')
     price = models.IntegerField()
     duration = models.IntegerField(default='')
-    age = models.IntegerField()
+    age = models.TextField(default='')
     description = models.TextField()
     learning_method = models.TextField(default='')    
 

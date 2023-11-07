@@ -121,7 +121,7 @@ def verify_account(request):
         otp_secret_key = request.session.get('otp_secret_key')
         otp_valid_until = request.session.get('otp_valid_until')
 
-        if otp_secret_key and otp_valid_until is not None:
+        if otp_secret_key is not None and otp_valid_until is not None:
             valid_until = datetime.fromisoformat(otp_valid_until)
             if valid_until > datetime.now():                
                 totp = pyotp.TOTP(otp_secret_key, digits=4, interval=60)
@@ -136,11 +136,7 @@ def verify_account(request):
                     mitra = Mitra(name=name, email=email, number=number, password=password, is_verified=True)
                     mitra.save()
 
-                    request.session.flush()
-                    import uuid
-                    unique_code = str(uuid.uuid4())
                     customer_uuid = f'mi{mitra.uuid_str()}'
-                    request.session['unique_code'] = unique_code
                     request.session['customer_id'] = customer_uuid
                     
                     return redirect('app.mitra:register_2')

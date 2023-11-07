@@ -77,6 +77,7 @@ def verify(request):
 
     if request.method == 'POST':
         user_otp = request.POST.get('digit-1') + request.POST.get('digit-2') + request.POST.get('digit-3') + request.POST.get('digit-4')
+        user_otp = int(user_otp)
         otp_secret_key = request.session['otp_secret_key']
         otp_valid_until = request.session['otp_valid_until']
 
