@@ -14540,9 +14540,9 @@ input[type=password]::-ms-clear
 .course-instruct-blk .table-nowrap tr td {
     white-space: inherit;
 }
-.sell-tabel-info {
+/* .sell-tabel-info {
 	max-width: 270px;
-}
+} */
 .sell-course-head p {
 	color: #303030;
 	margin-bottom: 0;

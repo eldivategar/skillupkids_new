@@ -10,7 +10,10 @@ urlpatterns = [
     path('register/2/', authentications.register_2, name='register_2'),
     path('resend_code/', authentications.resend_code, name='resend_code'),
 
-    path('dashboard/activity/', views.mitra_dashboard_activity, name='mitra_dashboard_activity'),
+    path('dashboard/list-of-activity/', views.mitra_dashboard_activity_list, name='mitra_dashboard_activity_list'),
+    path('dashboard/create-new-activity/', views.mitra_create_new_activity, name='mitra_create_new_activity'),
+
+
     path('profile/', views.mitra_profile, name='mitra_profile'),
     path('profile/update/', views.mitra_profile_update, name='mitra_profile_update'),
     path('sosmed/', views.mitra_sosmed, name='mitra_sosmed'),

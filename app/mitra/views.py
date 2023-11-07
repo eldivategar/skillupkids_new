@@ -4,7 +4,7 @@ from app.helpers.utils import get_mitra_data
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from app.models import Mitra
+from app.models import Mitra, ActivityList
 
 
 @cek_mitra_session
@@ -99,6 +99,68 @@ def mitra_profile_security(request):
         return render(request, 'mitra/security.html', {'data': data})
 
 @cek_mitra_session
-def mitra_dashboard_activity(request):
+def mitra_dashboard_activity_list(request):
+    mitra_id = request.session.get('customer_id')[2:]
     data = get_mitra_data(request)
-    return render(request, 'mitra/dashboard/activity.html', {'data': data})
+    all_activity = ActivityList.objects.filter(mitra_activity=mitra_id)
+    
+    data_activity = [row.activity_json() for row in all_activity]
+    print(data_activity)
+    return render(request, 'mitra/dashboard/list-of-activity.html', {'data': data, 'data_activity': data_activity})
+
+@cek_mitra_session
+def mitra_create_new_activity(request):
+    if request.method == 'GET':
+        data = get_mitra_data(request)
+        return render(request, 'mitra/dashboard/create-new-activity.html', {'data': data})
+    
+    if request.method == 'POST':
+        mitra_id = request.session.get('customer_id')[2:]
+        mitra_activity = mitra_id
+
+        # Basic Information
+        activity_name = request.POST.get('activity_name')
+        category = request.POST.get('category')
+        if category == 'other':
+            category = request.POST.get('custom_category')
+
+        # Activity Information
+        day = request.POST.get('day')
+        price = request.POST.get('price')
+        duration = request.POST.get('duration')
+        age = request.POST.get('age')
+        learning_method = request.POST.get('learning_method')
+        description = request.POST.get('description')
+
+        # Media
+        image = request.FILES.get('cover_image')  
+
+        # Additional Information
+        requirements = request.POST.get('requirements')
+        benefit = request.POST.get('benefit')
+        additional_information = request.POST.get('additional_information')
+
+        try:
+            mitra = Mitra.objects.get(uuid=mitra_id)
+            activity = ActivityList.objects.create(
+                mitra_activity=mitra,
+                activity_name=activity_name,
+                category=category,
+                day=day,
+                price=price,
+                duration=duration,
+                age=age,
+                learning_method=learning_method,
+                description=description,
+                requirements=requirements,
+                benefit=benefit,
+                additional_information=additional_information,
+            )
+            if image:
+                activity.activity_image.save(image.name, image, save=True)
+            messages.success(request, 'Aktivitas berhasil dibuat!')
+            return redirect('app.mitra:mitra_dashboard_activity_list')
+        
+        except Mitra.DoesNotExist:
+            messages.error(request, 'Terjadi kesalahan saat membuat aktivitas baru!')
+            return redirect('app.mitra:mitra_dashboard_activity_list')

@@ -7,6 +7,18 @@ Version      : 1.0
 (function($) {
     "use strict";
 
+	// Select Category Activity
+	
+	$(document).ready(function() {
+		$('#category-activity').change(function() {
+			if ($(this).val() === 'other') {
+				$('#other-cat').show();
+			} else {
+				$('#other-cat').hide();
+			}
+		});
+	});
+
     // Stick Sidebar
 	
 	if ($(window).width() > 767) {
@@ -1045,27 +1057,100 @@ Version      : 1.0
 	// Wizard
 
 	$(document).ready(function () {
-        let progressVal = 0;
-        let businessType = 0;
-      
-		$(".next_btn").click(function () {
-			$(this).parent().parent().parent().next().fadeIn('slow');
-			$(this).parent().parent().parent().css({
-				'display': 'none'
-			});
-			progressVal = progressVal + 1;
-			$('.progress-active').removeClass('progress-active').addClass('progress-activated').next().addClass('progress-active');
+		let progressVal = 0;
+		let businessType = 0;
+	
+		$(".next_btn_1").click(function () {
+			const isFormValid = validateFormStep1();
+			if (isFormValid) {
+				$(this).closest('fieldset').fadeOut('fast', function () {
+					$(this).next().fadeIn('slow');
+				});
+				progressVal++;
+				$('.progress-active').removeClass('progress-active').addClass('progress-activated').next().addClass('progress-active');
+			} else {
+				Swal.fire("Harap isi semua data yang dibutuhkan!");
+			}
+		});
+	
+		$(".next_btn_2").click(function () {
+			const isFormValid = validateFormStep2();
+			if (isFormValid) {
+				$(this).closest('fieldset').fadeOut('fast', function () {
+					$(this).next().fadeIn('slow');
+				});
+				progressVal++;
+				$('.progress-active').removeClass('progress-active').addClass('progress-activated').next().addClass('progress-active');
+			} else {
+				Swal.fire("Harap masukkan gambar cover!");
+			}
 		});
 
-		$(".prev_btn").click(function () {
-			$(this).parent().parent().parent().prev().fadeIn('slow');
-			$(this).parent().parent().parent().css({
-				'display': 'none'
-			});
-			progressVal = progressVal - 1;
-			$('.progress-active').removeClass('progress-active').prev().removeClass('progress-activated').addClass('progress-active'); 
+		$('.submit-act').click(function () {
+			const isFormValid = validateFormStep3();
+			if (isFormValid) {
+				Swal.fire({
+					title: "Upload Kegiatan Baru?",
+					text: "Anda tidak akan dapat mengubah data kembali!",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#3085d6",
+					cancelButtonColor: "#d33",
+					confirmButtonText: "Upload"
+				  }).then((result) => {
+					if (result.isConfirmed) {					  
+					  $('#create-form').submit();
+					}
+				  });				
+			} else {
+				Swal.fire("Harap isi semua data yang dibutuhkan!");
+			}
 		});
-  	});
+	
+		$(".prev_btn").click(function () {
+			$(this).closest('fieldset').fadeOut('fast', function () {
+				$(this).prev().fadeIn('slow');
+			});
+			progressVal--;
+			$('.progress-active').removeClass('progress-active').prev().removeClass('progress-activated').addClass('progress-active');
+		});
+	
+		function validateFormStep1() {
+			const activityName = $("input[name='activity_name']").val();
+			const category = $("select[name='category']").val();
+			const day = $("input[name='day']").val();
+			const duration = $("input[name='duration']").val();
+			const price = $("input[name='price']").val();
+			const age = $("input[name='age']").val();
+			const description = $("input[name='description']").val();
+			const learningMethod = $("input[name='learning_method']").val();
+		
+			if (activityName === "" || category === "Pilih Kategori" || day === "" || duration === "" || price === "" || age === "" || learningMethod === "" || description === "") {
+				return false;
+			}				
+			return true;
+		}
+	
+		function validateFormStep2() {
+			const coverImage = $("input[name='cover_image']").val();
+	
+			if (coverImage === "") {				
+				return false;
+			}
+			return true;
+		}
+
+		function validateFormStep3() {
+			const requirements = $("input[name='requirements']").val();
+			const benefit = $("input[name='benefit']").val();
+	
+			if (requirements === "" || benefit === "") {
+				return false;
+			}
+			return true;
+		}
+	});
+	
 
   	// CK Editor
 
@@ -1092,10 +1177,138 @@ Version      : 1.0
 		} )
 		.then( editor => {
 			window.editor = editor;
+
+			editor.model.document.on('change:data', () => {
+                var editorContent = editor.getData();
+                $('#editorDesc').val(editorContent);
+            });
 		} )
 		.catch( err => {
 			console.error( err.stack );
 		} );
 	}
 	
+	if ($('#editor-requirements').length > 0) {
+		ClassicEditor
+		.create( document.querySelector( '#editor-requirements' ), {
+			 toolbar: {
+			    items: [
+			        'heading', '|',
+			        'fontfamily', 'fontsize', '|',
+			        'alignment', '|',
+			        'fontColor', 'fontBackgroundColor', '|',
+			        'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+			        'link', '|',
+			        'outdent', 'indent', '|',
+			        'bulletedList', 'numberedList', 'todoList', '|',
+			        'code', 'codeBlock', '|',
+			        'insertTable', '|',
+			        'uploadImage', 'blockQuote', '|',
+			        'undo', 'redo'
+			    ],
+			    shouldNotGroupWhenFull: true
+			}
+		} )
+		.then( editor => {
+			window.editor = editor;
+
+			editor.model.document.on('change:data', () => {
+                var editorContent = editor.getData();
+                $('#editorReq').val(editorContent);
+            });
+		} )
+		.catch( err => {
+			console.error( err.stack );
+		} );
+	}
+	
+	if ($('#editor-benefit').length > 0) {
+		ClassicEditor
+		.create( document.querySelector( '#editor-benefit' ), {
+			 toolbar: {
+			    items: [
+			        'heading', '|',
+			        'fontfamily', 'fontsize', '|',
+			        'alignment', '|',
+			        'fontColor', 'fontBackgroundColor', '|',
+			        'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+			        'link', '|',
+			        'outdent', 'indent', '|',
+			        'bulletedList', 'numberedList', 'todoList', '|',
+			        'code', 'codeBlock', '|',
+			        'insertTable', '|',
+			        'uploadImage', 'blockQuote', '|',
+			        'undo', 'redo'
+			    ],
+			    shouldNotGroupWhenFull: true
+			}
+		} )
+		.then( editor => {
+			window.editor = editor;
+			
+			editor.model.document.on('change:data', () => {
+                var editorContent = editor.getData();
+                $('#editorBenefit').val(editorContent);
+            });
+		} )
+		.catch( err => {
+			console.error( err.stack );
+		} );
+	}
+
+	if ($('#editor-AddOn').length > 0) {
+		ClassicEditor
+		.create( document.querySelector( '#editor-AddOn' ), {
+			 toolbar: {
+			    items: [
+			        'heading', '|',
+			        'fontfamily', 'fontsize', '|',
+			        'alignment', '|',
+			        'fontColor', 'fontBackgroundColor', '|',
+			        'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+			        'link', '|',
+			        'outdent', 'indent', '|',
+			        'bulletedList', 'numberedList', 'todoList', '|',
+			        'code', 'codeBlock', '|',
+			        'insertTable', '|',
+			        'uploadImage', 'blockQuote', '|',
+			        'undo', 'redo'
+			    ],
+			    shouldNotGroupWhenFull: true
+			}
+		} )
+		.then( editor => {
+			window.editor = editor;
+
+			editor.model.document.on('change:data', () => {
+                var editorContent = editor.getData();
+                $('#editorAddOn').val(editorContent);
+            });
+		} )
+		.catch( err => {
+			console.error( err.stack );
+		} );
+	}
+
+	$(document).ready(function() {
+        $("#file-input").change(function() {
+            var fileName = $(this).val().split('\\').pop();
+            $("#filename").text(fileName);
+
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $("#uploaded-image").attr('src', e.target.result);
+                    $("#uploaded-image").show();
+					$("#show-image").remove();
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        $("#show-image").click(function() {
+            $("#uploaded-image").toggle();
+        });
+    });
+	  
 })(jQuery);

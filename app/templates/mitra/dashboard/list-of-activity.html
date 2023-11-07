@@ -1,0 +1,131 @@
+{% extends "mitra/dashboard/layout/base.html" %}
+{% load static %}
+{% block main_content %}
+{% include 'partials/notify.html' %}
+
+<section class="course-content">
+    <div class="container">
+        <div class="go-dashboard text-end mb-3">
+            <a href="{% url 'app.mitra:mitra_create_new_activity' %}" class="btn btn-primary">Buat Kegiatan Baru</a>
+        </div>
+        <div class="student-widget">
+            <div class="student-widget-group">
+                <div class="row">
+                    <div class="settings-inner-blk p-0">
+
+                        <div class="comman-space pb-0">
+                            <div class="instruct-search-blk">
+                                <div class="show-filter choose-search-blk">
+                                    <form action="#">
+                                        <div class="row gx-2 align-items-center">
+                                            <div class="col-md-6 col-item">
+                                                <div class=" search-group">
+                                                    <i class="feather-search"></i>
+                                                    <input type="text" class="form-control" placeholder="Cari kegiatan">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-item">
+                                                <div class="form-group select-form mb-0">
+                                                    <select class="form-select select" name="sellist1">
+                                                        <option selected>Status</option>
+                                                        <option>Pending</option>
+                                                        <option>Ditolak</option>
+                                                        <option>Terbit</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="settings-tickets-blk course-instruct-blk table-responsive">
+
+                                <!-- Referred Users-->
+                                <table class="table table-nowrap mb-2">
+                                    <thead>
+                                        <tr>
+                                            <th>KEGIATAN</th>                                            
+                                            <th class="text-center">STATUS</th>
+                                            <th class="text-center">KETERANGAN</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for data_activity in data_activity %}
+                                        <tr>
+                                            <td>
+                                                <div class="sell-table-group d-flex align-items-center">
+                                                    <div class="sell-group-img">
+                                                        <a href="#!">
+                                                            <img src="{{ data_activity.activity_image.url }}"
+                                                                class="img-fluid " alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div class="sell-tabel-info">
+                                                        <p><a href="#!">{{ data_activity.activity_name }}</a></p>
+                                                        <div
+                                                            class="course-info d-flex align-items-center border-bottom-0 pb-0">
+                                                            <div class="rating-img d-flex align-items-center">
+                                                                <img src="{% static 'assets/img/icon/icon-01.svg' %}"
+                                                                    alt="">
+                                                                <p>10+ Lesson</p>
+                                                            </div>
+                                                            <div class="course-view d-flex align-items-center">
+                                                                <img src="{% static 'assets/img/icon/timer-start.svg' %}"
+                                                                    alt="">
+                                                                <p>{{ data_activity.activity_informations.duration }} menit</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>                                            
+                                            <td class="text-center"><span class="badge info-low">{{ data_activity.activity_status.status }}</span></td>
+                                            <td class="text-center">{{ data_activity.activity_status.message_status }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        {% comment %} <tr>
+                                            <td>
+                                                <div class="sell-table-group d-flex align-items-center">
+                                                    <div class="sell-group-img">
+                                                        <a href="#!">
+                                                            <img src="{% static 'assets/img/course/course-10.jpg' %}"
+                                                                class="img-fluid " alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div class="sell-tabel-info">
+                                                        <p><a href="#!">Information About UI/UX Design Degree</a></p>
+                                                        <div
+                                                            class="course-info d-flex align-items-center border-bottom-0 pb-0">
+                                                            <div class="rating-img d-flex align-items-center">
+                                                                <img src="{% static 'assets/img/icon/icon-01.svg' %}"
+                                                                    alt="">
+                                                                <p>10+ Lesson</p>
+                                                            </div>
+                                                            <div class="course-view d-flex align-items-center">
+                                                                <img src="{% static 'assets/img/icon/timer-start.svg' %}"
+                                                                    alt="">
+                                                                <p>7hr 20min</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">0</td>
+                                            <td class="text-center"><span class="badge info-high">Ditolak</span></td>
+                                            <td class="text-center">Tidak memenuhi syarat</td>
+                                        </tr>                                         {% endcomment %}
+
+                                    </tbody>
+                                </table>
+                                <!-- /Referred Users-->
+
+                            </div>
+
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

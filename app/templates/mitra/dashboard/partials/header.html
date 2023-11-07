@@ -8,19 +8,19 @@
                     <div class="d-flex align-items-center">
                         <div class="course-name">
                             <h4><a href="#!">{{ data.name }}</a></h4>
-                            <p>Member</p>
+                            <p>Mitra</p>
                         </div>
                     </div>
                 </div>
                 <div class="course-share">
-                    <a href="{% url 'app.member:member_profile' %}" class="btn btn-primary">Pengaturan Akun</a>
+                    <a href="{% url 'app.mitra:mitra_profile' %}" class="btn btn-primary">Pengaturan Akun</a>
                 </div>
             </div>
         </div>
         <div class="my-student-list">
             <ul>
-                <li><a class="{% if request.path == '/member/dashboard/activity/' %} active{% endif %}"
-                        href="{% url 'app.member:member_dashboard_activity' %}">Kegiatan saya</a></li>
+                <li><a class="{% if request.path == '/mitra/dashboard/list-of-activity/' %} active{% endif %}"
+                        href="{% url 'app.mitra:mitra_dashboard_activity_list' %}">Daftar Kegiatan</a></li>
             </ul>
         </div>
     </div>

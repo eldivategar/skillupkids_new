@@ -43,7 +43,9 @@
                                 {% comment %} <li><a href="{% url 'about' %}">Tentang Kami</a></li> {% endcomment %}
                                 <li><a href="#!">Blog</a></li>
                                 <li><a href="{% url 'contact' %}">Kontak</a></li>
+                                {% if not request.session.customer_id %}
                                 <li><a href="{% url 'app.mitra:login' %}">Masuk sebagai Mitra</a></li>
+                                {% endif %}
                             </ul>
                         </li>
                         <li class="login-link">
@@ -51,11 +53,15 @@
                             <span class="user-img mx-3 mt-3 mb-3">
                                 <img src="{{ data.profile_image.url }}" alt="">
                                 <span class="status online" style="color: #ffffff;">{{ data.name }}</span>
-                                <span class="d-grid gap-2 d-flex mt-3">
+                                {% if request.session.customer_id|slice:":2" == 'me' %}
+                                <a href="#!" class="mt-2"><img src="{% static 'assets/img/icon/cart.svg' %}" alt=""></a>
+                                {% endif %}
+                                <span class="d-grid gap-2 d-flex mt-3 fs-6">
                                     <a href="{{ dynamic_url }}" style="color: #ffffff;"
                                         class="btn btn-primary me-md-2"><i class="feather-user me-1"></i>Profile</a>
-                                    <a href="#!" style="color: #ffffff;" class="btn btn-info"><i
-                                            class="feather-shopping-cart me-1"></i>Cart</a>
+                                    <a href="{% url 'logout' %}" style="color: #ffffff;"
+                                        class="btn btn-danger me-md-2"><i class="feather-log-out me-1"></i>Keluar</a>
+                                    
                                 </span>
                             </span>
                             {% else %}
@@ -67,7 +73,7 @@
 
                 {% if request.session.customer_id %}
                 <ul class="nav header-navbar-rht">
-
+                    {% if request.session.customer_id|slice:":2" == 'me' %}
                     <li class="nav-item cart-nav me-2">
                         <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
                             <img src="{% static 'assets/img/icon/cart.svg' %}" alt="img">
@@ -147,6 +153,7 @@
                             </div>
                         </div>
                     </li>
+                    {% endif %}
 
                     <li class="nav-item user-nav">
                         <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
@@ -168,13 +175,13 @@
                             </div>
                             <a class="dropdown-item" href="{{ dynamic_url }}"><i class="feather-user me-1"></i>
                                 Profile</a>
-                            <a class="dropdown-item" href="#!"><i class="feather-star me-1"></i> Subscription</a>
-                            <div class="dropdown-item night-mode">
-                                <span><i class="feather-moon me-1"></i> Night Mode </span>
-                                <div class="form-check form-switch check-on m-0">
-                                    <input class="form-check-input" type="checkbox" id="night-mode">
-                                </div>
-                            </div>
+                            {% if request.session.customer_id|slice:":2" == 'me' %}
+                            <a class="dropdown-item" href="{% url 'app.member:member_dashboard_activity' %}"><i class="feather-star me-1"></i> Kegiatan saya</a>
+                            
+                            {% elif request.session.customer_id|slice:":2" == 'mi' %}
+                            <a class="dropdown-item" href="{% url 'app.mitra:mitra_dashboard_activity_list' %}"><i class="feather-star me-1"></i> Dashboard</a>
+                            {% endif %}
+
                             <a class="dropdown-item" href="{% url 'logout' %}"><i class="feather-log-out me-1"></i>
                                 Logout</a>
                         </div>

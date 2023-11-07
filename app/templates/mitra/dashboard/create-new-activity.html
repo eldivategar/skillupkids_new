@@ -1,0 +1,244 @@
+{% extends "layout/base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- New Course -->
+<section class="page-content course-sec">
+	<div class="container">
+		<div class="row align-items-center">
+			<div class="col-md-12">
+				<div class="add-course-header">
+					<h2>Buat Kegiatan Baru</h2>
+					<div class="add-course-btns">
+						<ul class="nav">
+							<li>
+								<a href="{% url 'app.mitra:mitra_dashboard_activity_list' %}"
+									class="btn btn-black">Kembali ke Dashboard</a>
+							</li>
+							<!-- <li>
+								<a href="javascript:void(0);" class="btn btn-success-dark">Upload</a>
+							</li> -->
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+
+					<!-- Course Wizard -->
+					<div class="widget-set">
+						<div class="widget-setcount">
+							<ul id="progressbar">
+								<li class="progress-active">
+									<p><span></span> Informasi Kegiatan</p>
+								</li>
+								<li>
+									<p><span></span> Media</p>
+								</li>
+								<li>
+									<p><span></span> Tambahan</p>
+								</li>
+							</ul>
+						</div>
+						<div class="widget-content multistep-form">
+							<form id="create-form" action="{% url 'app.mitra:mitra_create_new_activity' %}"
+								method="post" enctype="multipart/form-data">
+								{% csrf_token %}
+								<fieldset id="first" id="field-1">
+									<div class="add-course-info">
+										<!-- Basic Information -->
+										<div class="add-course-inner-header">
+											<h4>Informasi Dasar</h4>
+										</div>
+										<div class="add-course-form">
+											<div class="form-group">
+												<label class="add-course-label">Judul Kegiatan</label>
+												<input type="text" name="activity_name" class="form-control"
+													placeholder="Judul Kegiatan" required>
+											</div>
+											<div class="form-group">
+												<label class="add-course-label">Kategori</label>
+												<select name="category" class="form-control select"
+													id="category-activity" required>
+													<option selected>Pilih Kategori</option>
+													<option value="seni">Seni</option>
+													<option value="olahraga">Olahraga</option>
+													<option value="musik">Musik</option>
+													<option value="stem">STEM</option>
+													<option value="keagamaan">Keagamaan</option>
+													<option value="teknologi">Teknologi</option>
+													<option value="memasak">Memasak</option>
+													<option value="other">Lainnya</option>
+												</select>
+											</div>
+											<div class="form-group form-group-tagsinput" id="other-cat"
+												style="display: none;">
+												<label for="add-course-label">Custom Kategori <span
+														class="fst-italic fs-6">(max 1)</span></label>
+												<input type="text" data-role="tagsinput" class="input-tags form-control"
+													name="custom_category" id="html" placeholder="Contoh: programming">
+											</div>
+										</div>
+
+										<!-- Activity Information -->
+										<div class="add-course-inner-header">
+											<h4>Informasi Aktifitas</h4>
+										</div>
+
+										<div class="add-course-form">
+											<div class="row">
+												<div class="col-lg-6">
+													<div class="form-group">
+														<label class="add-course-label">Hari dilaksanakan</label>
+														<input type="text" name="day" class="form-control"
+															placeholder="Tips: Senin-Minggu / Fleksibel mengikuti anak"
+															required>
+													</div>
+												</div>
+												<div class="col-lg-6">
+													<div class="form-group">
+														<label class="add-course-label">Durasi</label>
+														<input type="number" name="duration" class="form-control"
+															placeholder="Tips: Masukkan durasi ke dalam menit. Contoh: 60"
+															required>
+													</div>
+												</div>
+												<div class="col-lg-6">
+													<div class="form-group">
+														<label class="add-course-label">Harga</label>
+														<div class="input-group mb-3">
+															<span class="input-group-text">Rp.</span>
+															<input type="number" name="price" class="form-control"
+																placeholder="Tips: Masukkan durasi ke dalam menit. Contoh: 60"
+																aria-label="Price" required>
+														</div>
+													</div>
+												</div>
+												<div class="col-lg-6">
+													<div class="form-group">
+														<label class="add-course-label">Umur</label>
+														<input type="number" name="age" class="form-control"
+															placeholder="Tips: Masukkan rentang umur." required>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-6">
+												<div class="form-group">
+													<label class="add-course-label">Metode Kegiatan/kelas</label>
+													<input type="text" name="learning_method" class="form-control"
+														placeholder="Tips: Online: menggunakan zoom / Onsite" required>
+												</div>
+											</div>
+
+											<div class="form-group mb-0">
+												<label class="add-course-label">Course Description</label>
+												<div id="editor"></div>
+												<input type="hidden" name="description" id="editorDesc" required>
+											</div>
+										</div>
+
+										<div class="widget-btn">
+											<a></a>
+											<button type="button" class="btn btn-info-light next_btn_1">Lanjut</button>
+										</div>
+
+									</div>
+								</fieldset>
+								<fieldset class="field-card" id="field-2">
+									<div class="add-course-info">
+										<div class="add-course-inner-header">
+											<h4>Media</h4>
+										</div>
+										<div class="add-course-form">
+											<div class="form-group">
+												<label class="add-course-label">Gambar Cover</label>
+												<div class="relative-form">
+													<span id="filename">No File Selected</span>
+													<label class="relative-file-upload">
+														Upload File <input type="file" id="file-input"
+															name="cover_image" required>
+													</label>
+												</div>
+											</div>
+											<div class="col-lg-12 text-center">
+												<div class="form-group">
+													<div class="add-image-box">
+														<a href="javascript:void(0);" id="show-image">
+															<i class="far fa-image"></i>
+														</a>
+														<img src="" id="uploaded-image" class="img-fluid rounded"
+															style="display: none; max-width: 70%;">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="widget-btn">
+											<a class="btn btn-black prev_btn">Kembali</a>
+											<a class="btn btn-info-light next_btn_2">Lanjut</a>
+										</div>
+									</div>
+								</fieldset>
+								<fieldset class="field-card" id="field-3">
+									<div class="add-course-info">
+										<div class="add-course-inner-header">
+											<h4>Requirements</h4>
+											<p>Apa yang harus disiapkan?</p>
+										</div>
+										<div class="add-course-form">
+											<div class="form-group mb-0">
+												<div id="editor-requirements"></div>
+												<input type="hidden" name="requirements" id="editorReq">
+											</div>
+										</div>
+										<div class="add-course-info">
+											<div class="add-course-inner-header">
+												<h4>Manfaat Bagi Peserta</h4>
+											</div>
+											<div class="add-course-form">
+												<div class="form-group mb-0">
+													<div id="editor-benefit"></div>
+													<input type="hidden" name="benefit" id="editorBenefit">
+												</div>
+											</div>
+										</div>
+										<div class="add-course-info">
+											<div class="add-course-inner-header">
+												<h4>Informasi Tambahan (Opsional)</h4>
+											</div>
+											<div class="add-course-form">
+												<div class="form-group mb-0">
+													<div id="editor-AddOn"></div>
+													<input type="hidden" name="additional_information" id="editorAddOn">
+												</div>
+											</div>
+										</div>
+										<div class="widget-btn">
+											<a class="btn btn-black prev_btn">Kembali</a>
+											<button type="button" class="btn btn-info-light submit-act">Submit</button>
+										</div>
+									</div>
+								</fieldset>
+							</form>
+							<fieldset class="field-card">
+								<div class="add-course-info">
+									<div class="add-course-msg">
+										<i class="fas fa-circle-check"></i>
+										<h4>The Course Added Succesfully</h4>
+										<p>Admin will be Approve soon.</p>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+					</div>
+					<!-- /Course Wizard -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- /New Course -->
+
+{% endblock %}
