@@ -1,0 +1,11 @@
+# Mengabaikan semua file kecuali 'def.png' di dalam direktori 'activity'
+activity/*
+!activity/WordPress-Development.jpg
+
+# Mengabaikan semua file kecuali 'def.png' di dalam direktori 'mitra'
+mitra/*
+!mitra/default-logo.png
+
+# Mengabaikan semua file kecuali 'def.png' di dalam direktori 'member'
+member/*
+!member/avatar-profile.jpg
