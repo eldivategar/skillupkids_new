@@ -23,7 +23,7 @@ def login(request):
                 if check_password(password, mitra.password):
                     customer_uuid = f'mi{mitra.uuid_str()}'
                     request.session['customer_id'] = customer_uuid
-                    return redirect('app.mitra:mitra_profile')
+                    return redirect('app.mitra:mitra_dashboard_activity_list')
                 else:
                     messages.error(request, 'Ups, Password salah!')
                     return redirect('app.mitra:login')

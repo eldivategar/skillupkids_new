@@ -12,7 +12,7 @@ class Member(models.Model):
     address = models.TextField(default='', null=True, blank=True)
     profile_image = models.ImageField(upload_to='member/', default='member/avatar-profile.jpg', null=True, blank=True)
     is_verified = models.BooleanField(default=False)
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 
     def save(self, *args, **kwargs):
         self.password = make_password(self.password)
@@ -23,6 +23,16 @@ class Member(models.Model):
     
     def uuid_str(self):
         return str(self.uuid)
+    
+    def member_json(self):
+        data = {
+            'name': self.name,
+            'email': self.email,
+            'number': self.number,
+            'address': self.address,
+            'profile_image': self.profile_image,
+        }
+        return data
     
 class Mitra(models.Model):
     mitra_id = models.AutoField(primary_key=True)
@@ -35,14 +45,14 @@ class Mitra(models.Model):
     description = models.TextField()
     start_time = models.TimeField(default='00:00:00')
     end_time = models.TimeField(default='00:00:00')
-    twitter_site = models.URLField(max_length=200, null=True, default='')
-    fb_site = models.URLField(max_length=200, null=True, default='')
-    ig_site = models.URLField(max_length=200, null=True, default='')
-    linkedin_site = models.URLField(max_length=200, null=True, default='')
-    yt_site = models.URLField(max_length=200, null=True, default='')
+    twitter_site = models.URLField(max_length=200, null=True, blank=True, default='')
+    fb_site = models.URLField(max_length=200, null=True, blank=True, default='')
+    ig_site = models.URLField(max_length=200, null=True, blank=True, default='')
+    linkedin_site = models.URLField(max_length=200, null=True, blank=True, default='')
+    yt_site = models.URLField(max_length=200, null=True, blank=True, default='')
     profile_image = models.ImageField(upload_to='mitra/', default='mitra/default-logo.png', null=True, blank=True)
     is_verified = models.BooleanField(default=False)
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 
     def save(self, *args, **kwargs):
         self.password = make_password(self.password)
@@ -54,6 +64,25 @@ class Mitra(models.Model):
     def uuid_str(self):
         return str(self.uuid)
     
+    def mitra_json(self):
+        data = {
+            'name': self.name,
+            'email': self.email,
+            'number': self.number,
+            'address': self.address,
+            'city': self.city,
+            'description': self.description,
+            'start_time': self.start_time,
+            'end_time': self.end_time,
+            'twitter_site': self.twitter_site,
+            'fb_site': self.fb_site,
+            'ig_site': self.ig_site,
+            'linkedin_site': self.linkedin_site,
+            'yt_site': self.yt_site,
+            'profile_image': self.profile_image,
+        }
+        return data
+    
 class ActivityList(models.Model):
     activity_id = models.AutoField(primary_key=True)
 
@@ -64,20 +93,21 @@ class ActivityList(models.Model):
 
     # Activity Information
     day = models.TextField(default='')
-    price = models.IntegerField()
+    price = models.FloatField()
     duration = models.IntegerField(default='')
     age = models.TextField(default='')
-    description = models.TextField()
+    description = models.TextField(default='')
+    sub_description = models.TextField(default='')
     learning_method = models.TextField(default='')    
 
     # Benefit
-    benefit = models.TextField()
+    benefit = models.TextField(default='', null=True, blank=True)
 
     # Requirements
-    requirements = models.TextField(default='')
+    requirements = models.TextField(default='', null=True, blank=True)
 
     # Additional Information
-    additional_information = models.TextField(default='')
+    additional_information = models.TextField(default='', null=True, blank=True)
 
     # Activity Image
     activity_image = models.ImageField(upload_to='activity/', default='activity/default-activity.jpg', null=True, blank=True)
@@ -104,7 +134,9 @@ class ActivityList(models.Model):
                 'day': self.day,
                 'duration': self.duration,
                 'age': self.age,
+                'price': self.price,
                 'description': self.description,
+                'sub_description': self.sub_description,
                 'learning_method': self.learning_method
             },
             'benefit': self.benefit,            

@@ -28,6 +28,7 @@ handler500 = 'app.views._500'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("app.landing_page.urls")),
+    path('', include("app.activity.urls")),
     path('member/', include("app.member.urls")),
     path('mitra/', include("app.mitra.urls")),
     path('logout/', views.logout, name='logout'),

@@ -1,0 +1,175 @@
+{% extends "layout/base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="breadcrumb-list">
+                    <nav aria-label="breadcrumb" class="page-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item" aria-current="page"><a href="{% url 'class_list' %}">Daftar Kegiatan</a></li>
+                            <li class="breadcrumb-item" aria-current="page">{{ data_detail_activity.activity.activity_name }}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadcrumb -->    
+
+<!-- Inner Banner -->
+{% include 'activity/partials/inner-banner.html' %}
+<!-- /Inner Banner -->
+
+<!-- Class Content -->
+<section class="page-content course-sec">
+    <div class="container">
+    
+        <div class="row">
+            <div class="col-lg-8">
+            
+                <!-- Overview -->
+                <div class="card overview-sec">
+                    <div class="card-body">
+                        <h5 class="subs-title">Deskripsi</h5>
+                        <p>{{ data_detail_activity.activity.activity_informations.description|safe }}</p>
+                    </div>
+                </div>
+                <!-- /Overview -->
+                
+                <!-- Course Content -->
+                <div class="card content-sec">
+                    <div class="card-body">                        
+                        <div class="course-card">
+                            <h6 class="cou-title">
+                                <a class="collapsed" data-bs-toggle="collapse" href="#collapseOne" aria-expanded="false">Metode</a>
+                            </h6>
+                            <div id="collapseOne" class="card-collapse collapse">                                                           
+                                <div class="m-3">
+                                    <p>{{ data_detail_activity.activity.activity_informations.learning_method|safe }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-card">
+                            <h6 class="cou-title">
+                                <a class="collapsed" data-bs-toggle="collapse" href="#course2" aria-expanded="false">Manfaat Untuk Peserta</a>
+                            </h6>
+                            <div id="course2" class="card-collapse collapse">
+                                <div class="m-3">
+                                    <p>{{ data_detail_activity.activity.benefit|safe }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-card">
+                            <h6 class="cou-title">
+                                <a class="collapsed" data-bs-toggle="collapse" href="#course3" aria-expanded="false">Yang Harus Dipersiapkan</a>
+                            </h6>
+                            <div id="course3" class="card-collapse collapse">
+                                <div class="m-3">
+                                    <p>{{ data_detail_activity.activity.requirements|safe }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-card">
+                            <h6 class="cou-title mb-0">
+                                <a class="collapsed" data-bs-toggle="collapse" href="#coursefour" aria-expanded="false">Informasi Tambahan</a>
+                            </h6>
+                            <div id="coursefour" class="card-collapse collapse">
+                                <div class="m-3">
+                                    <p>{{ data_detail_activity.activity.additional_information|safe }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Course Content -->                               
+                
+                <!-- Comment -->
+                {% comment %} <div class="card comment-sec">
+                    <div class="card-body">
+                        <h5 class="subs-title">Post A comment</h5>
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Full Name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" placeholder="Email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Subject">
+                            </div>
+                            <div class="form-group">
+                                <textarea rows="4" class="form-control" placeholder="Your Comments"></textarea>
+                            </div>
+                            <div class="submit-section">
+                                <button class="btn submit-btn" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div> {% endcomment %}
+                <!-- /Comment -->
+                
+            </div>	
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="sidebar-sec">
+                
+                    <!-- Video -->
+                    <div class="video-sec vid-bg">
+                        <div class="card">
+                            <div class="card-body">                                    
+                                <img class="" src="{{ data_detail_activity.activity.activity_image }}" alt="">
+                                <div class="video-details">
+                                    <div class="course-fee">
+                                    <h2>Rp{{ data_detail_activity.activity.activity_informations.price }}00</h2>
+                                    </div>
+                                    <div class="row gx-2">
+                                        <div class="col-md-6">
+                                            <a href="course-wishlist.html" class="btn btn-wish w-100"><i class="feather-heart"></i> Add to Wishlist</a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a href="javascript:;" class="btn btn-wish w-100"><i class="feather-share-2"></i> Share</a>
+                                        </div>
+                                    </div>
+                                    <a href="checkout.html" class="btn btn-enroll w-100">Daftar Sekarang</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Video -->
+                    
+                    <!-- Features -->
+                    <div class="card feature-sec">
+                        <div class="card-body">
+                            <div class="cat-title">
+                                <h4>Informasi Aktifitas</h4>
+                            </div>
+                            <ul>
+                                <li><img src="{% static 'assets/img/icon/chapter.svg' %}" class="me-2" alt=""> Hari: <span>{{ data_detail_activity.activity.activity_informations.day|capfirst }}</span></li>
+                                <li><img src="{% static 'assets/img/icon/users.svg' %}" class="me-2" alt=""> Untuk usia: <span>{{ data_detail_activity.activity.activity_informations.age|capfirst }}</span></li>
+                                <li><img src="{% static 'assets/img/icon/timer.svg' %}" class="me-2" alt=""> Durasi: <span>{{ data_detail_activity.activity.activity_informations.duration|capfirst }} menit</span></li>                                
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /Features -->                    
+                </div>
+            </div>
+            <!-- /Sidebar -->
+        </div>	
+    </div>
+</section>
+<!-- /Pricing Plan -->
+
+{% include 'partials/footer.html' %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% load static %}
+<div class="inner-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="instructor-wrap border-bottom-0 m-0">
+                    <div class="about-instructor align-items-center">
+                        <div class="abt-instructor-img">
+                            <a href="#!"><img src="{{ data_detail_activity.mitra.profile_image }}" alt="img" class="img-fluid"></a>
+                        </div>
+                        <div class="instructor-detail me-3">
+                            <h5>{{ data_detail_activity.mitra.name }}</h5>
+                        </div>									
+                        
+                    </div>
+                    <span class="web-badge mb-3">{{ data_detail_activity.activity.category|capfirst }}</span>
+                </div>
+                <h2>{{ data_detail_activity.activity.activity_name }}</h2>
+                <p>{{ data_detail_activity.activity.activity_informations.sub_description|safe }}</p>               						
+            </div>
+        </div>
+    </div>
+</div>

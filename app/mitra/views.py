@@ -102,7 +102,7 @@ def mitra_profile_security(request):
 def mitra_dashboard_activity_list(request):
     mitra_id = request.session.get('customer_id')[2:]
     data = get_mitra_data(request)
-    all_activity = ActivityList.objects.filter(mitra_activity=mitra_id)
+    all_activity = ActivityList.objects.filter(mitra_activity=mitra_id).order_by('-activity_id')
     
     data_activity = [row.activity_json() for row in all_activity]
     print(data_activity)
@@ -116,17 +116,17 @@ def mitra_create_new_activity(request):
     
     if request.method == 'POST':
         mitra_id = request.session.get('customer_id')[2:]
-        mitra_activity = mitra_id
 
         # Basic Information
         activity_name = request.POST.get('activity_name')
+        sub_description = request.POST.get('sub_description')
         category = request.POST.get('category')
         if category == 'other':
             category = request.POST.get('custom_category')
 
         # Activity Information
         day = request.POST.get('day')
-        price = request.POST.get('price')
+        price = float(request.POST.get('price').replace(',', '.'))
         duration = request.POST.get('duration')
         age = request.POST.get('age')
         learning_method = request.POST.get('learning_method')
@@ -151,6 +151,7 @@ def mitra_create_new_activity(request):
                 duration=duration,
                 age=age,
                 learning_method=learning_method,
+                sub_description=sub_description,
                 description=description,
                 requirements=requirements,
                 benefit=benefit,

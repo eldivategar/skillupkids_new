@@ -1117,6 +1117,7 @@ Version      : 1.0
 	
 		function validateFormStep1() {
 			const activityName = $("input[name='activity_name']").val();
+			const sub_description = $("input[name='sub_description']").val();
 			const category = $("select[name='category']").val();
 			const day = $("input[name='day']").val();
 			const duration = $("input[name='duration']").val();
@@ -1125,7 +1126,7 @@ Version      : 1.0
 			const description = $("input[name='description']").val();
 			const learningMethod = $("input[name='learning_method']").val();
 		
-			if (activityName === "" || category === "Pilih Kategori" || day === "" || duration === "" || price === "" || age === "" || learningMethod === "" || description === "") {
+			if (activityName === "" || sub_description === "" || category === "Pilih Kategori" || day === "" || duration === "" || price === "" || age === "" || learningMethod === "" || description === "") {
 				return false;
 			}				
 			return true;
@@ -1335,4 +1336,26 @@ Version      : 1.0
 		// passwordInput.on("input", checkPasswordMatch);
 		confirmPasswordInput.on("input", checkPasswordMatch);
 	});
+
+	//  Filter Activity
+	$(document).ready(function() {
+		function filterByCategory(category) {
+			$(".course-box").each(function() {
+				const activityCategory = $(this).find(".category").text().toLowerCase();
+				if (category === "all" || activityCategory === category) {
+					$(this).show();
+				} else {
+					$(this).hide();
+				}
+			});
+		}
+
+		filterByCategory("all");
+
+		$("#sel1").on("change", function() {
+			const selectedCategory = $(this).val().toLowerCase();
+			filterByCategory(selectedCategory);
+		});
+	});
+
 })(jQuery);

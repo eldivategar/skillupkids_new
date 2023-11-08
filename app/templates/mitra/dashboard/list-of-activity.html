@@ -1,7 +1,5 @@
-{% extends "mitra/dashboard/layout/base.html" %}
-{% load static %}
-{% block main_content %}
-{% include 'partials/notify.html' %}
+{% extends "mitra/dashboard/layout/base.html" %} {% load static %}
+{% block main_content %} {% include 'partials/notify.html' %}
 
 <section class="course-content">
     <div class="container">
@@ -12,16 +10,16 @@
             <div class="student-widget-group">
                 <div class="row">
                     <div class="settings-inner-blk p-0">
-
                         <div class="comman-space pb-0">
                             <div class="instruct-search-blk">
                                 <div class="show-filter choose-search-blk">
                                     <form action="#">
                                         <div class="row gx-2 align-items-center">
                                             <div class="col-md-6 col-item">
-                                                <div class=" search-group">
+                                                <div class="search-group">
                                                     <i class="feather-search"></i>
-                                                    <input type="text" class="form-control" placeholder="Cari kegiatan">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Cari kegiatan" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-lg-6 col-item">
@@ -39,89 +37,81 @@
                                 </div>
                             </div>
                             <div class="settings-tickets-blk course-instruct-blk table-responsive">
-
                                 <!-- Referred Users-->
                                 <table class="table table-nowrap mb-2">
                                     <thead>
                                         <tr>
-                                            <th>KEGIATAN</th>                                            
+                                            <th>KEGIATAN</th>
                                             <th class="text-center">STATUS</th>
                                             <th class="text-center">KETERANGAN</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for data_activity in data_activity %}
+                                        {% if data_activity|length == 0 %}
+                                        <tr>
+                                            <td colspan="3" class="text-center">Tidak ada data</td>
+                                        </tr>
+                                        {% else %}
+                                            {% for activity in data_activity %}
+
                                         <tr>
                                             <td>
                                                 <div class="sell-table-group d-flex align-items-center">
                                                     <div class="sell-group-img">
                                                         <a href="#!">
-                                                            <img src="{{ data_activity.activity_image.url }}"
-                                                                class="img-fluid " alt="">
+                                                            <img src="{{ activity.activity_image.url }}"
+                                                                class="img-fluid" alt="" />
                                                         </a>
                                                     </div>
                                                     <div class="sell-tabel-info">
-                                                        <p><a href="#!">{{ data_activity.activity_name }}</a></p>
-                                                        <div
-                                                            class="course-info d-flex align-items-center border-bottom-0 pb-0">
+                                                        <h5 class="fw-bold">
+                                                            <h5 class="fw-bold"><a href="{% url 'class_detail' id=activity.activity_id activity_name=activity.activity_name|slugify %}">{{ activity.activity_name }}</a></h5>
+                                                        </h5>
+                                                        <div class="course-info d-grid border-bottom-0 pb-0">
                                                             <div class="rating-img d-flex align-items-center">
-                                                                <img src="{% static 'assets/img/icon/icon-01.svg' %}"
-                                                                    alt="">
-                                                                <p>10+ Lesson</p>
-                                                            </div>
-                                                            <div class="course-view d-flex align-items-center">
+                                                                <img src="{% static 'assets/img/icon/user-icon.svg' %}"
+                                                                    alt="" />
+                                                                <p>
+                                                                    {{ activity.activity_informations.age|capfirst }}
+                                                                </p>
                                                                 <img src="{% static 'assets/img/icon/timer-start.svg' %}"
-                                                                    alt="">
-                                                                <p>{{ data_activity.activity_informations.duration }} menit</p>
+                                                                    alt="" class="ms-2" />
+                                                                <p>
+                                                                    {{ activity.activity_informations.duration }}
+                                                                    menit
+                                                                </p>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>                                            
-                                            <td class="text-center"><span class="badge info-low">{{ data_activity.activity_status.status }}</span></td>
-                                            <td class="text-center">{{ data_activity.activity_status.message_status }}</td>
-                                        </tr>
-                                        {% endfor %}
-                                        {% comment %} <tr>
-                                            <td>
-                                                <div class="sell-table-group d-flex align-items-center">
-                                                    <div class="sell-group-img">
-                                                        <a href="#!">
-                                                            <img src="{% static 'assets/img/course/course-10.jpg' %}"
-                                                                class="img-fluid " alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="sell-tabel-info">
-                                                        <p><a href="#!">Information About UI/UX Design Degree</a></p>
-                                                        <div
-                                                            class="course-info d-flex align-items-center border-bottom-0 pb-0">
-                                                            <div class="rating-img d-flex align-items-center">
-                                                                <img src="{% static 'assets/img/icon/icon-01.svg' %}"
-                                                                    alt="">
-                                                                <p>10+ Lesson</p>
-                                                            </div>
-                                                            <div class="course-view d-flex align-items-center">
-                                                                <img src="{% static 'assets/img/icon/timer-start.svg' %}"
-                                                                    alt="">
-                                                                <p>7hr 20min</p>
+                                                            <div class="rating-img d-flex align-items-center mt-2">
+                                                                <img src="{% static 'assets/img/icon/icon-24.svg' %}"
+                                                                    alt="" />
+                                                                <p>{{ activity.category }}</p>
+                                                                <img src="{% static 'assets/img/icon/date-icon.png' %}"
+                                                                    alt="" class="ms-2" />
+                                                                <p>{{ activity.activity_informations.day }}</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="text-center">0</td>
-                                            <td class="text-center"><span class="badge info-high">Ditolak</span></td>
-                                            <td class="text-center">Tidak memenuhi syarat</td>
-                                        </tr>                                         {% endcomment %}
+                                            {% with status=activity.activity_status.status %}
 
+                                            <td class="text-center">
+                                                <span
+                                                    class="badge info-{% if status == 'pending' %}medium{% elif status == 'ditolak' %}high{% else %}low{% endif %}">{{ status|capfirst }}</span>
+                                            </td>
+                                            <td class="text-center">
+                                                {{ activity.activity_status.message_status }}
+                                            </td>
+
+                                            {% endwith %}
+                                        </tr>
+                                        {% endfor %} {% endif %}
                                     </tbody>
                                 </table>
                                 <!-- /Referred Users-->
-
                             </div>
-
                         </div>
-                    </div>                    
+                    </div>
                 </div>
             </div>
         </div>

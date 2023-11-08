@@ -59,6 +59,10 @@
 													placeholder="Judul Kegiatan" required>
 											</div>
 											<div class="form-group">
+												<label class="add-course-label">Deskripsi Singkat</label>												
+												<textarea name="sub_description" class="form-control" required></textarea>
+											</div>
+											<div class="form-group">
 												<label class="add-course-label">Kategori</label>
 												<select name="category" class="form-control select"
 													id="category-activity" required>
@@ -93,15 +97,15 @@
 													<div class="form-group">
 														<label class="add-course-label">Hari dilaksanakan</label>
 														<input type="text" name="day" class="form-control"
-															placeholder="Tips: Senin-Minggu / Fleksibel mengikuti anak"
+															placeholder="Senin-Minggu / Fleksibel mengikuti anak"
 															required>
 													</div>
 												</div>
 												<div class="col-lg-6">
 													<div class="form-group">
-														<label class="add-course-label">Durasi</label>
+														<label class="add-course-label">Durasi <span class="fst-italic">(dalam menit)</span></label>
 														<input type="number" name="duration" class="form-control"
-															placeholder="Tips: Masukkan durasi ke dalam menit. Contoh: 60"
+															placeholder="Contoh: 60"
 															required>
 													</div>
 												</div>
@@ -111,7 +115,7 @@
 														<div class="input-group mb-3">
 															<span class="input-group-text">Rp.</span>
 															<input type="number" name="price" class="form-control"
-																placeholder="Tips: Masukkan durasi ke dalam menit. Contoh: 60"
+																placeholder="Contoh: 100.000"
 																aria-label="Price" required>
 														</div>
 													</div>
@@ -119,8 +123,8 @@
 												<div class="col-lg-6">
 													<div class="form-group">
 														<label class="add-course-label">Umur</label>
-														<input type="number" name="age" class="form-control"
-															placeholder="Tips: Masukkan rentang umur 0-10." required>
+														<input type="text" name="age" class="form-control"
+															placeholder="Contoh: 1-10 tahun, 2-5 tahun." required>
 													</div>
 												</div>
 											</div>
@@ -128,12 +132,12 @@
 												<div class="form-group">
 													<label class="add-course-label">Metode Kegiatan/kelas</label>
 													<input type="text" name="learning_method" class="form-control"
-														placeholder="Tips: Online: menggunakan zoom / Onsite" required>
+														placeholder="Contoh: Online: menggunakan zoom / Onsite" required>
 												</div>
 											</div>
 
 											<div class="form-group mb-0">
-												<label class="add-course-label">Course Description</label>
+												<label class="add-course-label">Deskripsi Kegiatan</label>
 												<div id="editor"></div>
 												<input type="hidden" name="description" id="editorDesc" required>
 											</div>
