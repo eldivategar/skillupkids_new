@@ -181,7 +181,10 @@
 
 														<div class="course-three-text">
 															<a href="{% url 'class_detail' id=item.activity.activity_id activity_name=item.activity.activity_name|slugify %}">
-																<p>{{ item.activity.category|capfirst }}</p>
+																<div class="d-flex align-items-center">
+																	<img src="{% static 'assets/img/icon/icon-24.svg' %}" alt="" class="img-fluid d-flex" style="max-width: 20%;">
+																	<p class="fw-bold mt-3 ms-1">{{ item.activity.category|capfirst }}</p>
+																</div>
 																<h3 class="title instructor-text">{{ item.activity.activity_name|capfirst }}</h3>
 															</a>
 														</div>

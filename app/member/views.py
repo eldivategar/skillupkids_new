@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from app.models import Member
+from app.activity.helpers import get_activity_detail, get_activity_list, get_category
 
 
 @cek_member_session
@@ -56,5 +57,22 @@ def member_profile_security(request):
 
 @cek_member_session
 def member_dashboard_activity(request):
+    category = request.GET.get('category')
+    keyword = request.GET.get('keyword')        
+        
+    if category == None and keyword == None:
+        list_of_activity = get_activity_list(category='all')
+
+    elif category == None and keyword != None:
+        list_of_activity = get_activity_list(keyword=keyword)
+        
+    elif category != None and keyword == None:
+        list_of_activity = get_activity_list(category=category)
+        
+    elif category != None and keyword != None:
+        list_of_activity = get_activity_list(category=category, keyword=keyword)                
+
+    categories = get_category()
+
     data = get_member_data(request)
-    return render(request, 'member/dashboard/activity.html', {'data': data})
+    return render(request, 'member/dashboard/activity.html', {'data': data, 'list_of_activity': list_of_activity, 'category': categories})

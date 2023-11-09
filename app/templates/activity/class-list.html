@@ -19,7 +19,7 @@
                                             <div class=" search-group">
                                                 <i class="feather-search"></i>
                                                 <input type="text" class="form-control"
-                                                    placeholder="Cari kegiatan" name="keyword" value="{{ request.GET.keyword }}">
+                                                    placeholder="Cari kegiatan atau kelas" name="keyword" value="{{ request.GET.keyword }}">
                                             </div>
                                         </div>                                                                                 
                                         <div class="col-md-6 col-lg-6 col-item">
@@ -47,10 +47,10 @@
                             <div class="product">
                                 <div class="product-img">
                                     <a href="#!">
-                                        <img class="img-fluid" alt="" src="{{ activity.activity_image }}">
+                                        <img class="img-fluid" alt="" src="{{ item.activity.activity_image }}">
                                     </a>
                                     <div class="price">
-                                        {% with price=activity.activity_informations.price %}
+                                        {% with price=item.activity.activity_informations.price %}
 										{% if price == 0 or price == '0' %}
 										<h3>Gratis</h3>
 										{% else %}
