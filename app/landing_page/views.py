@@ -1,17 +1,21 @@
 from django.shortcuts import render, redirect
 from app.helpers.utils import get_member_data, get_mitra_data
+from app.activity.helpers import get_category, get_new_activity
 
 def home(request):
+    category = get_category()
+    new_activity = get_new_activity()
+
     if 'customer_id' not in request.session:
-        return render(request, 'landing_page/index.html')
+        return render(request, 'landing_page/index.html', {'category': category, 'new_activity': new_activity})
     else:
         customer = request.session.get('customer_id')
         if customer[:2] == 'mi' :
             data = get_mitra_data(request)
-            return render(request, 'landing_page/index.html', {'data': data})
+            return render(request, 'landing_page/index.html', {'data': data, 'category': category, 'new_activity': new_activity})
         elif customer[:2] == 'me':
             data = get_member_data(request)
-            return render(request, 'landing_page/index.html', {'data': data})
+            return render(request, 'landing_page/index.html', {'data': data, 'category': category, 'new_activity': new_activity})
 
 def about(request):
     if 'customer_id' not in request.session:

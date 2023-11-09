@@ -13,25 +13,27 @@
                     <div class="row">                        
                         <div class="col-lg-6">
                             <div class="show-filter add-course-info">
+                                <form id="form-category" action="{% url 'class_list' %}" method="get">
                                     <div class="row gx-2 align-items-center">
                                         <div class="col-md-6 col-item">
                                             <div class=" search-group">
                                                 <i class="feather-search"></i>
                                                 <input type="text" class="form-control"
-                                                    placeholder="Search our courses">
+                                                    placeholder="Cari kegiatan" name="keyword" value="{{ request.GET.keyword }}">
                                             </div>
                                         </div>                                                                                 
                                         <div class="col-md-6 col-lg-6 col-item">
                                             <div class="form-group select-form mb-0">
-                                                <select class="form-select select" id="sel1" name="sellist1">
+                                                <select class="form-select select" id="sel1" name="category">                                                    
                                                     <option value="all" selected>All</option>
                                                     {% for items in category %}
-                                                    <option value="{{ items|lower }}">{{ items|capfirst }}</option>
+                                                    <option value="{{ items|lower }}" {% if items|lower == request.GET.category %}selected{% endif %}>{{ items|capfirst }}</option>
                                                     {% endfor %}                                                                                                     
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
+                                </form>                                                            
                             </div>
                         </div>
                     </div>
@@ -40,7 +42,6 @@
 
                 <div class="row">
                     {% for item in list_of_activity %}
-                    
                     <div class="col-lg-4 col-md-6 d-flex">
                         <div class="course-box course-design d-flex ">
                             <div class="product">

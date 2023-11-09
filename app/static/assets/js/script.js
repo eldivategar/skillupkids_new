@@ -1338,23 +1338,17 @@ Version      : 1.0
 	});
 
 	//  Filter Activity
-	$(document).ready(function() {
-		function filterByCategory(category) {
-			$(".course-box").each(function() {
-				const activityCategory = $(this).find(".category").text().toLowerCase();
-				if (category === "all" || activityCategory === category) {
-					$(this).show();
-				} else {
-					$(this).hide();
-				}
-			});
-		}
-
-		filterByCategory("all");
-
-		$("#sel1").on("change", function() {
-			const selectedCategory = $(this).val().toLowerCase();
-			filterByCategory(selectedCategory);
+	
+	$(document).ready(function () {
+		var categorySelect = $('#sel1');
+		var formCategory = $('#form-category');
+	
+		categorySelect.on('change', function () {
+			var selectedCategory = categorySelect.val();
+	
+			$('select[name="category"]').val(selectedCategory);
+	
+			formCategory.submit();
 		});
 	});
 

@@ -35,6 +35,7 @@ urlpatterns = [
 
     re_path(r'^(?P<requested_url>.+)$', views._404, name='notfound'),
     path('server_error/', views._500, name='server_error'),
+    path('coming-soon/', views.coming_soon, name='coming_soon'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

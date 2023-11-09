@@ -10,7 +10,7 @@
                 <div class="breadcrumb-list">
                     <nav aria-label="breadcrumb" class="page-breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
                             <li class="breadcrumb-item" aria-current="page"><a href="{% url 'class_list' %}">Daftar Kegiatan</a></li>
                             <li class="breadcrumb-item" aria-current="page">{{ data_detail_activity.activity.activity_name }}</li>
                         </ol>
