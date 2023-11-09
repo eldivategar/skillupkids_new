@@ -182,7 +182,7 @@
 														<div class="course-three-text">
 															<a href="{% url 'class_detail' id=item.activity.activity_id activity_name=item.activity.activity_name|slugify %}">
 																<p>{{ item.activity.category|capfirst }}</p>
-																<h3 class="title instructor-text">{{ item.activity.activity_name }}</h3>
+																<h3 class="title instructor-text">{{ item.activity.activity_name|capfirst }}</h3>
 															</a>
 														</div>
 
@@ -193,9 +193,9 @@
 																	alt="">
 																{% with umur=item.activity.activity_informations.age %}
 																	{% if 'semua' in umur|lower %}
-																		<p>{{ item.activity.activity_informations.age }}</p>
+																		<p>{{ item.activity.activity_informations.age|capfirst }}</p>
 																	{% else %}
-																		<p>{{ item.activity.activity_informations.age }} tahun </p>
+																		<p>{{ item.activity.activity_informations.age|capfirst }} tahun </p>
 																	{% endif %}
 																{% endwith %}
 															</div>
