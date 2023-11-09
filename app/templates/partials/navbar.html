@@ -34,9 +34,10 @@
                         <li class="{% if request.path == '/' %} active{% endif %}">
                             <a href="{% url 'home' %}">Beranda</a>
                         </li>
-                        <li class="has-submenu {% if request.path == '/class-list/' %} active{% endif %}">
+                        <li class="{% if request.path == '/class-list/' %} active{% endif %}">
                             <a href="{% url 'class_list' %}">Daftar Kegiatan</a>
                         </li>
+                        
                         <li class="has-submenu">
                             <a href="#">Menu <i class="fas fa-chevron-down"></i></a>
                             <ul class="submenu first-submenu">
