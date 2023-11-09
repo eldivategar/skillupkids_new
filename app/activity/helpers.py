@@ -1,4 +1,4 @@
-from app.models import Member, Mitra, ActivityList
+from app.models import Member, Mitra, ActivityList, Testimonial
 from django.shortcuts import get_object_or_404
 
 def get_activity_detail(id):
@@ -110,6 +110,25 @@ def get_searched_activity(keyword):
         all_data.append({
             'mitra': mitra_data,
             'activity': activity_data,
+        })        
+
+    return all_data
+
+def get_testimonial():
+    get_all_testimonial = Testimonial.objects.all().order_by('-testimonial_id')
+    all_data = []
+
+    for testimonial in get_all_testimonial:
+        member_data = Member.objects.get(name=testimonial.member.name)
+        mitra_data = Mitra.objects.get(name=testimonial.mitra.name)
+        activity_data = ActivityList.objects.get(activity_name=testimonial.activity.activity_name)
+        testimonial_data = testimonial.testimonial_json()           
+        
+        all_data.append({
+            'member': member_data,
+            'mitra': mitra_data,
+            'activity': activity_data,
+            'testimonial': testimonial_data
         })        
 
     return all_data

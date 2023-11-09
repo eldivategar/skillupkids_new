@@ -205,7 +205,13 @@
 															class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
 															<div class="price-three-view d-flex align-items-center">
 																<div class="course-price-three">
-																	<h3>Rp{{ item.activity.activity_informations.price }}00</h3>
+																	{% with price=item.activity.activity_informations.price %}
+																	{% if price == 0 or price == '0' %}
+																	<h3>Gratis</h3>
+																	{% else %}
+																	<h3>Rp. {{ price }}</h3>
+																	{% endif %}
+																	{% endwith %}
 																</div>
 															</div>
 															<div
@@ -330,117 +336,67 @@
 						<div class="swiper-wrapper">
 
 							<!-- Swiper Slide -->
+							{% for testimoni in testimonials %}							
 							<div class="swiper-slide">
 								<div class="testimonial-item-five">
 									<div class="testimonial-quote">
 										<img class="quote img-fluid" alt=""
 											src="{% static 'assets/img/bg/quote.svg' %}">
-									</div>
-									<div class="testimonial-content">
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas pretium
-											feugiat tellus eget vitae sagittis id in. In in tempor ac dignissim at.
-											Scelerisque sociis consequat sit dolor. Vitae donec porttitor risus tellus
-											eget vitae sagittis id in. In in tempor ac dignissim at. Scelerisque sociis
-											consequat </p>
+										</div>
+										<div class="testimonial-content">
+										<p>{{ testimoni.testimonial.testimonial }}</p>
 									</div>
 									<div class="testimonial-ratings">
-										<div class="rating">
+										<div class="rating">											
+											{% with ratings=testimoni.testimonial.rating %}
+											{% if ratings == 5 %}
+											<i class="fas fa-star filled"></i>
+											<i class="fas fa-star filled"></i>
+											<i class="fas fa-star filled"></i>
+											<i class="fas fa-star filled"></i>
+											<i class="fas fa-star filled"></i>
+											{% elif ratings == 4 %}
 											<i class="fas fa-star filled"></i>
 											<i class="fas fa-star filled"></i>
 											<i class="fas fa-star filled"></i>
 											<i class="fas fa-star filled"></i>
 											<i class="fas fa-star"></i>
-											<p class="d-inline-block">4.5<span>ratings</span></p>
+											{% elif ratings == 3 %}
+											<i class="fas fa-star filled"></i>
+											<i class="fas fa-star filled"></i>
+											<i class="fas fa-star filled"></i>
+											<i class="fas fa-star"></i>
+											<i class="fas fa-star"></i>
+											{% elif ratings == 2 %}
+											<i class="fas fa-star filled"></i>
+											<i class="fas fa-star filled"></i>
+											<i class="fas fa-star"></i>
+											<i class="fas fa-star"></i>
+											<i class="fas fa-star"></i>
+											{% elif ratings == 1 %}
+											<i class="fas fa-star filled"></i>
+											<i class="fas fa-star"></i>
+											<i class="fas fa-star"></i>
+											<i class="fas fa-star"></i>
+											<i class="fas fa-star"></i>											
+											{% endif %}
+											{% endwith %}
+											{% comment %} <p class="d-inline-block"><span>Ratings</span> {{ testimoni.testimonial.rating }}</p> {% endcomment %}
 										</div>
 									</div>
 									<div class="testimonial-users">
 										<div class="imgbx">
 											<img class="img-fluid" alt=""
-												src="{% static 'assets/img/profiles/avatar-02.jpg' %}">
+												src="{{ testimoni.member.profile_image.url }}">
 										</div>
 										<div class="d-block">
-											<h6>Jeff J. Sparrow</h6>
-											<p>Designer</p>
+											<h6>{{ testimoni.member.name }}</h6>
 										</div>
 									</div>
 								</div>
 							</div>
+							{% endfor %}
 							<!-- /Swiper Slide -->
-
-							<!-- Swiper Slide -->
-							<div class="swiper-slide">
-								<div class="testimonial-item-five">
-									<div class="testimonial-quote">
-										<img class="quote img-fluid" alt=""
-											src="{% static 'assets/img/bg/quote.svg' %}">
-									</div>
-									<div class="testimonial-content">
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas pretium
-											feugiat tellus eget vitae sagittis id in. In in tempor ac dignissim at.
-											Scelerisque sociis consequat sit dolor. Vitae donec porttitor risus tellus
-											eget vitae sagittis id in. In in tempor ac dignissim at. Scelerisque sociis
-											consequat </p>
-									</div>
-									<div class="testimonial-ratings">
-										<div class="rating">
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star"></i>
-											<p class="d-inline-block">4.5<span>ratings</span></p>
-										</div>
-									</div>
-									<div class="testimonial-users">
-										<div class="imgbx">
-											<img class="" alt="" src="{% static 'assets/img/profiles/avatar-01.jpg' %}">
-										</div>
-										<div class="d-block">
-											<h6>Martin Harn</h6>
-											<p>Docker Development</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Swiper Slide -->
-
-							<!-- Swiper Slide -->
-							<div class="swiper-slide">
-								<div class="testimonial-item-five">
-									<div class="testimonial-quote">
-										<img class="quote img-fluid" alt=""
-											src="{% static 'assets/img/bg/quote.svg' %}">
-									</div>
-									<div class="testimonial-content">
-										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas pretium
-											feugiat tellus eget vitae sagittis id in. In in tempor ac dignissim at.
-											Scelerisque sociis consequat sit dolor. Vitae donec porttitor risus tellus
-											eget vitae sagittis id in. In in tempor ac dignissim at. Scelerisque sociis
-											consequat </p>
-									</div>
-									<div class="testimonial-ratings">
-										<div class="rating">
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star"></i>
-											<p class="d-inline-block">4.8<span>ratings</span></p>
-										</div>
-									</div>
-									<div class="testimonial-users">
-										<div class="imgbx">
-											<img class="" alt="" src="{% static 'assets/img/profiles/avatar-05.jpg' %}">
-										</div>
-										<div class="d-block">
-											<h6>Noah Aarons</h6>
-											<p>Business Man</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /Swiper Slide -->
-
 
 						</div>
 						<div class="testimonial-bottom-nav">

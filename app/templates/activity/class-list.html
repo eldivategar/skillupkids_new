@@ -50,7 +50,13 @@
                                         <img class="img-fluid" alt="" src="{{ activity.activity_image }}">
                                     </a>
                                     <div class="price">
-                                        <h3>Rp{{ activity.activity_informations.price }}</h3>
+                                        {% with price=activity.activity_informations.price %}
+										{% if price == 0 or price == '0' %}
+										<h3>Gratis</h3>
+										{% else %}
+										<h3>Rp. {{ price }}</h3>
+										{% endif %}
+										{% endwith %}
                                     </div>
                                 </div>
                                 <div class="product-content">
