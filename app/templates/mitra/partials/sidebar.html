@@ -33,16 +33,16 @@
                         <i class="feather-refresh-cw"></i> Sosial Media
                     </a>
                 </li>
-                <li class="nav-item {% if request.path == '/mitra/password/' %} active{% endif %}">
+                <li class="nav-item {% if request.path == '/mitra/security/' %} active{% endif %}">
                     <a href="{% url 'app.mitra:mitra_profile_security' %}" class="nav-link">
                         <i class="feather-user"></i> Keamanan
                     </a>
                 </li>
-                <li class="nav-item {% if request.path == '/mitra/del/profile/' %} active{% endif %}">
+                {% comment %} <li class="nav-item {% if request.path == '/mitra/del/profile/' %} active{% endif %}">
                     <a href="#!" class="nav-link">
                         <i class="feather-trash-2"></i> Hapus Akun
                     </a>
-                </li>
+                </li> {% endcomment %}
                 <li class="nav-item">
                     <a href="{% url 'logout' %}" class="nav-link">
                         <i class="feather-power"></i> Keluar

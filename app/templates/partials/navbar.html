@@ -54,9 +54,9 @@
                             <span class="user-img mx-3 mt-3 mb-3">
                                 <img src="{{ data.profile_image.url }}" alt="">
                                 <span class="status online" style="color: #ffffff;">{{ data.name }}</span>
-                                {% if request.session.customer_id|slice:":2" == 'me' %}
+                                {% comment %} {% if request.session.customer_id|slice:":2" == 'me' %}
                                 <a href="#!" class="mt-2"><img src="{% static 'assets/img/icon/cart.svg' %}" alt=""></a>
-                                {% endif %}
+                                {% endif %} {% endcomment %}
                                 <span class="d-grid gap-2 d-flex mt-3 fs-6">
                                     <a href="{{ dynamic_url }}" style="color: #ffffff;"
                                         class="btn btn-primary me-md-2"><i class="feather-user me-1"></i>Profile</a>
@@ -74,7 +74,7 @@
 
                 {% if request.session.customer_id %}
                 <ul class="nav header-navbar-rht">
-                    {% if request.session.customer_id|slice:":2" == 'me' %}
+                    {% comment %} {% if request.session.customer_id|slice:":2" == 'me' %}
                     <li class="nav-item cart-nav me-2">
                         <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
                             <img src="{% static 'assets/img/icon/cart.svg' %}" alt="img">
@@ -154,7 +154,7 @@
                             </div>
                         </div>
                     </li>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
 
                     <li class="nav-item user-nav">
                         <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">

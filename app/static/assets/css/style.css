@@ -17399,6 +17399,20 @@ input[type=password]::-ms-clear
 	font-size: 14px;
 	padding: 1px 11px;
 }
+.active-btns .btn-warning {
+	background-color: #FFC107;
+	border: 1px solid #FFC107;
+	color: #fff;
+	font-size: 14px;
+	padding: 1px 11px;
+}
+.active-btns .btn-secondary {
+	background-color: #0DCAF0;
+	border: 1px solid #0DCAF0;
+	color: #fff;
+	font-size: 14px;
+	padding: 1px 11px;
+}
 .active-btns .btn-danger {
 	color: #fff;
 	font-size: 14px;

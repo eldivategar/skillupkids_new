@@ -13,22 +13,22 @@
                         <div class="comman-space pb-0">
                             <div class="instruct-search-blk">
                                 <div class="show-filter choose-search-blk">
-                                    <form action="#">
+                                    <form id="form-category" action="{% url 'app.mitra:mitra_dashboard_activity_list' %}" method="get">
                                         <div class="row gx-2 align-items-center">
                                             <div class="col-md-6 col-item">
                                                 <div class="search-group">
                                                     <i class="feather-search"></i>
                                                     <input type="text" class="form-control"
-                                                        placeholder="Cari kegiatan" />
+                                                    placeholder="Cari kegiatan atau kelas" name="keyword" value="{{ request.GET.keyword }}"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-lg-6 col-item">
                                                 <div class="form-group select-form mb-0">
-                                                    <select class="form-select select" name="sellist1">
-                                                        <option selected>Status</option>
-                                                        <option>Pending</option>
-                                                        <option>Ditolak</option>
-                                                        <option>Terbit</option>
+                                                    <select class="form-select select" id="sel1" name="status">
+                                                        <option value="all" selected>All</option>
+                                                        {% for status in activity_status %}
+                                                        <option value="{{ status|lower }}" {% if status|lower == request.GET.status %}selected{% endif %}>{{ status|capfirst }}</option>
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
@@ -52,55 +52,55 @@
                                             <td colspan="3" class="text-center">Tidak ada data</td>
                                         </tr>
                                         {% else %}
-                                            {% for activity in data_activity %}
+                                            {% for items in data_activity %}
 
                                         <tr>
                                             <td>
                                                 <div class="sell-table-group d-flex align-items-center">
                                                     <div class="sell-group-img">
                                                         <a href="#!">
-                                                            <img src="{{ activity.activity_image.url }}"
+                                                            <img src="{{ items.activity.activity_image.url }}"
                                                                 class="img-fluid" alt="" />
                                                         </a>
                                                     </div>
                                                     <div class="sell-tabel-info">
                                                         <h5 class="fw-bold">
-                                                            <h5 class="fw-bold"><a href="{% url 'class_detail' id=activity.activity_id activity_name=activity.activity_name|slugify %}">{{ activity.activity_name }}</a></h5>
+                                                            <h5 class="fw-bold"><a href="{% url 'class_detail' id=items.activity.activity_id activity_name=items.activity.activity_name|slugify %}">{{ items.activity.activity_name }}</a></h5>
                                                         </h5>
                                                         <div class="course-info d-grid border-bottom-0 pb-0">
                                                             <div class="rating-img d-flex align-items-center">
                                                                 <img src="{% static 'assets/img/icon/user-icon.svg' %}"
                                                                     alt="" />
                                                                 <p>
-                                                                    {{ activity.activity_informations.age|capfirst }}
+                                                                    {{ items.activity.activity_informations.age|capfirst }}
                                                                 </p>
                                                                 <img src="{% static 'assets/img/icon/timer-start.svg' %}"
                                                                     alt="" class="ms-2" />
                                                                 <p>
-                                                                    {{ activity.activity_informations.duration }}
+                                                                    {{ items.activity.activity_informations.duration }}
                                                                     menit
                                                                 </p>
                                                             </div>
                                                             <div class="rating-img d-flex align-items-center mt-2">
                                                                 <img src="{% static 'assets/img/icon/icon-24.svg' %}"
                                                                     alt="" />
-                                                                <p>{{ activity.category }}</p>
+                                                                <p>{{ items.activity.category }}</p>
                                                                 <img src="{% static 'assets/img/icon/date-icon.png' %}"
                                                                     alt="" class="ms-2" />
-                                                                <p>{{ activity.activity_informations.day }}</p>
+                                                                <p>{{ items.activity.activity_informations.day }}</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            {% with status=activity.activity_status.status %}
+                                            {% with status=items.activity.activity_status.status %}
 
                                             <td class="text-center">
                                                 <span
                                                     class="badge info-{% if status == 'pending' %}medium{% elif status == 'ditolak' %}high{% else %}low{% endif %}">{{ status|capfirst }}</span>
                                             </td>
                                             <td class="text-center">
-                                                {{ activity.activity_status.message_status }}
+                                                {{ items.activity.activity_status.message_status }}
                                             </td>
 
                                             {% endwith %}

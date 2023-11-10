@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from app.models import Member
 from app.activity.helpers import get_activity_detail, get_activity_list, get_category
-
+from .helpers import get_transactions
 
 @cek_member_session
 def member_profile(request):
@@ -54,6 +54,37 @@ def member_profile_security(request):
     if request.method == 'GET':
         data = get_member_data(request)
         return render(request, 'member/security.html', {'data': data})
+
+@cek_member_session
+def member_profile_security_update(request):
+    if request.method == 'POST':
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+
+        customer_id = request.session.get('customer_id')[2:]
+        if password == confirm_password:
+            try:
+                member = Member.objects.get(uuid=customer_id)
+                member.password = password
+                member.save()
+                messages.success(request, 'Password berhasil diupdate!')
+                return redirect('app.member:member_profile_security')
+            except Member.DoesNotExist:
+                messages.error(request, 'Terjadi kesalahan saat update password!')
+                return redirect('app.member:member_profile_security')
+        else:
+            messages.error(request, 'Password tidak sama!')
+            return redirect('app.member:member_profile_security')
+    else:
+        return HttpResponse('Method not allowed!')
+
+@cek_member_session
+def transactions(request):
+    data = get_member_data(request)
+    member_id = request.session.get('customer_id')[2:]
+    transactions = get_transactions(member_id)
+
+    return render(request, 'member/transactions.html', {'data': data, 'transactions': transactions})
 
 @cek_member_session
 def member_dashboard_activity(request):

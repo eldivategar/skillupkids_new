@@ -1335,7 +1335,7 @@ Version      : 1.0
 		warningText.hide();
 		// passwordInput.on("input", checkPasswordMatch);
 		confirmPasswordInput.on("input", checkPasswordMatch);
-	});
+	});		
 
 	//  Filter Activity
 	

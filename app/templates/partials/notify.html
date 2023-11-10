@@ -1,21 +1,24 @@
 {% if messages %}
 {% for message in messages %}
-<div class="toast" id="success-toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="1500" style="position: fixed; top: 20px; right: 20px; z-index: 10000;">
-  <div class="toast-body {{ message.tags }} text-white rounded">
-    {% if messages.tags == 'bg-success' %}
+<div class="toast text-white {{ message.tags }} rounded border-0" id="success-toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="1500"
+  style="position: fixed; top: 20px; right: 20px; z-index: 10000;">
+  <div class="d-flex">
+    <div class="toast-body">
+      {% if messages.tags == 'bg-success' %}
       <i class="fas fa-check-circle me-2"></i>
-  
+
       {% elif message.tags == 'bg-warning' %}
-    <i class="fas fa-exclamation-circle me-2"></i>
-  
-    {% elif message.tags == 'bg-danger' %}
-    <i class="fas fa-times-circle me-2"></i>
-  
-    {% elif message.tags == 'bg-info' %}
-    <i class="fas fa-info-circle me-2"></i>
-    {% endif %}
-    
-    {{ message }}
+      <i class="fas fa-exclamation-circle me-2"></i>
+
+      {% elif message.tags == 'bg-danger' %}
+      <i class="fas fa-times-circle me-2"></i>
+
+      {% elif message.tags == 'bg-info' %}
+      <i class="fas fa-info-circle me-2"></i>
+      {% endif %}
+
+      {{ message }}
+    </div>
   </div>
 </div>
 {% endfor %}

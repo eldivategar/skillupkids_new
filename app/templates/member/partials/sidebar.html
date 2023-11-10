@@ -28,16 +28,16 @@
                         <i class="feather-settings"></i> Edit Profile
                     </a>
                 </li>
-                <li class="nav-item {% if request.path == '/member/password/' %} active{% endif %}">
+                <li class="nav-item {% if request.path == '/member/security/' %} active{% endif %}">
                     <a href="{% url 'app.member:member_profile_security' %}" class="nav-link">
                         <i class="feather-user"></i> Keamanan
                     </a>
                 </li>
-                <li class="nav-item {% if request.path == '/member/del/profile/' %} active{% endif %}">
+                {% comment %} <li class="nav-item {% if request.path == '/member/del/profile/' %} active{% endif %}">
                     <a href="#!" class="nav-link">
                         <i class="feather-trash-2"></i> Hapus Akun
                     </a>
-                </li>
+                </li> {% endcomment %}
                 <li class="nav-item">
                     <a href="{% url 'logout' %}" class="nav-link">
                         <i class="feather-power"></i> Keluar
@@ -46,16 +46,16 @@
             </ul>
             <h3>HISTORI</h3>
             <ul>                
-                <li class="nav-item {% if request.path == '/member/payment/' %} active{% endif %}">
-                    <a href="#!" class="nav-link">
-                        <i class="feather-credit-card"></i> Pembayaran
+                <li class="nav-item {% if request.path == '/member/transactions/' %} active{% endif %}">
+                    <a href="{% url 'app.member:transactions' %}" class="nav-link">
+                        <i class="feather-credit-card"></i> Transaksi
                     </a>
                 </li>
-                <li class="nav-item">
+                {% comment %} <li class="nav-item">
                     <a href="#!" class="nav-link {% if request.path == '/member/invoice/' %} active{% endif %}">
                         <i class="feather-clipboard"></i> Invoice
                     </a>
-                </li>
+                </li> {% endcomment %}
             </ul>
         </div>
     </div>					

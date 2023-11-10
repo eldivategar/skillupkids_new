@@ -3,6 +3,9 @@ from app.models import Member, Mitra
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import datetime
+from django.http import HttpResponseRedirect
+from urllib.parse import quote
+from django.utils.html import escape
 import pyotp
 import smtplib
 
@@ -87,3 +90,9 @@ def get_member_data(request):
         return 'Pengguna tidak ditemukan!'
     
     return customer_data
+
+def redirect_to_whatsapp(message):
+    admin_wa = '+6285157558709'    
+
+    redirect_to = f'https://wa.me/{admin_wa}?text={message}&app_absent=0'
+    return HttpResponseRedirect(redirect_to)

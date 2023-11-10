@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+from datetime import datetime
 import uuid
-import json
 
 class Member(models.Model):
     cust_id = models.AutoField(primary_key=True)
@@ -45,11 +47,11 @@ class Mitra(models.Model):
     description = models.TextField()
     start_time = models.TimeField(default='00:00:00')
     end_time = models.TimeField(default='00:00:00')
-    twitter_site = models.URLField(max_length=200, null=True, blank=True, default='')
-    fb_site = models.URLField(max_length=200, null=True, blank=True, default='')
-    ig_site = models.URLField(max_length=200, null=True, blank=True, default='')
-    linkedin_site = models.URLField(max_length=200, null=True, blank=True, default='')
-    yt_site = models.URLField(max_length=200, null=True, blank=True, default='')
+    twitter_site = models.URLField(max_length=200, blank=True, default='')
+    fb_site = models.URLField(max_length=200, blank=True, default='')
+    ig_site = models.URLField(max_length=200, blank=True, default='')
+    linkedin_site = models.URLField(max_length=200, blank=True, default='')
+    yt_site = models.URLField(max_length=200, blank=True, default='')
     profile_image = models.ImageField(upload_to='mitra/', default='mitra/default-logo.png', null=True, blank=True)
     is_verified = models.BooleanField(default=False)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
@@ -148,11 +150,7 @@ class ActivityList(models.Model):
                 'message_status': self.message_status
             }
         }        
-        return data
-
-    class Meta:
-        verbose_name = 'Kegiatan'
-        verbose_name_plural = 'Daftar Kegiatan'
+        return data        
 
 class Testimonial(models.Model):
     testimonial_id = models.AutoField(primary_key=True)
@@ -178,6 +176,50 @@ class Testimonial(models.Model):
         }
         return data
 
-    class Meta:
-        verbose_name = 'Testimoni'
-        verbose_name_plural = 'Daftar Testimoni'
+class Transaction(models.Model):
+    transaction_id = models.CharField(primary_key=True, max_length=20, editable=False)
+    member = models.ForeignKey(Member, to_field='uuid', related_name='member_transaction', on_delete=models.CASCADE)
+    mitra = models.ForeignKey(Mitra, to_field='uuid', related_name='mitra_transaction', on_delete=models.CASCADE)
+    activity = models.ForeignKey(ActivityList, to_field='activity_id', related_name='activity_transaction', on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+
+    STATUS = (
+        ('pending', 'Pending'),
+        ('wfp', 'Menunggu Pembayaran'),
+        ('success', 'Sukses'),
+        ('paid', 'Lunas'),
+        ('failed', 'Gagal'),
+        ('refund', 'Refund'),
+        ('expired', 'Kadaluwarsa'),
+        ('cancel', 'Dibatalkan'),
+    ) 
+
+    status = models.CharField(max_length=50, choices=STATUS, default='pending')
+    message_status = models.TextField(default='', blank=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=3, default=0)
+    
+    def __str__(self):
+        return str(self.transaction_id)
+    
+    def transaction_json(self):
+        data = {
+            'transaction_id': self.transaction_id,
+            'member': self.member.name,
+            'mitra': self.mitra.name,
+            'activity': self.activity.activity_name,
+            'date': self.date,
+            'status': self.status,
+            'total_price': self.total_price,
+        }
+        return data
+    
+def generate_transaction_id():
+    tahun_sekarang = datetime.now().year
+    angka_unik = uuid.uuid4().int & (1<<64)-1
+    return f'SUK-{tahun_sekarang}-{angka_unik:013d}'
+
+
+@receiver(pre_save, sender=Transaction)
+def set_transaction_id(sender, instance, **kwargs):
+    if not instance.transaction_id:
+        instance.transaction_id = generate_transaction_id()

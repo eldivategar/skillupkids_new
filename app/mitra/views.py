@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from app.models import Mitra, ActivityList
-
+from .helpers import get_my_activity, get_status
 
 @cek_mitra_session
 def mitra_profile(request):
@@ -99,14 +99,52 @@ def mitra_profile_security(request):
         return render(request, 'mitra/security.html', {'data': data})
 
 @cek_mitra_session
+def mitra_profile_security_update(request):
+    if request.method == 'POST':
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+
+        customer_id = request.session.get('customer_id')[2:]
+        if password == confirm_password:
+            try:
+                mitra = Mitra.objects.get(uuid=customer_id)
+                mitra.password = password
+                mitra.save()
+                messages.success(request, 'Password berhasil diupdate!')
+                return redirect('app.mitra:mitra_profile_security')
+            except Mitra.DoesNotExist:
+                messages.error(request, 'Terjadi kesalahan saat update password!')
+                return redirect('app.mitra:mitra_profile_security')
+        else:
+            messages.error(request, 'Password tidak sama!')
+            return redirect('app.mitra:mitra_profile_security')
+    else:
+        return HttpResponse('Method not allowed!')
+
+@cek_mitra_session
 def mitra_dashboard_activity_list(request):
+    keyword = request.GET.get('keyword')
+    status = request.GET.get('status')
     mitra_id = request.session.get('customer_id')[2:]
-    data = get_mitra_data(request)
-    all_activity = ActivityList.objects.filter(mitra_activity=mitra_id).order_by('-activity_id')
     
-    data_activity = [row.activity_json() for row in all_activity]
+    if status == None and keyword == None:
+        data_activity = get_my_activity(mitra_id)
+    
+    elif status == None and keyword != None:
+        data_activity = get_my_activity(mitra_id, keyword=keyword)
+    
+    elif status != None and keyword == None:
+        data_activity = get_my_activity(mitra_id, status=status)
+    
+    elif status != None and keyword != None:
+        data_activity = get_my_activity(mitra_id, keyword=keyword, status=status)
+        
+
+    data = get_mitra_data(request)
+    activity_status = get_status()
+            
     print(data_activity)
-    return render(request, 'mitra/dashboard/list-of-activity.html', {'data': data, 'data_activity': data_activity})
+    return render(request, 'mitra/dashboard/list-of-activity.html', {'data': data, 'data_activity': data_activity, 'activity_status': activity_status})
 
 @cek_mitra_session
 def mitra_create_new_activity(request):

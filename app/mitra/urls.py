@@ -19,5 +19,6 @@ urlpatterns = [
     path('profile/update/', views.mitra_profile_update, name='mitra_profile_update'),
     path('sosmed/', views.mitra_sosmed, name='mitra_sosmed'),
     path('sosmed/update', views.mitra_sosmed_update, name='mitra_sosmed_update'),
-    path('password/', views.mitra_profile_security, name='mitra_profile_security'),
+    path('security/', views.mitra_profile_security, name='mitra_profile_security'),
+    path('security/update/', views.mitra_profile_security_update, name='mitra_profile_security_update'),
 ]

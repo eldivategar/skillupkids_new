@@ -1,0 +1,161 @@
+{% extends "member/layout/base.html" %}
+{% load static %}
+{% block content %}
+{% include 'partials/notify.html' %}
+
+<div class="col-xl-9 col-md-8">
+
+    <div class="settings-widget profile-details">
+        <div class="settings-menu p-0">
+
+            <div class="profile-heading subscription-group d-flex align-items-center">
+                <div class="subscription-name">
+                    <h3>Transaksi</h3>
+                    <p>Kelola transaksimu disini.</p>
+                </div>                
+            </div>
+            {% for transaction in transactions %}
+            <div class="monthly-subscribtion comman-space border-line">
+                <div class="monthly-group d-flex align-items-center">
+                    <div class="subscribtion-active">
+                        <div class="active-btns">
+                            <button type="button" class="btn btn-warning mb-2">Menunggu Pembayaran</button>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 d-flex">
+                            <div class="product-img">
+                                <a href="#"><img src="{% static 'WordPress-Development.jpg' %}" alt=""></a>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center mt-2">                                                    
+                            <img src="{% static 'assets/img/icon/icon-24.svg' %}" alt="" class="img-fluid d-flex" style="max-width: 20%;">
+                            <p class="fw-bold category">{{ transaction.activity.category|capfirst }}</p>                                            
+                        </div>
+
+                        <h5>{{ transaction.activity.activity_name }} </h5>
+                        <p><b>Invoice:</b> {{ transaction.transaction.transaction_id }}</p>
+                    </div>
+                    <div class="active-change-plan grad-border hvr-sweep-to-right">                        
+                        <p class="fw-bold">Total Rp{{ transaction.transaction.total_price }}</p>                        
+                        <a href="#!" class="btn btn-primary">Detail</a>
+                    </div>
+                </div>
+                <div class="month-plan-detail">
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6 d-flex">
+                            <div class="bill-widget d-flex align-items-center">
+                                <div class="plan-icons">
+                                    <i class="feather-calendar"></i>
+                                </div>
+                                <div class="bill-name-group">
+                                    <h5>Pembelian</h5>
+                                    <p>{{ transaction.transaction.date|date:"d F Y" }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-6 d-flex">
+                            <div class="bill-widget d-flex align-items-center">
+                                <div class="plan-icons">
+                                    <i class="feather-credit-card"></i>
+                                </div>
+                                <div class="bill-name-group">
+                                    <h5>Price</h5>
+                                    <p>Monthly</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 d-flex">
+                            <div class="bill-widget d-flex align-items-center">
+                                <div class="plan-icons">
+                                    <i class="feather-book-open"></i>
+                                </div>
+                                <div class="bill-name-group">
+                                    <h5>Access</h5>
+                                    <p>Access All Courses</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 d-flex">
+                            <div class="bill-widget d-flex align-items-center">
+                                <div class="plan-icons">
+                                    <i class="feather-calendar"></i>
+                                </div>
+                                <div class="bill-name-group">
+                                    <h5>Billing Date</h5>
+                                    <p>Next Billing on Nov 1, 2022</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- <div class="monthly-subscribtion comman-space">
+                <div class="monthly-group d-flex align-items-center">
+                    <div class="subscribtion-active">
+                        <div class="active-btns">
+                            <button type="button" class="btn btn-danger">Expired</button>
+                        </div>
+                        <h5>Free Plan  </h5>
+                        <p>Subscription ID: #100010002</p>
+                    </div>
+                    <div class="active-change-plan grad-border">
+                        <button type="button" class="btn btn-default fs-6" >Disabled</button>
+                    </div>
+                </div>
+                <div class="month-plan-detail">
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6 d-flex">
+                            <div class="bill-widget d-flex align-items-center">
+                                <div class="plan-icons">
+                                    <i class="feather-calendar"></i>
+                                </div>
+                                <div class="bill-name-group">
+                                    <h5>Started On</h5>
+                                    <p>Oct 1, 2022</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-md-6 d-flex">
+                            <div class="bill-widget d-flex align-items-center">
+                                <div class="plan-icons">
+                                    <i class="feather-credit-card"></i>
+                                </div>
+                                <div class="bill-name-group">
+                                    <h5>Price</h5>
+                                    <p>Monthly</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 d-flex">
+                            <div class="bill-widget d-flex align-items-center">
+                                <div class="plan-icons">
+                                    <i class="feather-book-open"></i>
+                                </div>
+                                <div class="bill-name-group">
+                                    <h5>Access</h5>
+                                    <p>Access All Courses</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 d-flex">
+                            <div class="bill-widget d-flex align-items-center">
+                                <div class="plan-icons">
+                                    <i class="feather-calendar"></i>
+                                </div>
+                                <div class="bill-name-group">
+                                    <h5>Billing Date</h5>
+                                    <p>Next Billing on Nov 1, 2022</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
