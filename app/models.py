@@ -267,7 +267,7 @@ class Transaction(models.Model):
 def generate_transaction_id():
     tahun_sekarang = datetime.now().year
     angka_unik = uuid.uuid4().int & (1<<64)-1
-    return f'SUK-{tahun_sekarang}-{angka_unik:013d}'
+    return f'SUK-{tahun_sekarang}-{angka_unik:013d}'[:20]
 
 
 @receiver(pre_save, sender=Transaction)

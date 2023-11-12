@@ -93,7 +93,4 @@ def buy_activity(request, id):
             payment_method=metode   
         )
 
-        return redirect('app.member:transactions')
-        # message = f'Halo admin %F0%9F%98%8A \nSaya atas nama {member} mau daftar kegiatan {activity_name} dengan kategori {activity_category}!'
-        # return redirect_to_whatsapp(message)
-        
+        return redirect('app.member:transactions')        
