@@ -4,9 +4,9 @@ from app.helpers.utils import get_member_data
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from app.models import Member, Transaction
+from app.models import Member, Transaction, ActivityList
 from app.activity.helpers import get_activity_detail, get_activity_list, get_category
-from .helpers import get_transactions
+# from .helpers import get_transactions
 from app.helpers.utils import redirect_to_whatsapp
 
 @cek_member_session
@@ -78,6 +78,21 @@ def member_profile_security_update(request):
             return redirect('app.member:member_profile_security')
     else:
         return HttpResponse('Method not allowed!')
+
+def get_transactions(id):
+    transactions = Transaction.objects.filter(member=id).order_by('-date')
+    transactions_data = []    
+    # check_payment_status(id)
+    for transaction in transactions:
+        activity = ActivityList.objects.filter(activity_id=transaction.activity.activity_id)
+        
+        transaction_data = transaction.transaction_json()
+        transactions_data.append({
+            'transaction': transaction_data,
+            'activity': activity[0].activity_json()
+        })
+
+    return transactions_data  
 
 @cek_member_session
 def transactions(request):

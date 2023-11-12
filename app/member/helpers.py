@@ -8,7 +8,6 @@ def get_transactions(id):
     check_payment_status(id)
     for transaction in transactions:
         activity = ActivityList.objects.filter(activity_id=transaction.activity.activity_id)
-        status = transaction.status                      
         
         transaction_data = transaction.transaction_json()
         transactions_data.append({
@@ -27,4 +26,3 @@ def check_payment_status(id):
         remaining_time = payment_due_time - current_time
         if remaining_time.total_seconds() <= 0:
             transaction.status = 'Gagal'
-            transaction.save()
