@@ -278,13 +278,36 @@ def set_transaction_id(sender, instance, **kwargs):
     if not instance.date:
         instance.date = timezone.now()  
 
-@receiver(pre_save, sender=Transaction)
-def update_transaction_status(sender, instance, **kwargs):
-    if instance.status == 'Menunggu Pembayaran':
-        current_time = timezone.now()
-        payment_due_time = instance.date + timedelta(minutes=10)
-        remaining_time = payment_due_time - current_time
+from apscheduler.schedulers.background import BackgroundScheduler
 
-        if remaining_time.total_seconds() <= 0:
-            instance.status = 'Gagal'
-            instance.save()
+scheduler = BackgroundScheduler()
+
+def update_transaction_status(transaction_id):
+    try:
+        transaction = Transaction.objects.get(transaction_id=transaction_id)
+        if transaction.status == 'Menunggu Pembayaran':
+            current_time = timezone.now()
+            payment_due_time = transaction.date + timedelta(minutes=1)
+            remaining_time = payment_due_time - current_time
+
+            if remaining_time.total_seconds() <= 0:
+                transaction.status = 'Gagal'
+                transaction.save()
+    except Transaction.DoesNotExist:
+        pass
+
+for transaction in Transaction.objects.filter(status='Menunggu Pembayaran'):
+    scheduler.add_job(update_transaction_status, 'interval', args=[transaction.transaction_id], minutes=1)
+
+scheduler.start()
+
+@receiver(pre_save, sender=Transaction)
+def set_transaction_id(sender, instance, **kwargs):
+    if not instance.transaction_id:
+        instance.transaction_id = generate_transaction_id()
+
+    if not instance.date:
+        instance.date = timezone.now()
+
+    if instance.status == 'Menunggu Pembayaran':
+        scheduler.add_job(update_transaction_status, 'interval', args=[instance.transaction_id], minutes=1)
