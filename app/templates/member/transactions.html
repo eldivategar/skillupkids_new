@@ -18,27 +18,84 @@
             <div class="monthly-subscribtion comman-space border-line">
                 <div class="monthly-group d-flex align-items-center">
                     <div class="subscribtion-active">
-                        <div class="active-btns">
-                            <button type="button" class="btn btn-warning mb-2">Menunggu Pembayaran</button>
+                        <div class="d-flex active-btns">
+                            {% with status=transaction.transaction.status %}
+                            {% if status == 'Menunggu Pembayaran' %}
+                            <button type="button" class="btn btn-warning mb-2">{{ status }}</button>
+                            {% elif status == 'Gagal' %}
+                            <button type="button" class="btn btn-danger mb-2">{{ status }}</button>
+                            {% elif status == 'Sukses' or status == 'Lunas' %}
+                            <button type="button" class="btn btn-success mb-2">{{ status }}</button>
+                            {% endif %}
+                            {% endwith %}
+                            {% if transaction.transaction.remaining_time %}
+                            <p id="remaining-time" class="fw-bold ms-2">{{ transaction.transaction.remaining_time }}</p>
+                            <script>
+                                function updateRemainingTime() {
+                                    var remainingTimeElement = document.getElementById('remaining-time');
+                                    var remainingTime = remainingTimeElement.innerText.split(':');
+                                    
+                                    var minutes = parseInt(remainingTime[0]);
+                                    var seconds = parseInt(remainingTime[1]);
+
+                                    if ((minutes === 0 && seconds === 0)) {
+                                        remainingTimeElement.innerText = '';
+                                    } else {
+                                        seconds--;
+
+                                        if (seconds < 0) {
+                                            seconds = 59;
+                                            minutes--;
+                                        }
+
+                                        remainingTimeElement.innerText = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+                                        setTimeout(updateRemainingTime, 1000);
+                                    }
+                                }
+                                window.onload = updateRemainingTime;
+                            </script>
+                            {% endif %}
                         </div>
 
                         <div class="col-lg-4 col-md-6 d-flex">
                             <div class="product-img">
-                                <a href="#"><img src="{% static 'WordPress-Development.jpg' %}" alt=""></a>
+                                <a href="#"><img src="{{ transaction.activity.activity_image.url }}" alt=""></a>
                             </div>
                         </div>
 
                         <div class="d-flex align-items-center mt-2">                                                    
                             <img src="{% static 'assets/img/icon/icon-24.svg' %}" alt="" class="img-fluid d-flex" style="max-width: 20%;">
-                            <p class="fw-bold category">{{ transaction.activity.category|capfirst }}</p>                                            
+                            <p id="remaining-time" class="fw-bold category">{{ transaction.activity.category|capfirst }}</p>                                            
                         </div>
 
                         <h5>{{ transaction.activity.activity_name }} </h5>
                         <p><b>Invoice:</b> {{ transaction.transaction.transaction_id }}</p>
                     </div>
-                    <div class="active-change-plan grad-border hvr-sweep-to-right">                        
-                        <p class="fw-bold">Total Rp{{ transaction.transaction.total_price }}</p>                        
-                        <a href="#!" class="btn btn-primary">Detail</a>
+                    <div class="active-change-plan grad-border hvr-sweep-to-right"> 
+                        {% if not transaction.transaction.is_free and transaction.transaction.status != 'Gagal' %}                     
+                        <p class="fw-bold">Rp{{ transaction.transaction.total_price }}</p>
+                        <a target="_blank" class="btn btn-primary" onclick="confirmBuy('{{ transaction.transaction.transaction_id }}')">Bayar</a>
+                        <script>
+                             function confirmBuy(transactionId) {
+                                Swal.fire({
+                                    title: "Selesaikan pembayaran?",
+                                    text: "Kamu akan dialihkan ke Whatsapp admin untuk pembayaran!",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#3085d6",
+                                    cancelButtonColor: "#d33",
+                                    cancelButtonText: "Kembali",
+                                    confirmButtonText: "Lanjut!"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        var url = "{% url 'app.member:chat_to_pay' id='TRANSACTION_ID' %}".replace('TRANSACTION_ID', transactionId);
+                                        window.location.href = url;
+                                    }
+                                });
+                            }
+                        </script>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="month-plan-detail">
@@ -54,105 +111,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-2 col-md-6 d-flex">
+                        <div class="col-xl-4 col-md-6 d-flex">
                             <div class="bill-widget d-flex align-items-center">
                                 <div class="plan-icons">
                                     <i class="feather-credit-card"></i>
                                 </div>
                                 <div class="bill-name-group">
-                                    <h5>Price</h5>
-                                    <p>Monthly</p>
+                                    <h5>Metode</h5>
+                                    <p>{{ transaction.transaction.payment_method|capfirst }}</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6 d-flex">
-                            <div class="bill-widget d-flex align-items-center">
-                                <div class="plan-icons">
-                                    <i class="feather-book-open"></i>
-                                </div>
-                                <div class="bill-name-group">
-                                    <h5>Access</h5>
-                                    <p>Access All Courses</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-md-6 d-flex">
-                            <div class="bill-widget d-flex align-items-center">
-                                <div class="plan-icons">
-                                    <i class="feather-calendar"></i>
-                                </div>
-                                <div class="bill-name-group">
-                                    <h5>Billing Date</h5>
-                                    <p>Next Billing on Nov 1, 2022</p>
-                                </div>
-                            </div>
-                        </div>
+                        </div>                                            
                     </div>
                 </div>
             </div>
-            {% endfor %}
-            <!-- <div class="monthly-subscribtion comman-space">
-                <div class="monthly-group d-flex align-items-center">
-                    <div class="subscribtion-active">
-                        <div class="active-btns">
-                            <button type="button" class="btn btn-danger">Expired</button>
-                        </div>
-                        <h5>Free Plan  </h5>
-                        <p>Subscription ID: #100010002</p>
-                    </div>
-                    <div class="active-change-plan grad-border">
-                        <button type="button" class="btn btn-default fs-6" >Disabled</button>
-                    </div>
-                </div>
-                <div class="month-plan-detail">
-                    <div class="row">
-                        <div class="col-xl-3 col-md-6 d-flex">
-                            <div class="bill-widget d-flex align-items-center">
-                                <div class="plan-icons">
-                                    <i class="feather-calendar"></i>
-                                </div>
-                                <div class="bill-name-group">
-                                    <h5>Started On</h5>
-                                    <p>Oct 1, 2022</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-md-6 d-flex">
-                            <div class="bill-widget d-flex align-items-center">
-                                <div class="plan-icons">
-                                    <i class="feather-credit-card"></i>
-                                </div>
-                                <div class="bill-name-group">
-                                    <h5>Price</h5>
-                                    <p>Monthly</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6 d-flex">
-                            <div class="bill-widget d-flex align-items-center">
-                                <div class="plan-icons">
-                                    <i class="feather-book-open"></i>
-                                </div>
-                                <div class="bill-name-group">
-                                    <h5>Access</h5>
-                                    <p>Access All Courses</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-md-6 d-flex">
-                            <div class="bill-widget d-flex align-items-center">
-                                <div class="plan-icons">
-                                    <i class="feather-calendar"></i>
-                                </div>
-                                <div class="bill-name-group">
-                                    <h5>Billing Date</h5>
-                                    <p>Next Billing on Nov 1, 2022</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
+            {% endfor %}            
         </div>
     </div>
 

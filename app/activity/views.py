@@ -3,9 +3,9 @@ from django.http import HttpResponse
 from app.helpers.utils import get_member_data, get_mitra_data
 from .helpers import get_activity_detail, get_activity_list, get_category
 from app.helpers.utils import redirect_to_whatsapp
-from app.models import Member
+from app.models import Member, Transaction, Mitra
 from app.activity.helpers import get_activity_detail
-from django.utils.html import escape
+from app.helpers.decorators import cek_member_session
 
 def class_list(request):
     if request.method == 'GET':
@@ -52,7 +52,7 @@ def class_detail(request, id, activity_name):
                 data = get_member_data(request)
                 return render(request, 'activity/activity-details.html', {'data': data, 'data_detail_activity': data_detail_activity})
 
-def buy_activity(request, id, activity_name):
+def chat_to_admin(request, id, activity_name):
     if request.method == 'GET':
         customer_id = request.session.get('customer_id')[2:]
         member = Member.objects.get(uuid=customer_id)
@@ -62,4 +62,38 @@ def buy_activity(request, id, activity_name):
 
         message = f'Halo admin %F0%9F%98%8A \nSaya atas nama {member} mau daftar kegiatan {activity_name} dengan kategori {activity_category}!'
         return redirect_to_whatsapp(message)
+
+@cek_member_session
+def buy_activity(request, id):
+    if request.method == 'GET':
+        customer_id = request.session.get('customer_id')[2:]
+        member = Member.objects.get(uuid=customer_id)
+        activity = get_activity_detail(id)
+
+        activity_id = activity['activity']['activity_id']
+        mitra = Mitra.objects.get(uuid=activity['mitra']['uuid'])
+        price = activity['activity']['activity_informations']['price']
+
+        if price == 0:
+            is_free = True
+            status = 'Sukses'
+            metode = '-'
+        else:
+            is_free = False
+            status = 'Menunggu Pembayaran'
+            metode = 'Transfer Bank'
+    
+        Transaction.objects.create(
+            member=member,
+            mitra=mitra,
+            activity_id=activity_id,
+            is_free=is_free,
+            total_price=price,
+            status=status,
+            payment_method=metode   
+        )
+
+        return redirect('app.member:transactions')
+        # message = f'Halo admin %F0%9F%98%8A \nSaya atas nama {member} mau daftar kegiatan {activity_name} dengan kategori {activity_category}!'
+        # return redirect_to_whatsapp(message)
         

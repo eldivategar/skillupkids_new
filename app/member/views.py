@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from app.models import Member
 from app.activity.helpers import get_activity_detail, get_activity_list, get_category
 from .helpers import get_transactions
+from app.helpers.utils import redirect_to_whatsapp
 
 @cek_member_session
 def member_profile(request):
@@ -83,8 +84,19 @@ def transactions(request):
     data = get_member_data(request)
     member_id = request.session.get('customer_id')[2:]
     transactions = get_transactions(member_id)
-
+        
     return render(request, 'member/transactions.html', {'data': data, 'transactions': transactions})
+
+@cek_member_session
+def chat_to_pay(request, id):
+    if request.method == 'GET':
+        customer_id = request.session.get('customer_id')[2:]
+        member = Member.objects.get(uuid=customer_id)
+        transactions = get_transactions(customer_id)
+        activity_name = transactions[0]['activity']['activity_name']
+        total_price = transactions[0]['transaction']['total_price']
+        message = f'Halo admin %F0%9F%98%80 \nSaya atas nama *{member}* ingin melakukan pembayaran kegiatan *{activity_name}* sebesar *{total_price}*!'
+        return redirect_to_whatsapp(message)
 
 @cek_member_session
 def member_dashboard_activity(request):

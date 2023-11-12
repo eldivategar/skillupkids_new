@@ -16,4 +16,5 @@ urlpatterns = [
     path('security/', views.member_profile_security, name='member_profile_security'),
     path('security/update/', views.member_profile_security_update, name='member_profile_security_update'),
     path('transactions/', views.transactions, name='transactions'),
+    path('chat-to-pay/<str:id>', views.chat_to_pay, name='chat_to_pay'),
 ]

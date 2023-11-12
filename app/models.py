@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.hashers import make_password
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from datetime import datetime
+from datetime import datetime, timedelta
+from django.utils import timezone
 import uuid
 
 class Member(models.Model):
@@ -82,6 +83,7 @@ class Mitra(models.Model):
             'linkedin_site': self.linkedin_site,
             'yt_site': self.yt_site,
             'profile_image': self.profile_image,
+            'uuid': self.uuid
         }
         return data
     
@@ -182,37 +184,86 @@ class Transaction(models.Model):
     mitra = models.ForeignKey(Mitra, to_field='uuid', related_name='mitra_transaction', on_delete=models.CASCADE)
     activity = models.ForeignKey(ActivityList, to_field='activity_id', related_name='activity_transaction', on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
-
+    
+    IS_FREE = (
+        (True, True),
+        (False, False),
+    )
+    is_free = models.BooleanField(choices=IS_FREE, default=False)
     STATUS = (
-        ('pending', 'Pending'),
-        ('wfp', 'Menunggu Pembayaran'),
-        ('success', 'Sukses'),
-        ('paid', 'Lunas'),
-        ('failed', 'Gagal'),
-        ('refund', 'Refund'),
-        ('expired', 'Kadaluwarsa'),
-        ('cancel', 'Dibatalkan'),
-    ) 
+        ('Pending', 'Pending'),
+        ('Menunggu Pembayaran', 'Menunggu Pembayaran'),
+        ('Sukses', 'Sukses'),
+        ('Lunas', 'Lunas'),
+        ('Gagal', 'Gagal'),
+        ('Refund', 'Refund'),
+        ('Kadaluwarsa', 'Kadaluwarsa'),
+        ('Dibatalkan', 'Dibatalkan'),
+    )
 
-    status = models.CharField(max_length=50, choices=STATUS, default='pending')
+    PAYMENT_METHOD = (
+        ('Transfer Bank', 'Transfer Bank'),
+        ('OVO', 'OVO'),
+        ('GoPay', 'GoPay'),
+        ('LinkAja', 'LinkAja'),
+        ('Dana', 'Dana'),
+        ('ShopeePay', 'ShopeePay'),
+        ('Alfamart', 'Alfamart'),
+        ('Indomaret', 'Indomaret'),     
+    )
+
+    status = models.CharField(max_length=50, choices=STATUS, default='Menunggu Pembayaran')
     message_status = models.TextField(default='', blank=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=3, default=0)
-    
+    payment_method = models.CharField(max_length=50, choices=PAYMENT_METHOD, default='Transfer Bank')
+
     def __str__(self):
         return str(self.transaction_id)
     
     def transaction_json(self):
-        data = {
-            'transaction_id': self.transaction_id,
-            'member': self.member.name,
-            'mitra': self.mitra.name,
-            'activity': self.activity.activity_name,
-            'date': self.date,
-            'status': self.status,
-            'total_price': self.total_price,
-        }
+        if self.is_free:
+            data = {
+                'transaction_id': self.transaction_id,
+                'member': self.member.name,
+                'mitra': self.mitra.name,
+                'activity': self.activity.activity_name,
+                'date': self.date,
+                'is_free': self.is_free,
+                'status': self.status,
+                'total_price': self.total_price,
+                'payment_method': self.payment_method,                            
+            }
+
+        else:
+            data = {
+                'transaction_id': self.transaction_id,
+                'member': self.member.name,
+                'mitra': self.mitra.name,
+                'activity': self.activity.activity_name,
+                'date': self.date,
+                'is_free': self.is_free,
+                'status': self.status,
+                'total_price': self.total_price,
+                'payment_method': self.payment_method,
+                'remaining_time': self.calculate_remaining_time(),                
+            }
         return data
     
+    def calculate_remaining_time(self):
+        if self.status == 'Menunggu Pembayaran':
+            current_time = timezone.now()
+            payment_due_time = self.date + timedelta(minutes=10)
+            remaining_time = payment_due_time - current_time
+
+            if remaining_time.total_seconds() <= 0:
+                self.status = 'Gagal'
+                self.save()
+                return ''                                
+
+            return f"{int(remaining_time.total_seconds() // 60)}:{int(remaining_time.total_seconds() % 60):02d}"        
+        else:
+            return ''
+
 def generate_transaction_id():
     tahun_sekarang = datetime.now().year
     angka_unik = uuid.uuid4().int & (1<<64)-1
@@ -222,4 +273,4 @@ def generate_transaction_id():
 @receiver(pre_save, sender=Transaction)
 def set_transaction_id(sender, instance, **kwargs):
     if not instance.transaction_id:
-        instance.transaction_id = generate_transaction_id()
+        instance.transaction_id = generate_transaction_id()    

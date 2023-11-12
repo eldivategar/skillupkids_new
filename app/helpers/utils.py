@@ -94,5 +94,6 @@ def get_member_data(request):
 def redirect_to_whatsapp(message):
     admin_wa = '+6285157558709'    
 
-    redirect_to = f'https://wa.me/{admin_wa}?text={message}&app_absent=0'
+    # redirect_to = f'https://wa.me/{admin_wa}?text={message}&app_absent=0'
+    redirect_to = f'https://api.whatsapp.com/send?phone={admin_wa}&text={message}'
     return HttpResponseRedirect(redirect_to)
