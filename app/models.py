@@ -245,14 +245,14 @@ class Transaction(models.Model):
                 'status': self.status,
                 'total_price': self.total_price,
                 'payment_method': self.payment_method,
-                'remaining_time': self.calculate_remaining_time(),                
+                'remaining_time': self.check_payment_status(),                
             }
         return data
     
-    def calculate_remaining_time(self):
+    def check_payment_status(self):
         if self.status == 'Menunggu Pembayaran':
             current_time = timezone.now()
-            payment_due_time = self.date + timedelta(minutes=10)
+            payment_due_time = self.date + timedelta(minutes=1)
             remaining_time = payment_due_time - current_time
 
             if remaining_time.total_seconds() <= 0:
@@ -273,4 +273,18 @@ def generate_transaction_id():
 @receiver(pre_save, sender=Transaction)
 def set_transaction_id(sender, instance, **kwargs):
     if not instance.transaction_id:
-        instance.transaction_id = generate_transaction_id()    
+        instance.transaction_id = generate_transaction_id()
+    
+    if not instance.date:
+        instance.date = timezone.now()  
+
+@receiver(pre_save, sender=Transaction)
+def update_transaction_status(sender, instance, **kwargs):
+    if instance.status == 'Menunggu Pembayaran':
+        current_time = timezone.now()
+        payment_due_time = instance.date + timedelta(minutes=10)
+        remaining_time = payment_due_time - current_time
+
+        if remaining_time.total_seconds() <= 0:
+            instance.status = 'Gagal'
+            instance.save()

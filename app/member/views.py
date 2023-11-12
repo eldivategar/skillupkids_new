@@ -4,7 +4,7 @@ from app.helpers.utils import get_member_data
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from app.models import Member
+from app.models import Member, Transaction
 from app.activity.helpers import get_activity_detail, get_activity_list, get_category
 from .helpers import get_transactions
 from app.helpers.utils import redirect_to_whatsapp

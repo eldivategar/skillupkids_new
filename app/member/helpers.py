@@ -1,4 +1,5 @@
 from app.models import ActivityList, Transaction
+from django.utils import timezone
 
 def get_transactions(id):
     transactions = Transaction.objects.filter(member=id).order_by('-date')
@@ -12,4 +13,4 @@ def get_transactions(id):
             'activity': activity[0].activity_json()
         })
 
-    return transactions_data
+    return transactions_data   

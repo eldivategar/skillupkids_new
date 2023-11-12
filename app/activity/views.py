@@ -68,7 +68,7 @@ def buy_activity(request, id):
     if request.method == 'GET':
         customer_id = request.session.get('customer_id')[2:]
         member = Member.objects.get(uuid=customer_id)
-        activity = get_activity_detail(id)
+        activity = get_activity_detail(int(id))
 
         activity_id = activity['activity']['activity_id']
         mitra = Mitra.objects.get(uuid=activity['mitra']['uuid'])
