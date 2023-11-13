@@ -14934,8 +14934,15 @@ input[type=password]::-ms-clear
 	color: #1DA1F2;
 }
 .social-icon-soon ul li .insta-gram {
-	color: #000100;
-}
+    background: linear-gradient(45deg, #feda77, #d62976, #962fbf, #4f5bd5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}  
+.social-icon-soon ul li .tik-tok {
+    background: linear-gradient(45deg, #69C9D0, #EE1D52, #010101, #FFFFFF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}  
 .social-icon-soon ul li .linked-in {
 	color: #0A66C2;
 }
