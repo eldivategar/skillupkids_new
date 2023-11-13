@@ -6,14 +6,3 @@ DEBUG = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'app/static')
 
 ALLOWED_HOSTS = ['*']
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'skillupkids_db',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST':'localhost',
-        'PORT':'3306',
-    }
-}
