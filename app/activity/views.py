@@ -84,7 +84,7 @@ def buy_activity(request, id):
             status = 'Menunggu Pembayaran'
             metode = 'Transfer Bank'
         
-        expired_at = timezone.now() + timezone.timedelta(minutes=7)
+        expired_at = timezone.now() + timezone.timedelta(minutes=10)
     
         transaction = Transaction.objects.create(
             member=member,
