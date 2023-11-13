@@ -6,6 +6,7 @@ from app.helpers.utils import redirect_to_whatsapp
 from app.models import Member, Transaction, Mitra
 from app.activity.helpers import get_activity_detail
 from app.helpers.decorators import cek_member_session
+from django.utils import timezone
 
 def class_list(request):
     if request.method == 'GET':
@@ -82,15 +83,19 @@ def buy_activity(request, id):
             is_free = False
             status = 'Menunggu Pembayaran'
             metode = 'Transfer Bank'
+        
+        expired_at = timezone.now() + timezone.timedelta(minutes=7)
     
-        Transaction.objects.create(
+        transaction = Transaction.objects.create(
             member=member,
             mitra=mitra,
             activity_id=activity_id,
             is_free=is_free,
             total_price=price,
             status=status,
-            payment_method=metode   
+            payment_method=metode,
+            expired_at=expired_at 
         )
+        transaction.save()
 
         return redirect('app.member:transactions')        

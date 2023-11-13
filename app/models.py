@@ -216,11 +216,19 @@ class Transaction(models.Model):
     message_status = models.TextField(default='', blank=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=3, default=0)
     payment_method = models.CharField(max_length=50, choices=PAYMENT_METHOD, default='Transfer Bank')
+    expired_at = models.DateTimeField(null=True, blank=True, default=None)
 
     def __str__(self):
         return str(self.transaction_id)
     
+    def save(self, *args, **kwargs):
+        if not self.is_free and self.expired_at is None:
+            self.expired_at = self.date + timezone.timedelta(minutes=10)
+
+        super().save(*args, **kwargs)
+    
     def transaction_json(self):
+        self.check_expired_status()
         if self.is_free:
             data = {
                 'transaction_id': self.transaction_id,
@@ -236,33 +244,23 @@ class Transaction(models.Model):
 
         else:
             data = {
-                'transaction_id': self.transaction_id,
-                'member': self.member.name,
-                'mitra': self.mitra.name,
-                'activity': self.activity.activity_name,
-                'date': self.date,
-                'is_free': self.is_free,
-                'status': self.status,
-                'total_price': self.total_price,
-                'payment_method': self.payment_method,
-                'remaining_time': self.check_payment_status(),                
-            }
+                    'transaction_id': self.transaction_id,
+                    'member': self.member.name,
+                    'mitra': self.mitra.name,
+                    'activity': self.activity.activity_name,
+                    'date': self.date,
+                    'is_free': self.is_free,
+                    'status': self.status,
+                    'total_price': self.total_price,
+                    'payment_method': self.payment_method,
+                    'expired_at': self.expired_at
+                }
         return data
     
-    def check_payment_status(self):
-        if self.status == 'Menunggu Pembayaran':
-            current_time = timezone.now()
-            payment_due_time = self.date + timedelta(minutes=1)
-            remaining_time = payment_due_time - current_time
-
-            if remaining_time.total_seconds() <= 0:
-                self.status = 'Gagal'
-                self.save()
-                return ''                                
-
-            return f"{int(remaining_time.total_seconds() // 60)}:{int(remaining_time.total_seconds() % 60):02d}"        
-        else:
-            return ''
+    def check_expired_status(self):
+        if self.expired_at and timezone.now() > self.expired_at:
+            self.status = 'Gagal'
+            self.save()
 
 def generate_transaction_id():
     tahun_sekarang = datetime.now().year
@@ -276,38 +274,4 @@ def set_transaction_id(sender, instance, **kwargs):
         instance.transaction_id = generate_transaction_id()
     
     if not instance.date:
-        instance.date = timezone.now()  
-
-from apscheduler.schedulers.background import BackgroundScheduler
-
-scheduler = BackgroundScheduler()
-
-def update_transaction_status(transaction_id):
-    try:
-        transaction = Transaction.objects.get(transaction_id=transaction_id)
-        if transaction.status == 'Menunggu Pembayaran':
-            current_time = timezone.now()
-            payment_due_time = transaction.date + timedelta(minutes=1)
-            remaining_time = payment_due_time - current_time
-
-            if remaining_time.total_seconds() <= 0:
-                transaction.status = 'Gagal'
-                transaction.save()
-    except Transaction.DoesNotExist:
-        pass
-
-for transaction in Transaction.objects.filter(status='Menunggu Pembayaran'):
-    scheduler.add_job(update_transaction_status, 'interval', args=[transaction.transaction_id], minutes=1)
-
-scheduler.start()
-
-@receiver(pre_save, sender=Transaction)
-def set_transaction_id(sender, instance, **kwargs):
-    if not instance.transaction_id:
-        instance.transaction_id = generate_transaction_id()
-
-    if not instance.date:
         instance.date = timezone.now()
-
-    if instance.status == 'Menunggu Pembayaran':
-        scheduler.add_job(update_transaction_status, 'interval', args=[instance.transaction_id], minutes=1)

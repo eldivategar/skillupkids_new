@@ -28,33 +28,33 @@
                             <button type="button" class="btn btn-success mb-2">{{ status }}</button>
                             {% endif %}
                             {% endwith %}
-                            {% if transaction.transaction.remaining_time %}
-                            <p id="remaining-time" class="fw-bold ms-2">{{ transaction.transaction.remaining_time }}</p>
+                            {% if transaction.transaction.expired_at %}
+                            <p id="remaining-time" class="fw-bold ms-2"></p>
                             <script>
-                                function updateRemainingTime() {
-                                    var remainingTimeElement = document.getElementById('remaining-time');
-                                    var remainingTime = remainingTimeElement.innerText.split(':');
-                                    
-                                    var minutes = parseInt(remainingTime[0]);
-                                    var seconds = parseInt(remainingTime[1]);
-
-                                    if ((minutes === 0 && seconds === 0)) {
-                                        remainingTimeElement.innerText = '';
-                                    } else {
-                                        seconds--;
-
-                                        if (seconds < 0) {
-                                            seconds = 59;
-                                            minutes--;
-                                        }
-
-                                        remainingTimeElement.innerText = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
-
-                                        setTimeout(updateRemainingTime, 1000);
+                                function updateCountdownTimer(expiredAt) {
+                                    var expiredDate = new Date(expiredAt);
+                                
+                                    var now = new Date();
+                                    var remainingTime = expiredDate - now;
+                                
+                                    var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                                    var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+                                
+                                    var formattedTime = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+                                
+                                    $("#remaining-time").text(formattedTime);
+                                
+                                    if (remainingTime <= 0) {
+                                        $("#remaining-time").text("");
                                     }
                                 }
-                                window.onload = updateRemainingTime;
-                            </script>
+                                
+                                var expiredAt = "{{ transaction.transaction.expired_at.isoformat }}";
+                                
+                                setInterval(function() {
+                                    updateCountdownTimer(expiredAt);
+                                }, 1000);
+                                </script>
                             {% endif %}
                         </div>
 
