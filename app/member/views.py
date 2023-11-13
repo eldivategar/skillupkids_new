@@ -85,7 +85,7 @@ def transactions(request):
     member_id = request.session.get('customer_id')[2:]
     transactions = get_transactions(member_id)
         
-    return render(request, 'member/transactions.html', {'data': data, 'transactions': transactions})
+    return HttpResponse(transactions)
 
 @cek_member_session
 def chat_to_pay(request, id):
