@@ -229,7 +229,7 @@ class Transaction(models.Model):
     
     def transaction_json(self):
         self.check_expired_status()
-        if self.is_free:
+        if self.is_free or self.status == 'Sukses' or self.status == 'Lunas' or self.status == 'Gagal' or self.status == 'Refund' or self.status == 'Kadaluwarsa' or self.status == 'Dibatalkan':
             data = {
                 'transaction_id': self.transaction_id,
                 'member': self.member.name,

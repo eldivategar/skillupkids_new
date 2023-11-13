@@ -73,7 +73,7 @@
                         <p><b>Invoice:</b> {{ transaction.transaction.transaction_id }}</p>
                     </div>
                     <div class="active-change-plan grad-border hvr-sweep-to-right"> 
-                        {% if not transaction.transaction.is_free and transaction.transaction.status != 'Gagal' %}                     
+                        {% if transaction.transaction.expired_at %}                     
                         <p class="fw-bold">Rp{{ transaction.transaction.total_price }}</p>
                         <a target="_blank" class="btn btn-primary" onclick="confirmBuy('{{ transaction.transaction.transaction_id }}')">Bayar</a>
                         <script>
