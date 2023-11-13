@@ -11,6 +11,8 @@
                 <div class="row">
                     <div class="settings-inner-blk p-0">
                         <div class="comman-space pb-0">
+                                                        
+                            <!-- List Activity -->
                             <div class="instruct-search-blk">
                                 <div class="show-filter choose-search-blk">
                                     <form id="form-category" action="{% url 'app.mitra:mitra_dashboard_activity_list' %}" method="get">
@@ -44,12 +46,13 @@
                                             <th>KEGIATAN</th>
                                             <th class="text-center">STATUS</th>
                                             <th class="text-center">KETERANGAN</th>
+                                            <th class="text-center">ACTIONS</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% if data_activity|length == 0 %}
                                         <tr>
-                                            <td colspan="3" class="text-center">Tidak ada data</td>
+                                            <td colspan="4" class="text-center">Tidak ada data</td>
                                         </tr>
                                         {% else %}
                                             {% for items in data_activity %}
@@ -104,12 +107,117 @@
                                             </td>
 
                                             {% endwith %}
+                                            <td class="text-center"> 
+                                                <button class="btn btn-info btn-sm text-white btn-details" onclick="show_member('{{ items.activity.activity_id }}', '{{ items.activity.activity_name }}')">Details</button>
+                                                <button class="btn btn-warning btn-sm text-white">Edit</button>
+                                            </td>
                                         </tr>
                                         {% endfor %} {% endif %}
                                     </tbody>
                                 </table>
                                 <!-- /Referred Users-->
                             </div>
+                            	
+                            <!-- List Member -->
+                            {% if member_data %}
+                            <script>
+                                document.querySelector('.instruct-search-blk').style.display = 'none';
+                                document.querySelector('.settings-tickets-blk').style.display = 'none';
+                                
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    document.querySelectorAll('.btn-details').forEach(function (button) {
+                                        button.addEventListener('click', function () {
+                                            var activity = button.getAttribute('data-id');
+                            
+                                            document.querySelector('.instruct-search-blk').style.display = 'none';
+                                            document.querySelector('.settings-tickets-blk').style.display = 'none';
+                            
+                                            document.querySelector('#list-member-container').style.display = 'block';
+                                        });
+                                    });
+                            
+                                    document.querySelector('.btn-close-member').addEventListener('click', function () {
+                                        document.querySelector('#list-member-container').style.display = 'none';
+                            
+                                        document.querySelector('.instruct-search-blk').style.display = 'block';
+                                        document.querySelector('.settings-tickets-blk').style.display = 'block';
+                                    });
+                                });    
+                            </script>                            
+                            <div class="tak-instruct-group" id="list-member-container">
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="settings-widget">
+                                            <div class="settings-inner-blk p-0">
+                                                <div class="sell-course-head student-meet-head comman-space border-0">
+                                                    <button class="mb-2 btn btn-danger btn-sm text-white btn-close-member"><i class="feather-x"></i></button>
+                                                        <div class="tak-head d-flex align-items-center">
+                                                            <div>
+                                                                <h3 id="title-member"></h3>
+                                                                <p>Daftar member yang terdaftar.</p>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <form>
+                                                            <div class="student-search-form d-flex ">
+                                                                <div class="form-group mb-0">
+                                                                    <input type="text" class="form-control" placeholder="Nama Member">
+                                                                </div>
+                                                                <div class="export-cvv-btn">
+                                                                    <button class="btn btn-primary">Cari</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        {% for items in member_data %}
+                                        <div class="col-xl-4 col-lg-6 col-md-6 d-flex">
+                                            <div class="student-box flex-fill">
+                                                <div class="student-box-blks">
+                                                    
+                                                    <div class="student-img">
+                                                        <a href="#!">
+                                                            <img class="img-fluid" alt="Students Info" src="{% static 'assets/img/user/user1.jpg' %}">
+                                                        </a>
+                                                    </div>
+                                                    <div class="student-content pb-0">												
+                                                        <h5><a href="#!">{{ items.member.name }}</a></h5>
+                                                        <div class="loc-blk d-grid align-items-center justify-content-center">
+                                                            <div class="d-flex align-items-center justify-content-center">                                                            
+                                                                <i class="feather-mail me-2"></i>
+                                                                <p>{{ items.member.email }}</p>
+                                                            </div>
+                                                            <div class="d-flex align-items-center justify-content-center">                                                            
+                                                                <i class="feather-phone me-2"></i>
+                                                                <p>{{ items.member.number }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="enrol-student-foot">
+                                                    <ul>
+                                                        <li>                                                            
+                                                            <p>Terdaftar <b>{{ items.transaction.date|date:"d F Y" }}</b></p>
+                                                        </li>
+                                                        <li>
+                                                            <a class="btn btn-wish w-100" onclick="chat_to_member('{{ items.member.number }}')">Hubungi</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script>
+                                            document.querySelector('#title-member').innerHTML = '{{ items.activity.activity_name }}';
+                                        </script>
+                                        {% endfor %}                                       
+                                                                  
+                                </div>
+                            </div>
+                            {% endif %}
+
                         </div>
                     </div>
                 </div>
@@ -117,5 +225,14 @@
         </div>
     </div>
 </section>
-
+<script>
+    function chat_to_member(number) {
+        var url = "{% url 'app.mitra:chat_to_member' number='WA_NUMBER' %}".replace('WA_NUMBER', number);
+        window.open(url, '_blank');
+    }
+    function show_member(id, activity) {
+        var url = "{% url 'app.mitra:mitra_dashboard_activity_list' activity_id='ACTIVITY_ID' activity_name='ACTIVITY_NAME' %}".replace('ACTIVITY_ID', id).replace('ACTIVITY_NAME', activity);
+        window.location.href = url;
+    }
+</script>
 {% endblock %}

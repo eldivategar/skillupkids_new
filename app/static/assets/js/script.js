@@ -1350,6 +1350,6 @@ Version      : 1.0
 	
 			formCategory.submit();
 		});
-	});
+	});	
 
 })(jQuery);

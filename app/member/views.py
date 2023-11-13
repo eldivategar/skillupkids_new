@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from app.models import Member, Transaction
 from app.activity.helpers import get_activity_detail, get_activity_list, get_category
-from .helpers import get_transactions
+from .helpers import get_transactions, get_member_activity
 from app.helpers.utils import redirect_to_whatsapp
 
 @cek_member_session
@@ -100,22 +100,33 @@ def chat_to_pay(request, id):
 
 @cek_member_session
 def member_dashboard_activity(request):
-    category = request.GET.get('category')
-    keyword = request.GET.get('keyword')        
-        
-    if category == None and keyword == None:
-        list_of_activity = get_activity_list(category='all')
+    if request.method == 'GET':
+        member_id = request.session.get('customer_id')[2:]
+        category = request.GET.get('category')
+        keyword = request.GET.get('keyword')        
+            
+        if category == None and keyword == None:
+            list_of_activity = get_activity_list(category='all')
 
-    elif category == None and keyword != None:
-        list_of_activity = get_activity_list(keyword=keyword)
-        
-    elif category != None and keyword == None:
-        list_of_activity = get_activity_list(category=category)
-        
-    elif category != None and keyword != None:
-        list_of_activity = get_activity_list(category=category, keyword=keyword)                
+        elif category == None and keyword != None:
+            list_of_activity = get_activity_list(keyword=keyword)
+            
+        elif category != None and keyword == None:
+            list_of_activity = get_activity_list(category=category)
+            
+        elif category != None and keyword != None:
+            list_of_activity = get_activity_list(category=category, keyword=keyword)                
 
-    categories = get_category()
+        categories = get_category()
+        activities = get_member_activity(member_id)
 
-    data = get_member_data(request)
-    return render(request, 'member/dashboard/activity.html', {'data': data, 'list_of_activity': list_of_activity, 'category': categories})
+        data = get_member_data(request)
+        return render(request, 'member/dashboard/activity.html', {'data': data, 'list_of_activity': list_of_activity, 'category': categories, 'activities': activities})
+    
+@cek_member_session
+def chat_to_admin(request):
+    if request.method == 'GET':
+        customer_id = request.session.get('customer_id')[2:]
+        member = Member.objects.get(uuid=customer_id)
+        message = f'Halo admin %F0%9F%98%80 \nSaya atas nama *{member}* ingin bertanya tentang...'
+        return redirect_to_whatsapp(message)

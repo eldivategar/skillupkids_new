@@ -4,8 +4,9 @@ from app.helpers.utils import get_mitra_data
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from app.models import Mitra, ActivityList
-from .helpers import get_my_activity, get_status
+from app.models import Mitra, ActivityList, Member
+from .helpers import get_my_activity, get_status, get_registered_member
+from app.helpers.utils import redirect_to_whatsapp
 
 @cek_mitra_session
 def mitra_profile(request):
@@ -122,7 +123,7 @@ def mitra_profile_security_update(request):
         return HttpResponse('Method not allowed!')
 
 @cek_mitra_session
-def mitra_dashboard_activity_list(request):
+def mitra_dashboard_activity_list(request, activity_id=None, activity_name=None):
     keyword = request.GET.get('keyword')
     status = request.GET.get('status')
     mitra_id = request.session.get('customer_id')[2:]
@@ -138,14 +139,29 @@ def mitra_dashboard_activity_list(request):
     
     elif status != None and keyword != None:
         data_activity = get_my_activity(mitra_id, keyword=keyword, status=status)
-        
-
+    
     data = get_mitra_data(request)
     activity_status = get_status()
-            
-    print(data_activity)
+    
+    if activity_id and activity_name:
+        member_data = get_registered_member(activity_id)
+        if not member_data:
+            messages.error(request, 'Belum ada member yang terdaftar!')
+            return render(request, 'mitra/dashboard/list-of-activity.html', {'data': data, 'data_activity': data_activity, 'activity_status': activity_status})
+        
+        return render(request, 'mitra/dashboard/list-of-activity.html', {'data': data, 'data_activity': data_activity, 'activity_status': activity_status, 'member_data': member_data})
+    
     return render(request, 'mitra/dashboard/list-of-activity.html', {'data': data, 'data_activity': data_activity, 'activity_status': activity_status})
 
+@cek_mitra_session
+def chat_to_member(request, number):
+    if request.method == 'GET':
+        customer_id = request.session.get('customer_id')[2:]
+        mitra = Mitra.objects.get(uuid=customer_id)
+        member = Member.objects.get(number=number)
+        message = f'Halo {member} %F0%9F%98%80 \nKami atas nama *{mitra}* ingin bertanya tentang...!'
+        return redirect_to_whatsapp(message, number)
+    
 @cek_mitra_session
 def mitra_create_new_activity(request):
     if request.method == 'GET':

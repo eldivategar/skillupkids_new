@@ -91,9 +91,12 @@ def get_member_data(request):
     
     return customer_data
 
-def redirect_to_whatsapp(message):
-    admin_wa = '+6285157558709'    
-
-    # redirect_to = f'https://wa.me/{admin_wa}?text={message}&app_absent=0'
-    redirect_to = f'https://api.whatsapp.com/send?phone={admin_wa}&text={message}'
+def redirect_to_whatsapp(message, number=None):      
+    if number == None:
+        number = '+6285157558709'
+    else:
+        if number.startswith('0'):
+            number = '+62' + number[1:]        
+        
+    redirect_to = f'https://api.whatsapp.com/send?phone={number}&text={message}'
     return HttpResponseRedirect(redirect_to)

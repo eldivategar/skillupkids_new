@@ -12,8 +12,9 @@ urlpatterns = [
     path('forgot-password/', authentications.forgot_password, name='forgot_password'),
 
     path('dashboard/list-of-activity/', views.mitra_dashboard_activity_list, name='mitra_dashboard_activity_list'),
+    path('dashboard/list-of-activity/<str:activity_id>/<str:activity_name>/', views.mitra_dashboard_activity_list, name='mitra_dashboard_activity_list'),
     path('dashboard/create-new-activity/', views.mitra_create_new_activity, name='mitra_create_new_activity'),
-
+    path('chat-to-member/<str:number>', views.chat_to_member, name='chat_to_member'),
 
     path('profile/', views.mitra_profile, name='mitra_profile'),
     path('profile/update/', views.mitra_profile_update, name='mitra_profile_update'),

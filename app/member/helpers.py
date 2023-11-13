@@ -1,7 +1,18 @@
-from app.models import ActivityList, Transaction
-from django.utils import timezone
-from datetime import timedelta
+from app.models import ActivityList, Transaction, Mitra
 
+def get_member_activity(id):
+    get_activites = Transaction.objects.filter(member=id, status='Sukses').order_by('-date')
+    activites_data = []
+
+    for activity in get_activites:
+        data = activity.activity.activity_json()
+        mitra_data = Mitra.objects.get(name=data['mitra_activity'])
+        activites_data.append({
+            'activity': data,
+            'mitra': mitra_data.mitra_json(),
+        })
+    # print(activites_data)
+    return activites_data
 def get_transactions(id):
     transactions = Transaction.objects.filter(member=id).order_by('-date')
     transactions_data = []    

@@ -9,12 +9,58 @@
             <div class="student-widget-group">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="row">
-
-                            <div class="d-flex justify-content-center align-items-center">
-                                <h5>Belum ada kegiatan yang diikuti.</h5>
-                            </div>
-
+                        <div class="row">                            
+                            {% if not activities %}
+                            <h5 class="text-center">Belum ada kegiatan yang diikuti</h5>
+                            {% else %}
+                            {% for items in activities %}
+                            <h5 class="d-flex justify-content-center align-items-center mb-2" style="font-weight: 600;">Kegiatan Saya</h5>
+                                <div class="course-box course-design list-course d-flex">
+                                        <div class="product">
+                                            <div class="product-img">
+                                                <img class="img-fluid" alt="" src="{% static 'assets/img/course/course-10.jpg' %}">
+                                            </div>                                      
+                                            <div class="product-content">
+                                                <div class="head-course-title">
+                                                    <h3 class="title">{{ items.activity.activity_name }}</h3>
+                                                    <div class="all-btn all-category d-flex align-items-center">
+                                                        <a id="chat-to-admin" class="btn btn-primary" onclick="chat_to_admin()">Chat Admin</a>
+                                                    </div>
+                                                </div>              
+                                                <div class="col-lg-8">
+                                                    <p class="fw-normal" style="font-size: smaller;">{{ items.activity.activity_informations.sub_description }}</p>
+                                                </div>                              
+                                                <div class="course-info border-bottom-0 pb-0 d-flex align-items-center">
+                                                    <div class="rating-img d-flex align-items-center">
+                                                        <img src="{% static 'assets/img/icon/user-icon.svg' %}" alt="">
+                                                        <p>{{ items.activity.activity_informations.age|capfirst }}</p>
+                                                    </div>
+                                                    <div class="course-view d-flex align-items-center">
+                                                        <img src="{% static 'assets/img/icon/icon-02.svg' %}" alt="">
+                                                        <p>{{ items.activity.activity_informations.duration|capfirst }} menit</p>
+                                                    </div>
+                                                    <div class="course-view d-flex align-items-center">
+                                                        <img src="{% static 'assets/img/icon/icon-24.svg' %}" alt="" class="img-fluid d-flex" style="max-width: 20%;">
+                                                        <p>{{ items.activity.category|capfirst }}</p>
+                                                    </div>
+                                                </div>                                            
+                                                <div class="course-group d-flex mb-0">
+                                                    <div class="course-group-img d-flex">
+                                                        <img src="{% static 'assets/img/user/user1.jpg' %}" alt="" class="img-fluid">
+                                                        <div class="course-name">
+                                                            <h4>{{ items.mitra.name }}</h4>
+                                                            <p>Mitra</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="course-share d-flex align-items-center justify-content-center">
+                                                        <a href="#rate"><i class="fa-regular fa-heart"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -51,7 +97,7 @@
                                                         <select class="form-select select" id="sel1" name="category">
                                                             <option value="all" selected>All</option>
                                                             {% for items in category %}
-                                                            <option value="{{ items|lower }}" {% if items|lower == request.GET.category %}selected{% endif %}>{{ items|capfirst }}</option>
+                                                            <option value="{{ items }}" {% if items == request.GET.category %}selected{% endif %}>{{ items|capfirst }}</option>
                                                             {% endfor %}
                                                         </select>
                                                     </div>
@@ -66,7 +112,7 @@
 
                         <div class="row">
                             {% for item in list_of_activity %}
-                            <div class="col-xl-3 col-lg-4 col-md-6 d-flex">
+                            <div class="col-xl-4 col-lg-4 col-md-6 d-flex">
                                 <div class="course-box course-design d-flex ">
                                     <div class="product">
                                         <div class="product-img">
@@ -138,4 +184,10 @@
 </section>
 <!-- /Activity -->
 
+<script>
+    function chat_to_admin(event) {    
+        var url = "{% url 'app.member:chat_to_admin' %}";
+        window.open(url, '_blank');
+    }
+</script>
 {% endblock %}

@@ -234,6 +234,7 @@ class Transaction(models.Model):
                 'transaction_id': self.transaction_id,
                 'member': self.member.name,
                 'mitra': self.mitra.name,
+                'activity_id': self.activity.activity_id,
                 'activity': self.activity.activity_name,
                 'date': self.date,
                 'is_free': self.is_free,
@@ -258,7 +259,7 @@ class Transaction(models.Model):
         return data
     
     def check_expired_status(self):
-        if self.expired_at and timezone.now() > self.expired_at:
+        if self.status == 'Menunggu Pembayaran' and timezone.now() > self.expired_at:
             self.status = 'Gagal'
             self.save()
 

@@ -50,7 +50,7 @@
 </div>
 
 {% block custom_js %}
-
+{% comment %} 
 <script>        
     let countdown_resend_code = localStorage.getItem('countdown_resend_code') || 50;
 
@@ -71,7 +71,7 @@
     }
 
     updateCountdown();
-</script>
+</script> {% endcomment %}
 
 
 {% endblock %}

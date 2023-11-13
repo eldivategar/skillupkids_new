@@ -1,4 +1,4 @@
-from app.models import Mitra, ActivityList
+from app.models import Mitra, ActivityList, Transaction
 
 def get_my_activity(uuid, keyword=None, status=None):
     if keyword == None and status == None or status == 'all':
@@ -29,3 +29,17 @@ def get_my_activity(uuid, keyword=None, status=None):
 def get_status():
     status = ['Pending', 'Ditolak', 'Terbit']
     return status
+
+def get_registered_member(activity_id):
+    get_activity = Transaction.objects.filter(activity=activity_id)
+    get_all_member = []
+
+    for data in get_activity:
+        member_data = data.member.member_json()
+        get_all_member.append({
+            'member': member_data,
+            'transaction': data.transaction_json(),
+            'activity': data.activity.activity_json(),
+        })
+    
+    return get_all_member
