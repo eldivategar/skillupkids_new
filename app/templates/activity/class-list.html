@@ -27,7 +27,7 @@
                                                 <select class="form-select select" id="sel1" name="category">                                                    
                                                     <option value="all" selected>All</option>
                                                     {% for items in category %}
-                                                    <option value="{{ items|lower }}" {% if items|lower == request.GET.category %}selected{% endif %}>{{ items|capfirst }}</option>
+                                                    <option value="{{ items }}" {% if items == request.GET.category %}selected{% endif %}>{{ items|capfirst }}</option>
                                                     {% endfor %}                                                                                                     
                                                 </select>
                                             </div>
