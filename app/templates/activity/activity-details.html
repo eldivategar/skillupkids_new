@@ -163,7 +163,7 @@
                                            }).then((result) => {
                                                if (result.isConfirmed) {
                                                    var url = "{% url 'buy_activity' id='ACTIVITY_ID' %}".replace('ACTIVITY_ID', transactionId);
-                                                   window.open(url, '_blank');
+                                                   window.location.href = url;
                                                }
                                            });
                                        }

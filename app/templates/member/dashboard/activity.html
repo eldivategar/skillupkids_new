@@ -18,7 +18,7 @@
                                 <div class="course-box course-design list-course d-flex">
                                         <div class="product">
                                             <div class="product-img">
-                                                <img class="img-fluid" alt="" src="{% static 'assets/img/course/course-10.jpg' %}">
+                                                <img class="img-fluid" alt="" src="{{ items.activity.activity_image.url }}">
                                             </div>                                      
                                             <div class="product-content">
                                                 <div class="head-course-title">
@@ -46,7 +46,7 @@
                                                 </div>                                            
                                                 <div class="course-group d-flex mb-0">
                                                     <div class="course-group-img d-flex">
-                                                        <img src="{% static 'assets/img/user/user1.jpg' %}" alt="" class="img-fluid">
+                                                        <img src="{{ items.mitra.profile_image.url }}" alt="" class="img-fluid">
                                                         <div class="course-name">
                                                             <h4>{{ items.mitra.name }}</h4>
                                                             <p>Mitra</p>
