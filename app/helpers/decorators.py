@@ -14,7 +14,7 @@ def user_must_be_registered(view_func):
 
 def cek_member_session(view_func):
     def _wrapped_view(request, *args, **kwargs):
-        if 'customer_id' in request.session:
+        if 'customer_id' in request.session and request.session['customer_id'][:2] == 'me':
             return view_func(request, *args, **kwargs)
         else:
             return redirect('app.member:login')
@@ -22,7 +22,7 @@ def cek_member_session(view_func):
 
 def cek_mitra_session(view_func):
     def _wrapped_view(request, *args, **kwargs):
-        if 'customer_id' in request.session:
+        if 'customer_id' in request.session and request.session['customer_id'][:2] == 'mi':
             return view_func(request, *args, **kwargs)
         else:
             return redirect('app.mitra:login')
