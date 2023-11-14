@@ -95,7 +95,8 @@ def chat_to_pay(request, id):
         transactions = get_transactions(customer_id)
         activity_name = transactions[0]['activity']['activity_name']
         total_price = transactions[0]['transaction']['total_price']
-        message = f'Halo admin %F0%9F%98%80 \nSaya atas nama *{member}* ingin melakukan pembayaran kegiatan *{activity_name}* sebesar *{total_price}*!'
+        invoice = transactions[0]['transaction']['transaction_id']
+        message = f'Halo admin %F0%9F%98%80 \nSaya atas nama *{member}* ingin melakukan pembayaran kegiatan. \nNama Kegiatan: *{activity_name}* \nTotal: *{total_price}* \nInvoice: *{invoice}*'
         return redirect_to_whatsapp(message)
 
 @cek_member_session
