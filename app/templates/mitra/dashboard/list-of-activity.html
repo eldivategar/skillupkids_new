@@ -145,68 +145,68 @@
                                 });    
                             </script>                            
                             <div class="tak-instruct-group" id="list-member-container">
-                                
-                                <div class="sell-course-head student-meet-head border-0 mb-4">
-                                    <button class="mb-2 btn btn-danger btn-sm text-white btn-close-member"><i class="feather-x"></i></button>
-                                    <div class="tak-head d-flex align-items-center">
-                                        <div>
-                                            <h3 id="title-member"></h3>
-                                            <p>Daftar member yang terdaftar.</p>
-                                        </div>                                                            
-                                    </div>
-                                    <form>
-                                        <div class="student-search-form d-flex ">
-                                               <div class="form-group mb-0">
-                                                <input type="text" class="form-control" placeholder="Nama Member">
-                                            </div>
-                                            <div class="export-cvv-btn">
-                                                <button class="btn btn-primary">Cari</button>
-                                            </div>
+                                <div class="row">
+                                    <div class="sell-course-head student-meet-head border-0 mb-4">
+                                        <button class="mb-2 btn btn-danger btn-sm text-white btn-close-member"><i class="feather-x"></i></button>
+                                        <div class="tak-head d-flex align-items-center">
+                                            <div>
+                                                <h3 id="title-member"></h3>
+                                                <p>Daftar member yang terdaftar.</p>
+                                            </div>                                                            
                                         </div>
-                                    </form>
-                                </div>
-                                        
-                                {% for items in member_data %}
-                                <div class="col-xl-4 col-lg-6 col-md-6 d-flex">
-                                            <div class="student-box flex-fill">
-                                                <div class="student-box-blks">
-                                                    
-                                                    <div class="student-img">
-                                                        <a href="#!">
-                                                            <img class="img-fluid" alt="Students Info" src="{{ items.member.profile_image.url }}">
-                                                        </a>
-                                                    </div>
-                                                    <div class="student-content pb-0">												
-                                                        <h5><a href="#!">{{ items.member.name }}</a></h5>
-                                                        <div class="loc-blk d-grid align-items-center justify-content-center">
-                                                            <div class="d-flex align-items-center justify-content-center">                                                            
-                                                                <i class="feather-mail me-2"></i>
-                                                                <p>{{ items.member.email }}</p>
-                                                            </div>
-                                                            <div class="d-flex align-items-center justify-content-center">                                                            
-                                                                <i class="feather-phone me-2"></i>
-                                                                <p>{{ items.member.number }}</p>
+                                        <form>
+                                            <div class="student-search-form d-flex ">
+                                                <div class="form-group mb-0">
+                                                    <input type="text" class="form-control" placeholder="Nama Member">
+                                                </div>
+                                                <div class="export-cvv-btn">
+                                                    <button class="btn btn-primary">Cari</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                            
+                                    {% for items in member_data %}
+                                    <div class="col-xl-4 col-lg-6 col-md-6 d-flex">
+                                                <div class="student-box flex-fill">
+                                                    <div class="student-box-blks">
+                                                        
+                                                        <div class="student-img">
+                                                            <a href="#!">
+                                                                <img class="img-fluid" alt="Students Info" src="{{ items.member.profile_image.url }}">
+                                                            </a>
+                                                        </div>
+                                                        <div class="student-content pb-0">												
+                                                            <h5><a href="#!">{{ items.member.name }}</a></h5>
+                                                            <div class="loc-blk d-grid align-items-center justify-content-center">
+                                                                <div class="d-flex align-items-center justify-content-center">                                                            
+                                                                    <i class="feather-mail me-2"></i>
+                                                                    <p>{{ items.member.email }}</p>
+                                                                </div>
+                                                                <div class="d-flex align-items-center justify-content-center">                                                            
+                                                                    <i class="feather-phone me-2"></i>
+                                                                    <p>{{ items.member.number }}</p>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="enrol-student-foot">
+                                                        <ul>
+                                                            <li>                                                            
+                                                                <p>Terdaftar <b>{{ items.transaction.date|date:"d F Y" }}</b></p>
+                                                            </li>
+                                                            <li>
+                                                                <a class="btn btn-wish w-100" onclick="chat_to_member('{{ items.member.number }}')">Hubungi</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                                <div class="enrol-student-foot">
-                                                    <ul>
-                                                        <li>                                                            
-                                                            <p>Terdaftar <b>{{ items.transaction.date|date:"d F Y" }}</b></p>
-                                                        </li>
-                                                        <li>
-                                                            <a class="btn btn-wish w-100" onclick="chat_to_member('{{ items.member.number }}')">Hubungi</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                </div>
-                                <script>
-                                            document.querySelector('#title-member').innerHTML = '{{ items.activity.activity_name }}';
-                                </script>
-                                {% endfor %}                                       
-                                                                  
+                                    </div>
+                                    <script>
+                                                document.querySelector('#title-member').innerHTML = '{{ items.activity.activity_name }}';
+                                    </script>
+                                    {% endfor %}                                       
+                                </div>                    
                             </div>
                             {% endif %}
 
