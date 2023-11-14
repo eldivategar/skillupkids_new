@@ -40,7 +40,7 @@
                                                         <p>{{ items.activity.activity_informations.duration|capfirst }} menit</p>
                                                     </div>
                                                     <div class="course-view d-flex align-items-center">
-                                                        <img src="{% static 'assets/img/icon/icon-24.svg' %}" alt="" class="img-fluid d-flex" style="max-width: 20%;">
+                                                        <img src="{% static 'assets/img/icon/icon-24.svg' %}" alt="" class="img-fluid d-flex" style="max-width: 25%;">
                                                         <p>{{ items.activity.category|capfirst }}</p>
                                                     </div>
                                                 </div>                                            
@@ -135,17 +135,16 @@
                                                     <a href="#!"><img src="{{ item.mitra.profile_image.url }}"
                                                             alt="" class="img-fluid"></a>
                                                     <div class="course-name">
-                                                        <h4><a href="#!">{{ item.mitra.name|capfirst }}</a></h4>
-                                                        <div class="d-flex align-items-center">                                                    
-                                                            <img src="{% static 'assets/img/icon/icon-24.svg' %}" alt="" class="img-fluid d-flex" style="max-width: 20%;">
-                                                            <p class="fw-bold category">{{ item.activity.category|capfirst }}</p>                                            
-                                                        </div>
+                                                        <h4><a href="#!">{{ item.mitra.name|capfirst }}</a></h4>                                                        
                                                     </div>
                                                 </div>
-                                                <div
-                                                    class="course-share d-flex align-items-center justify-content-center">
+                                                <div class="course-share d-flex align-items-center justify-content-center">
                                                     <a href="#rate"><i class="fa-regular fa-heart"></i></a>
                                                 </div>
+                                            </div>
+                                            <div class="course-name d-flex align-items-center mb-2">                                                    
+                                                <img src="{% static 'assets/img/icon/icon-24.svg' %}" alt="" class="img-fluid d-flex" style="max-width: 20%;">
+                                                <p class="ms-2 fw-bold category my-auto">{{ item.activity.category|capfirst }}</p>                                            
                                             </div>
                                             <h3 class="title"><a href="{% url 'class_detail' id=item.activity.activity_id activity_name=item.activity.activity_name|slugify %}">{{ item.activity.activity_name }}</a></h3>
                                             <div class="course-info d-flex align-items-center border-bottom-0 pb-0">
