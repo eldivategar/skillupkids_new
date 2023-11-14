@@ -46,7 +46,7 @@
                         <div class="course-box course-design d-flex ">
                             <div class="product">
                                 <div class="product-img">
-                                    <a href="#!">
+                                    <a href="{% url 'class_detail' id=item.activity.activity_id activity_name=item.activity.activity_name|slugify %}">
                                         <img class="img-fluid" alt="" src="{{ item.activity.activity_image.url }}">
                                     </a>
                                     <div class="price">
@@ -62,7 +62,7 @@
                                 <div class="product-content">
                                     <div class="course-group d-flex">
                                         <div class="course-group-img d-flex">
-                                            <a href="{% url 'class_detail' id=item.activity.activity_id activity_name=item.activity.activity_name|slugify %}"><img src="{{ item.mitra.profile_image.url }}"
+                                            <a href="#!"><img src="{{ item.mitra.profile_image.url }}"
                                                     alt="" class="img-fluid"></a>
                                             <div class="course-name">
                                                 <h4><a href="#!">{{ item.mitra.name }}</a></h4>
