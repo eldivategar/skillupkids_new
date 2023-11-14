@@ -1,12 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from app.helpers.decorators import cek_member_session
 from app.helpers.utils import get_member_data
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from app.models import Member, Transaction
-from app.activity.helpers import get_activity_detail, get_activity_list, get_category
-from .helpers import get_transactions, get_member_activity
+from app.models import Member, Transaction, ActivityList, Testimonial
+from app.activity.helpers import get_activity_detail, get_activity_list, get_category, get_activity_detail_by_name
+from .helpers import get_transactions, get_member_activity, check_testimoni_member
 from app.helpers.utils import redirect_to_whatsapp
 
 @cek_member_session
@@ -123,7 +123,36 @@ def member_dashboard_activity(request):
 
         data = get_member_data(request)
         return render(request, 'member/dashboard/activity.html', {'data': data, 'list_of_activity': list_of_activity, 'category': categories, 'activities': activities})
-    
+
+@cek_member_session
+def view_activity(request, id, activity):
+    if request.method == 'GET':
+        member_id = request.session.get('customer_id')[2:]
+        data = get_member_data(request)
+        data_detail_activity = get_activity_detail(id)
+        check_testimoni = check_testimoni_member(member_id, id)
+        return render(request, 'member/dashboard/view-activity.html', {'data': data, 'data_detail_activity': data_detail_activity, 'check_testimoni': check_testimoni})
+
+@cek_member_session
+def rating(request, activity_id):
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        testimoni = request.POST.get('testimoni')
+        member_id = request.session.get('customer_id')[2:]
+        member_id = Member.objects.get(uuid=member_id)
+        activity = ActivityList.objects.get(activity_id=activity_id)
+        
+        
+        Testimonial.objects.create(
+            member=member_id,
+            activity=activity,
+            rating=rating,
+            testimonial=testimoni
+        )
+
+        messages.success(request, 'Terima kasih atas penilaian anda!')        
+        return redirect('app.member:view_activity')
+
 @cek_member_session
 def chat_to_admin(request):
     if request.method == 'GET':

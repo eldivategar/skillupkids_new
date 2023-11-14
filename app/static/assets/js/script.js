@@ -1188,6 +1188,39 @@ Version      : 1.0
 			console.error( err.stack );
 		} );
 	}
+	if ($('#editor-lm').length > 0) {
+		ClassicEditor
+		.create( document.querySelector( '#editor-lm' ), {
+			 toolbar: {
+			    items: [
+			        'heading', '|',
+			        'fontfamily', 'fontsize', '|',
+			        'alignment', '|',
+			        'fontColor', 'fontBackgroundColor', '|',
+			        'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+			        'link', '|',
+			        'outdent', 'indent', '|',
+			        'bulletedList', 'numberedList', 'todoList', '|',
+			        'code', 'codeBlock', '|',
+			        'insertTable', '|',
+			        'uploadImage', 'blockQuote', '|',
+			        'undo', 'redo'
+			    ],
+			    shouldNotGroupWhenFull: true
+			}
+		} )
+		.then( editor => {
+			window.editor = editor;
+
+			editor.model.document.on('change:data', () => {
+                var editorContent = editor.getData();
+                $('#editorLM').val(editorContent);
+            });
+		} )
+		.catch( err => {
+			console.error( err.stack );
+		} );
+	}
 	
 	if ($('#editor-requirements').length > 0) {
 		ClassicEditor
@@ -1352,4 +1385,42 @@ Version      : 1.0
 		});
 	});	
 
+
+	// Rating
+
+	$(document).ready(function () {
+        const stars = $('.star-form');
+        const testimonialTextarea = $('textarea');
+
+        let selectedRating = 0;
+
+        stars.click(function () {
+            const value = parseInt($(this).data('value'));
+            selectedRating = value;
+
+            stars.removeClass('active');
+            stars.slice(0, value).addClass('active');
+        });
+
+        $('#penilaianForm').submit(function (event) {
+            if (selectedRating === 0) {
+                alert('Harap pilih penilaian bintang terlebih dahulu!');
+                return false;
+            }
+
+            const testimonialValue = testimonialTextarea.val().trim();
+            if (testimonialValue === '') {
+                alert('Harap isi testimonial Anda!');
+                return false;
+            }
+
+			$('<input>').attr({
+                type: 'hidden',
+                name: 'rating',
+                value: selectedRating
+            }).appendTo('#penilaianForm');
+
+            return true;
+        });
+    });
 })(jQuery);

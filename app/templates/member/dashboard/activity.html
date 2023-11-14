@@ -1,6 +1,7 @@
 {% extends "member/dashboard/layout/base.html" %}
 {% load static %}
 {% block main_content %}
+{% include 'partials/notify.html' %}
 
 <!-- Activity -->
 <section class="course-content">
@@ -18,11 +19,11 @@
                                 <div class="course-box course-design list-course d-flex">
                                         <div class="product">
                                             <div class="product-img">
-                                                <img class="img-fluid" alt="" src="{{ items.activity.activity_image.url }}">
+                                                <a href="{% url 'app.member:view_activity' id=items.activity.activity_id activity=items.activity.activity_name|slugify %}"><img class="img-fluid" alt="" src="{{ items.activity.activity_image.url }}"></a>
                                             </div>                                      
                                             <div class="product-content">
                                                 <div class="head-course-title">
-                                                    <h3 class="title">{{ items.activity.activity_name }}</h3>
+                                                    <a href="{% url 'app.member:view_activity' id=items.activity.activity_id activity=items.activity.activity_name|slugify %}"><h3 class="title">{{ items.activity.activity_name }}</h3></a>
                                                     <div class="all-btn all-category d-flex align-items-center">
                                                         <a id="chat-to-admin" class="btn btn-primary" onclick="chat_to_admin()">Chat Admin</a>
                                                     </div>

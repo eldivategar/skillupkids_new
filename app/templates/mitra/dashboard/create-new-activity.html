@@ -67,13 +67,16 @@
 												<select name="category" class="form-control select"
 													id="category-activity" required>
 													<option selected>Pilih Kategori</option>
-													<option value="seni">Seni</option>
-													<option value="olahraga">Olahraga</option>
-													<option value="musik">Musik</option>
-													<option value="stem">STEM</option>
-													<option value="keagamaan">Keagamaan</option>
-													<option value="teknologi">Teknologi</option>
-													<option value="memasak">Memasak</option>
+													{% for dc in default_category %}
+													<option value="{{ dc }}">{{ dc }}</option>
+													{% endfor %}
+													
+													{% for items in category %}
+													{% if items|lower not in default_category|lower %}
+													<option value="{{ items|capfirst }}">{{ items|capfirst }}</option>
+													{% endif %}
+													{% endfor %}
+
 													<option value="other">Lainnya</option>
 												</select>
 											</div>
@@ -127,13 +130,12 @@
 															placeholder="Contoh: 1-10 tahun, 2-5 tahun." required>
 													</div>
 												</div>
-											</div>
-											<div class="col-lg-6">
-												<div class="form-group">
-													<label class="add-course-label">Metode Kegiatan/kelas</label>
-													<input type="text" name="learning_method" class="form-control"
-														placeholder="Contoh: Online: menggunakan zoom / Onsite" required>
-												</div>
+											</div>											
+
+											<div class="form-group mb-3">
+												<label class="add-course-label">Metode Kegiatan/kelas</label>
+												<div id="editor-lm"></div>
+												<input type="hidden" name="learning_method" id="editorLM" required>
 											</div>
 
 											<div class="form-group mb-0">

@@ -25529,3 +25529,18 @@ input[type=password]::-ms-clear
     }
 }
 
+
+/* style.css */
+.rating {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.star-form {
+    color: grey;
+    margin-right: 5px;
+}
+
+.star-form.active {
+    color: yellow;
+}

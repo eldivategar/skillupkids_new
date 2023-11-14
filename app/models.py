@@ -157,7 +157,7 @@ class ActivityList(models.Model):
 class Testimonial(models.Model):
     testimonial_id = models.AutoField(primary_key=True)
     member = models.ForeignKey(Member, to_field='uuid', related_name='member_testimonial', on_delete=models.CASCADE)
-    mitra = models.ForeignKey(Mitra, to_field='uuid', related_name='mitra_testimonial', on_delete=models.CASCADE)
+    # mitra = models.ForeignKey(Mitra, to_field='uuid', related_name='mitra_testimonial', on_delete=models.CASCADE)
     activity = models.ForeignKey(ActivityList, to_field='activity_id', related_name='activity_testimonial', on_delete=models.CASCADE)
     testimonial = models.TextField(default='')
     rating = models.IntegerField(default=0)
@@ -170,7 +170,7 @@ class Testimonial(models.Model):
         data = {
             'testimonial_id': self.testimonial_id,
             'member': self.member.name,
-            'mitra': self.mitra.name,
+            'mitra': self.activity.mitra_activity.name,
             'activity': self.activity.activity_name,
             'testimonial': self.testimonial,
             'rating': self.rating,

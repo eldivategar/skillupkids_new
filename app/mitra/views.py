@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from app.models import Mitra, ActivityList, Member
 from .helpers import get_my_activity, get_status, get_registered_member
 from app.helpers.utils import redirect_to_whatsapp
+from app.activity.helpers import get_category
 
 @cek_mitra_session
 def mitra_profile(request):
@@ -166,7 +167,9 @@ def chat_to_member(request, number):
 def mitra_create_new_activity(request):
     if request.method == 'GET':
         data = get_mitra_data(request)
-        return render(request, 'mitra/dashboard/create-new-activity.html', {'data': data})
+        default_category = ['Seni', 'Olahraga', 'Musik', 'STEM', 'Keagamaan', 'Teknologi', 'Memasak']
+        category = get_category()
+        return render(request, 'mitra/dashboard/create-new-activity.html', {'data': data, 'default_category': default_category, 'category': category})
     
     if request.method == 'POST':
         mitra_id = request.session.get('customer_id')[2:]

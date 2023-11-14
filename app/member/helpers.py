@@ -1,4 +1,5 @@
-from app.models import ActivityList, Transaction, Mitra
+from app.models import ActivityList, Transaction, Mitra, Testimonial
+from django.shortcuts import get_object_or_404
 
 def get_member_activity(id):
     get_activites = Transaction.objects.filter(member=id, status='Sukses').order_by('-date')
@@ -27,3 +28,10 @@ def get_transactions(id):
         })
 
     return transactions_data
+
+def check_testimoni_member(member_id, activity_id):
+    testimoni = Testimonial.objects.filter(member=member_id, activity=activity_id)
+    if testimoni:
+        return True
+    else:
+        return False    

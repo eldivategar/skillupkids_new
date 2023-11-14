@@ -11,6 +11,16 @@ def get_activity_detail(id):
     }
     return data_detail_activity
 
+def get_activity_detail_by_name(activity_name):
+    detail_activity = get_object_or_404(ActivityList, activity_name=activity_name).activity_json()
+    mitra_data = Mitra.objects.get(name=detail_activity['mitra_activity']).mitra_json()
+        
+    data_detail_activity = {
+        'mitra': mitra_data,
+        'activity': detail_activity
+    }
+    return data_detail_activity
+
 def get_activity_list(category, keyword=None):
     if category == 'all' and keyword == None:
         get_all_activity = ActivityList.objects.filter(activity_status='terbit')
@@ -114,19 +124,19 @@ def get_searched_activity(keyword):
 
     return all_data
 
-def get_testimonial():
-    get_all_testimonial = Testimonial.objects.all().order_by('-testimonial_id')
+def get_testimonial(num=5):
+    get_all_testimonial = Testimonial.objects.all().order_by('-testimonial_id')[:num]
     all_data = []
 
     for testimonial in get_all_testimonial:
         member_data = Member.objects.get(name=testimonial.member.name)
-        mitra_data = Mitra.objects.get(name=testimonial.mitra.name)
+        # mitra_data = Mitra.objects.get(name=testimonial.mitra.name)
         activity_data = ActivityList.objects.get(activity_name=testimonial.activity.activity_name)
         testimonial_data = testimonial.testimonial_json()           
         
         all_data.append({
             'member': member_data,
-            'mitra': mitra_data,
+            # 'mitra': mitra_data,
             'activity': activity_data,
             'testimonial': testimonial_data
         })        
