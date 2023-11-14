@@ -90,7 +90,7 @@
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         var url = "{% url 'app.member:chat_to_pay' id='TRANSACTION_ID' %}".replace('TRANSACTION_ID', transactionId);
-                                        window.location.href = url;
+                                        window.open(url, '_blank');
                                     }
                                 });
                             }
