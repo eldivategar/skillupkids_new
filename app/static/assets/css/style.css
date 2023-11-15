@@ -1548,7 +1548,8 @@ html.menu-opened body {
 	margin-bottom: 15px;
 }
 .footer-widget .footer-logo img {
-    width: 160px;
+    width: 9rem;
+    height: 4rem;
     max-width: 100%;
 }
 .footer-widget .footer-about-content p {
@@ -21681,7 +21682,7 @@ input[type=password]::-ms-clear
 		height: auto;
 	}
 	.footer .footer-widget .footer-logo img {
-		max-height:40px;
+		max-height: 7rem;
 	}
 	#mobile_btn {
 		top: 18px;
