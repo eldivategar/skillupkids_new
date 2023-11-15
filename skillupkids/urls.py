@@ -21,8 +21,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from app import views
 
-admin.site.site_header = "Skillupkids Admin"
-admin.site.site_title = "Skillupkids Admin Portal"
 admin.site.index_title = "Welcome to Skillupkids Admin Portal"
 
 handler404 = 'app.views._404'
@@ -40,5 +38,6 @@ urlpatterns = [
     re_path(r'^(?P<requested_url>.+)$', views._404, name='notfound'),
     path('server_error/', views._500, name='server_error'),
 ]
+
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
