@@ -195,12 +195,12 @@
                             </div>
                             <ul>
                                 <li><img src="{% static 'assets/img/icon/chapter.svg' %}" class="me-2" alt=""> Hari: <span>{{ data_detail_activity.activity.activity_informations.day|capfirst }}</span></li>
-                                <li class="d-flex"><img src="{% static 'assets/img/icon/users.svg' %}" class="me-2" alt=""> Untuk usia: <span class="ms-1">                                    
+                                <li><img src="{% static 'assets/img/icon/users.svg' %}" class="me-2" alt=""> Untuk usia: <span class="ms-1">                                    
                                     {% with umur=data_detail_activity.activity.activity_informations.age %}
 									{% if 'semua' in umur|lower or 'umur' in umur|lower %}
-										<p>{{ data_detail_activity.activity.activity_informations.age|capfirst }}</p>
+										{{ data_detail_activity.activity.activity_informations.age|capfirst }}
 									{% else %}
-										<p>{{ data_detail_activity.activity.activity_informations.age|capfirst }} tahun </p>
+										{{ data_detail_activity.activity.activity_informations.age|capfirst }} tahun
 									{% endif %}
 									{% endwith %}
                                 </span></li>
