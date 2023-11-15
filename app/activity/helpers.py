@@ -94,8 +94,12 @@ def get_category():
     
     return categories_list
 
-def get_new_activity():
-    get_all_activity = ActivityList.objects.filter(activity_status='terbit').order_by('-activity_id')
+def get_new_activity(num=None):
+    if num == None:
+        get_all_activity = ActivityList.objects.filter(activity_status='terbit').order_by('-activity_id')
+    else:
+        get_all_activity = ActivityList.objects.filter(activity_status='terbit').order_by('-activity_id')[:num]
+        
     all_data = []
 
     for activity in get_all_activity:

@@ -4,7 +4,7 @@ from app.activity.helpers import get_category, get_new_activity, get_testimonial
 
 def home(request):
     category = get_category()
-    new_activity = get_new_activity()
+    new_activity = get_new_activity(num=8)
     testimonials = get_testimonial()
 
     if 'customer_id' not in request.session:
