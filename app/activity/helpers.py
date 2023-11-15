@@ -131,7 +131,7 @@ def get_testimonial(num=5):
     for testimonial in get_all_testimonial:
         member_data = Member.objects.get(name=testimonial.member.name)
         # mitra_data = Mitra.objects.get(name=testimonial.mitra.name)
-        activity_data = ActivityList.objects.filter(activity_name=testimonial.activity.activity_name)
+        activity_data = ActivityList.objects.filter(activity_id=testimonial.activity.activity_id)
         testimonial_data = testimonial.testimonial_json()           
         
         all_data.append({
