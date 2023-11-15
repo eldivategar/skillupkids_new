@@ -21,6 +21,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from app import views
 
+admin.site.site_header = "Skillupkids Admin"
+admin.site.site_title = "Skillupkids Admin Portal"
+admin.site.index_title = "Welcome to Skillupkids Admin Portal"
 
 handler404 = 'app.views._404'
 handler500 = 'app.views._500'
