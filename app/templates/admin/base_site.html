@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | Skillupkids Admin Portal{% endblock %}
-{% block extrahead %}<link rel="shortcut icon" href="{% static 'assets/img/logo.ico' %}" />{% endblock %}
+{% block extrahead %}<link rel="shortcut icon" href="{% static 'assets/img/logo.png' %}" />{% endblock %}
 {% block branding %}
 <h1 id="site-name"><a href="{% url 'admin:index' %}">Skillupkids Admin Portal</a></h1>
 {% if user.is_anonymous %}
