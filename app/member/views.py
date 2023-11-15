@@ -151,7 +151,7 @@ def rating(request, activity_id):
         )
 
         messages.success(request, 'Terima kasih atas penilaian anda!')        
-        return redirect('app.member:view_activity')
+        return redirect('app.member:view_activity', id=activity_id, activity=activity.activity_name)
 
 @cek_member_session
 def chat_to_admin(request):
