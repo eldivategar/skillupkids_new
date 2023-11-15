@@ -195,7 +195,15 @@
                             </div>
                             <ul>
                                 <li><img src="{% static 'assets/img/icon/chapter.svg' %}" class="me-2" alt=""> Hari: <span>{{ data_detail_activity.activity.activity_informations.day|capfirst }}</span></li>
-                                <li><img src="{% static 'assets/img/icon/users.svg' %}" class="me-2" alt=""> Untuk usia: <span>{{ data_detail_activity.activity.activity_informations.age|capfirst }}</span></li>
+                                <li class="d-flex"><img src="{% static 'assets/img/icon/users.svg' %}" class="me-2" alt=""> Untuk usia: <span class="ms-1">                                    
+                                    {% with umur=data_detail_activity.activity.activity_informations.age %}
+									{% if 'semua' in umur|lower or 'umur' in umur|lower %}
+										<p>{{ data_detail_activity.activity.activity_informations.age|capfirst }}</p>
+									{% else %}
+										<p>{{ data_detail_activity.activity.activity_informations.age|capfirst }} tahun </p>
+									{% endif %}
+									{% endwith %}
+                                </span></li>
                                 <li><img src="{% static 'assets/img/icon/timer.svg' %}" class="me-2" alt=""> Durasi: <span>{{ data_detail_activity.activity.activity_informations.duration|capfirst }} menit</span></li>                                
                             </ul>
                         </div>

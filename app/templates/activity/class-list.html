@@ -80,7 +80,13 @@
                                     <div class="course-info d-flex align-items-center">
                                         <div class="rating-img d-flex align-items-center">
                                             <img src="{% static 'assets/img/icon/user-icon.svg' %}" alt="">
-                                            <p>{{ item.activity.activity_informations.age|capfirst }}</p>                                            
+                                            {% with umur=item.activity.activity_informations.age %}
+											{% if 'semua' in umur|lower or 'umur' in umur|lower %}
+												<p>{{ item.activity.activity_informations.age|capfirst }}</p>
+											{% else %}
+												<p>{{ item.activity.activity_informations.age|capfirst }} tahun </p>
+											{% endif %}
+										    {% endwith %}
                                         </div>                                        
                                         <div class="course-view d-flex align-items-center">
                                             <img src="{% static 'assets/img/icon/icon-02.svg' %}" alt="">

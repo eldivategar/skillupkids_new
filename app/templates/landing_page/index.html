@@ -195,7 +195,7 @@
 																<img src="{% static 'assets/img/icon/user-icon.svg' %}"
 																	alt="">
 																{% with umur=item.activity.activity_informations.age %}
-																	{% if 'semua' in umur|lower %}
+																	{% if 'semua' in umur|lower or 'umur' in umur|lower %}
 																		<p>{{ item.activity.activity_informations.age|capfirst }}</p>
 																	{% else %}
 																		<p>{{ item.activity.activity_informations.age|capfirst }} tahun </p>

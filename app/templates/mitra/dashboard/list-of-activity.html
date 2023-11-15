@@ -70,27 +70,36 @@
                                                         <h5 class="fw-bold">
                                                             <h5 class="fw-bold"><a href="{% url 'class_detail' id=items.activity.activity_id activity_name=items.activity.activity_name|slugify %}">{{ items.activity.activity_name }}</a></h5>
                                                         </h5>
-                                                        <div class="course-info d-grid border-bottom-0 pb-0">
-                                                            <div class="rating-img d-flex align-items-center">
-                                                                <img src="{% static 'assets/img/icon/user-icon.svg' %}"
-                                                                    alt="" />
-                                                                <p>
-                                                                    {{ items.activity.activity_informations.age|capfirst }}
-                                                                </p>
-                                                                <img src="{% static 'assets/img/icon/timer-start.svg' %}"
-                                                                    alt="" class="ms-2" />
-                                                                <p>
-                                                                    {{ items.activity.activity_informations.duration }}
-                                                                    menit
-                                                                </p>
-                                                            </div>
-                                                            <div class="rating-img d-flex align-items-center mt-2">
-                                                                <img src="{% static 'assets/img/icon/icon-24.svg' %}"
-                                                                    alt="" />
-                                                                <p>{{ items.activity.category }}</p>
-                                                                <img src="{% static 'assets/img/icon/date-icon.png' %}"
-                                                                    alt="" class="ms-2" />
-                                                                <p>{{ items.activity.activity_informations.day }}</p>
+                                                        <div class="course-info border-bottom-0 pb-0">                                                            
+                                                            <div class="container-lg-8">
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <div class="rating-img d-flex align-items-center">
+                                                                            <img src="{% static 'assets/img/icon/user-icon.svg' %}" alt="" />                                                                                                                                    
+                                                                            {% with umur=items.activity.activity_informations.age %}
+                                                                            {% if 'semua' in umur|lower or 'umur' in umur|lower %}
+                                                                                <p>{{ items.activity.activity_informations.age|capfirst }}</p>
+                                                                            {% else %}
+                                                                                <p>{{ items.activity.activity_informations.age|capfirst }} tahun </p>
+                                                                            {% endif %}
+                                                                            {% endwith %}                                                                
+                                                                            <img src="{% static 'assets/img/icon/timer-start.svg' %}"
+                                                                                alt="" class="ms-2" />
+                                                                            <p>
+                                                                                {{ items.activity.activity_informations.duration }}
+                                                                                menit
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col mt-2">
+                                                                        <div class="rating-img d-flex align-items-center">
+                                                                            <img src="{% static 'assets/img/icon/icon-24.svg' %}" alt="" />   
+                                                                            <p>{{ items.activity.category|capfirst }}</p>                
+                                                                            <img src="{% static 'assets/img/icon/date-icon.png' %}" alt="" class="ms-2" />
+                                                                            <p>{{ items.activity.activity_informations.day }}</p>                                                                                                                                                                                            
+                                                                        </div>
+                                                                    </div>                                                                    
+                                                                </div>                                                            
                                                             </div>
                                                         </div>
                                                     </div>
