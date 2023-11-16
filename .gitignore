@@ -2,4 +2,5 @@ env
 staticfiles
 pycache
 db.sqlite3
-dns
+dns.txt
+data.json
