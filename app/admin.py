@@ -3,7 +3,8 @@ from .models import Member, Mitra, ActivityList, Testimonial, Transaction
 
 class TransactionAdmin(admin.ModelAdmin):
     list_display = ('transaction_id', 'member', 'mitra', 'activity', 'date', 'status', 'total_price', 'payment_method', 'expired_at')
-    list_filter = ('status','payment_method', 'is_free')
+    list_filter = ('status', 'date','payment_method', 'is_free')
+    ordering = ('-date')
 
 class ActivityAdmin(admin.ModelAdmin):
     list_display = ('activity_id', 'activity_name', 'mitra_activity', 'category', 'activity_status')
