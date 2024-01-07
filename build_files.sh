@@ -20,8 +20,7 @@ python manage.py customsuperuser --settings=skillupkids.settings.prod
 echo "Permission..."
 
 
-chown -R nobody:nogroup /var/task
-chown -R nobody:nogroup media
+chmod -R 777 .
 
-ls -l
-pwd
+ls -la .
+ls -la /var/task/
