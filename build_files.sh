@@ -19,4 +19,5 @@ python manage.py customsuperuser --settings=skillupkids.settings.prod
 
 echo "Permission..."
 pwd
+ls
 # chmod -R 777 /var/task/media/mitra/
