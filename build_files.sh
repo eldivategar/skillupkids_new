@@ -18,4 +18,4 @@ echo "Create Superuser..."
 python manage.py customsuperuser --settings=skillupkids.settings.prod
 
 echo "Permission..."
-chmod 777 /var/task/
+chmod 777 /var/task/media
