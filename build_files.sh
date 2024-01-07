@@ -18,6 +18,8 @@ echo "Create Superuser..."
 python manage.py customsuperuser --settings=skillupkids.settings.prod
 
 echo "Permission..."
-pwd
-ls
-# chmod -R 777 /var/task/media/mitra/
+chmod -R 777 media
+chmod -R 777 staticfiles_build
+
+cd /var/task/media
+chmod -R 777 /var/task/media
