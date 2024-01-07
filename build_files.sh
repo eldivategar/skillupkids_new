@@ -23,3 +23,5 @@ chmod -R 777 staticfiles_build
 
 mkdir /var/task/media
 chmod -R 777 /var/task/media
+ls -l
+pwd
