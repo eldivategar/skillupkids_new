@@ -134,4 +134,5 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.getenv('API_SECRET')
 }
 
-NO_ADMIN = os.getenv('NO_ADMIN')
+# NO_ADMIN = os.getenv('NO_ADMIN')
+NO_ADMIN = '+6285157558709'
