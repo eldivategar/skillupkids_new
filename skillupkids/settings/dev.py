@@ -7,6 +7,9 @@ DEBUG = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'app/static')
 
+MEDIA_URL='/media/'
+MEDIA_ROOT = BASE_DIR /'media'
+
 ALLOWED_HOSTS = ['*']
 
 DATABASES = {

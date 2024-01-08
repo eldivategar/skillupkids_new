@@ -9,6 +9,9 @@ DEBUG = False
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
+MEDIA_URL='/media/'
+MEDIA_ROOT = '/var/task/media'
+
 ALLOWED_HOSTS = ['*', '.vercel.app', '.now.sh',]
 
 DATABASES = {
