@@ -51,18 +51,6 @@ MIDDLEWARE = [
 ]
 
 
-STORAGES = {
-    "staticfiles_build": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "media": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    }
-}
-
 ROOT_URLCONF = 'skillupkids.urls'
 
 TEMPLATES = [
