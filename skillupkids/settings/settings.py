@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # Application definition
 
 INSTALLED_APPS = [
-    "whitenoise.runserver_nostatic",
+    # "whitenoise.runserver_nostatic",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,8 +35,6 @@ INSTALLED_APPS = [
     'app',
     'skillupkids',
 ]
-
-WHITENOISE_MANIFEST_STRICT = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -104,8 +102,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL='/media/'
+MEDIA_ROOT = BASE_DIR /'media'
+print(MEDIA_ROOT)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
