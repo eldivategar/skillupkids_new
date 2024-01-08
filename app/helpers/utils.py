@@ -6,6 +6,7 @@ from datetime import datetime
 from django.http import HttpResponseRedirect
 from urllib.parse import quote
 from django.utils.html import escape
+from django.conf import settings
 import pyotp
 import smtplib
 
@@ -93,7 +94,7 @@ def get_member_data(request):
 
 def redirect_to_whatsapp(message, number=None):      
     if number == None:
-        number = '+6285157558709'
+        number = settings.NO_ADMIN
     else:
         if number.startswith('0'):
             number = '+62' + number[1:]        
