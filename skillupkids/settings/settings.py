@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'skillupkids',
 ]
 
-WHITENOISE_USE_FINDERS = True
 WHITENOISE_MANIFEST_STRICT = False
 
 MIDDLEWARE = [
@@ -53,7 +52,7 @@ MIDDLEWARE = [
 
 
 STORAGES = {
-    "staticfiles": {
+    "staticfiles_build": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
     "default": {
