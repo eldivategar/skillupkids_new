@@ -13,7 +13,7 @@ class Member(models.Model):
     number = models.CharField(max_length=13, unique=True)
     password = models.CharField(max_length=100)
     address = models.TextField(default='', null=True, blank=True)
-    profile_image = models.ImageField(upload_to='member/', default='member/avatar-profile.jpg', null=True, blank=True)
+    profile_image = models.ImageField(upload_to='member/', default='member/avatar-profile_n68t05.jpg', null=True, blank=True)
     is_verified = models.BooleanField(default=False)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 
@@ -53,7 +53,7 @@ class Mitra(models.Model):
     ig_site = models.URLField(max_length=200, blank=True, default='')
     linkedin_site = models.URLField(max_length=200, blank=True, default='')
     yt_site = models.URLField(max_length=200, blank=True, default='')
-    profile_image = models.ImageField(upload_to='mitra/', default='mitra/default-logo.png', null=True, blank=True)
+    profile_image = models.ImageField(upload_to='mitra/', default='mitra/default-logo_sicqfg.png', null=True, blank=True)
     is_verified = models.BooleanField(default=False)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
 
