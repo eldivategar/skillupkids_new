@@ -6,6 +6,7 @@ packaging
 Pillow
 psycopg2-binary
 pyotp
+python-dotenv
 pytz
 six
 sqlparse
