@@ -8,7 +8,7 @@ DEBUG = False
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', '.now.sh', 'skillupkids.id', 'www.skillupkids.id']
+ALLOWED_HOSTS = ['*', '.vercel.app', '.now.sh',]
 
 DATABASES = {
     'default': {
