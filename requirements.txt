@@ -1,6 +1,11 @@
-Django
 APScheduler
 asgiref
+certifi
+charset-normalizer
+cloudinary
+Django
+django-cloudinary-storage
+idna
 # mysqlclient
 packaging
 Pillow
@@ -8,9 +13,11 @@ psycopg2-binary
 pyotp
 python-dotenv
 pytz
+requests
 six
 sqlparse
 typing_extensions
 tzdata
 tzlocal
+urllib3
 whitenoise
