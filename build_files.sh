@@ -10,6 +10,9 @@ echo "BUILD END"
 echo "Collecting static files..."
 python manage.py collectstatic --settings=skillupkids.settings.prod
 
+echo "Create cache_table..."
+python manage.py createcachetable --settings=skillupkids.settings.prod
+
 echo "Migrating..."
 python manage.py makemigrations --settings=skillupkids.settings.prod
 python manage.py migrate --settings=skillupkids.settings.prod
