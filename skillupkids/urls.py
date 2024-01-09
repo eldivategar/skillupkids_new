@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.static import serve
 from app import views
+import debug_toolbar
 
 admin.site.index_title = "Welcome to Skillupkids Admin Portal"
 
@@ -38,6 +39,7 @@ urlpatterns = [
 
     re_path(r'^(?P<requested_url>.+)$', views._404, name='notfound'),  
     path('server_error/', views._500, name='server_error'),
+    path('__debug__/', include(debug_toolbar.urls, namespace='djdt')),
 ]
 
 if settings.DEBUG: 
