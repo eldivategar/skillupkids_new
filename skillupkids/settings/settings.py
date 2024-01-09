@@ -159,6 +159,7 @@ MESSAGE_TAGS = {
 }
 
 CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'Strict'
 SESSION_COOKIE_SECURE = True
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
