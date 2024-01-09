@@ -5,6 +5,7 @@ charset-normalizer
 cloudinary
 Django
 django-cloudinary-storage
+django-debug-toolbar
 idna
 # mysqlclient
 packaging
