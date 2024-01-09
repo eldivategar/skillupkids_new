@@ -57,7 +57,6 @@ MIDDLEWARE = [
 ]
 
 INTERNAL_IPS = [
-    # Alamat IP Anda
     '127.0.0.1',
 ]
 
