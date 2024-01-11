@@ -12,7 +12,5 @@ def coming_soon(request):
     return render(request, 'events/coming-soon.html')
 
 def logout(request):
-    logout(request)
     request.session.flush()
-    cache.clear()
     return redirect('home')
