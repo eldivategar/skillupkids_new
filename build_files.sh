@@ -20,4 +20,5 @@ python manage.py migrate --settings=skillupkids.settings.prod
 echo "Create Superuser..."
 python manage.py customsuperuser --settings=skillupkids.settings.prod
 
+du -h -d 1 skillupkids_v1 | sort -h
 # echo "Permission..."
