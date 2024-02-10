@@ -24,75 +24,38 @@ def get_activity_detail_by_name(activity_name):
 def get_activity_list(category, keyword=None):
     if category == 'all' and keyword == None:
         get_all_activity = ActivityList.objects.filter(activity_status='terbit')
-        all_data = []
-
-        for activity in get_all_activity:
-            mitra_data = Mitra.objects.get(name=activity.mitra_activity.name)
-            activity_data = activity.activity_json()           
-            
-            all_data.append({
-                'mitra': mitra_data,
-                'activity': activity_data,
-            })        
-        
-        return all_data
 
     elif category == 'all' and keyword != None:
         get_all_activity = ActivityList.objects.filter(activity_status='terbit', activity_name__icontains=keyword)
-        all_data = []
-
-        for activity in get_all_activity:
-            mitra_data = Mitra.objects.get(name=activity.mitra_activity.name)
-            activity_data = activity.activity_json()           
-            
-            all_data.append({
-                'mitra': mitra_data,
-                'activity': activity_data,
-            })        
-        
-        return all_data
 
     elif category != 'all' and keyword == None:
-        get_all_activity = ActivityList.objects.filter(activity_status='terbit', category=category)
-        all_data = []
-
-        for activity in get_all_activity:
-            mitra_data = Mitra.objects.get(name=activity.mitra_activity.name)
-            activity_data = activity.activity_json()           
-            
-            all_data.append({
-                'mitra': mitra_data,
-                'activity': activity_data,
-            })        
-        
-        return all_data
+        get_all_activity = ActivityList.objects.filter(activity_status='terbit', category__icontains=category)
 
     elif category != 'all' and keyword != None:
-        get_all_activity = ActivityList.objects.filter(activity_status='terbit', category=category, activity_name__icontains=keyword)
-        all_data = []
-
-        for activity in get_all_activity:
-            mitra_data = Mitra.objects.get(name=activity.mitra_activity.name)
-            activity_data = activity.activity_json()           
-            
-            all_data.append({
-                'mitra': mitra_data,
-                'activity': activity_data,
-            })        
+        get_all_activity = ActivityList.objects.filter(activity_status='terbit', category__icontains=category, activity_name__icontains=keyword)
         
-        return all_data
+    all_data = []
+
+    for activity in get_all_activity:
+        mitra_data = Mitra.objects.get(name=activity.mitra_activity.name)
+        activity_data = activity.activity_json()           
+        
+        all_data.append({
+            'mitra': mitra_data,
+            'activity': activity_data,
+        })        
+    
+    return all_data
      
     
 def get_category():
-    get_all_category = ActivityList.objects.filter(activity_status='terbit').values_list('category', flat=True).distinct()
-    categories_data = set()
-    
-    for category in get_all_category:
-        categories_data.add(category)
-        
-    categories_list = sorted(list(categories_data))
-    
-    return categories_list
+    get_categories_set = set(ActivityList.objects.filter(activity_status='terbit').values_list('category', flat=True).distinct())
+    merged_categories = [category.split(', ') for category in get_categories_set]
+    categories = [item for sublist in merged_categories for item in sublist]
+
+    return categories
+
+
 
 def get_new_activity(num=None):
     if num == None:
