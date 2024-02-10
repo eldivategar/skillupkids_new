@@ -15,8 +15,10 @@
                             <img class="img-fluid" src="{% static 'assets/img/logo/logo.png' %}" alt="logo">
                         </div>
                         <div class="footer-about-content">
-                            <p class="fw-bold fst-italic">Platform Unggulan yang Memanfaatkan
-                                Teknologi Terkini dan Inovasi untuk Membantu Anak Anda Meraih Potensi Terbaik Mereka.
+                            <p class="fw-bold fst-italic">
+                                Platform pilihan pertama orang tua untuk mengembangkan 
+                                potensi Si Kecil lewat beragam aktivitas, kursus, dan konten
+                                berkualitas.
                             </p>
                             <div class="d-flex col-sm-2">
                                 <a href="https://www.tiktok.com/@skillupkids" target="_blank" class="btn btn-dark me-2 rounded-circle"><i class="fab fa-tiktok"></i></a>
@@ -34,7 +36,7 @@
                     <div class="footer-widget footer-menu">
                         <h2 class="footer-title">Tentang</h2>
                         <ul>
-                            <li><a href="{% url 'about' %}">Tentang Kami</a></li>
+                            {% comment %} <li><a href="{% url 'about' %}">Tentang Kami</a></li> {% endcomment %}
                             <li><a href="{% url 'contact' %}">Hubungi Kami</a></li>
                         </ul>
                     </div>
@@ -101,7 +103,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="copyright-text">
-                            <p class="mb-0">&copy; 2023 SkillUpKids. All rights reserved.</p>
+                            <p class="mb-0">&copy; 2023-2024 SkillUpKids. All rights reserved.</p>
                         </div>
                     </div>
                 </div>
