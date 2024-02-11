@@ -1,5 +1,6 @@
+/usr/bin/env bash
+
 echo "BUILD START"
-/vercel/path0/venv/bin/python3.9 -m pip install --upgrade pip
 
 python3.9 -m venv venv
     source venv/bin/activate
@@ -9,7 +10,7 @@ pip install -r requirements.txt
 echo "BUILD END"
 
 echo "Collecting static files..."
-python manage.py collectstatic --settings=skillupkids.settings.prod
+python manage.py collectstatic --noinput --settings=skillupkids.settings.prod 
 
 # echo "Create cache_table..."
 # python manage.py createcachetable --settings=skillupkids.settings.prod
