@@ -4,6 +4,7 @@ app/static/
 **/__pycache__/
 db.sqlite3
 dns.txt
+erd.txt
 data.json
 .env
 staticfiles_build
