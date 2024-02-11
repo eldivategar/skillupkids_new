@@ -1,5 +1,6 @@
 env
 staticfiles
+app/static/
 **/__pycache__/
 db.sqlite3
 dns.txt
