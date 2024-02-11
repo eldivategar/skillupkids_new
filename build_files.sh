@@ -8,8 +8,8 @@ pip install -r requirements.txt
 
 echo "BUILD END"
 
-# echo "Collecting static files..."
-# python manage.py collectstatic --settings=skillupkids.settings.prod
+echo "Collecting static files..."
+python manage.py collectstatic --settings=skillupkids.settings.prod
 
 # echo "Create cache_table..."
 # python manage.py createcachetable --settings=skillupkids.settings.prod
