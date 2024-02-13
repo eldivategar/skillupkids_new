@@ -52,6 +52,7 @@ def get_category():
     get_categories_set = set(ActivityList.objects.filter(activity_status='terbit').values_list('category', flat=True).distinct())
     merged_categories = [category.split(', ') for category in get_categories_set]
     categories = [item for sublist in merged_categories for item in sublist]
+    categories = list(set(categories))
 
     return categories
 
