@@ -12,7 +12,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 MEDIA_URL='/media/'
 # MEDIA_ROOT = '/var/task/media'
 
-ALLOWED_HOSTS = ['*', '.vercel.app', '.now.sh',]
+ALLOWED_HOSTS = ['*', '.vercel.app', '.now.sh', 'skillupkids.id', 'www.skillupkids.id']
 
 DATABASES = {
     'default': {
