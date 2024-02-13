@@ -141,10 +141,10 @@
 										{% endwith %}
                                     </div>
                                     <div class="row gx-2">
-                                        <div class="col-md-3">
+                                        {% comment %} <div class="col-md-3">
                                             <a href="#" class="btn btn-wish w-100"><i class="feather-shopping-cart fs-5"></i></a>
-                                        </div>
-                                        <div class="col-md-9">
+                                        </div> {% endcomment %}
+                                        <div class="col-md-12">
                                             <a href="{% url 'chat_to_admin' id=data_detail_activity.activity.activity_id activity_name=data_detail_activity.activity.activity_name|slugify %}" target="_blank" class="btn btn-wish w-100"><i class="fab fa-whatsapp"></i> Chat Admin</a>
                                         </div>
                                     </div>
