@@ -55,9 +55,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
 ]
 
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
 
 DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.versions.VersionsPanel',
@@ -74,17 +71,17 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.redirects.RedirectsPanel',
 ]
 
+CACHES = {
+   'default': {
+    #   'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+      'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+      'LOCATION': '127.0.0.1:11211',
+   }
+}
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-#         'LOCATION': 'cache_table',
-#     }
-# }
-
-# CACHE_MIDDLEWARE_ALIAS = ''
-# CACHE_MIDDLEWARE_SECONDS = 86400
-# CACHE_MIDDLEWARE_KEY_PREFIX = ''
+import socket
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
 
 ROOT_URLCONF = 'skillupkids.urls'
 
