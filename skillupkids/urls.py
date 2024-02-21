@@ -34,15 +34,14 @@ urlpatterns = [
     path('', include("app.activity.urls")),
     path('member/', include("app.member.urls")),
     path('mitra/', include("app.mitra.urls")),
-    path('midtrans/', include("app.midtrans.urls")),
     path('logout/', views.logout, name='logout'),
     path('coming-soon/', views.coming_soon, name='coming_soon'),
 
     re_path(r'^(?P<requested_url>.+)$', views._404, name='notfound'),  
     path('server_error/', views._500, name='server_error'),
+    path('__debug__/', include(debug_toolbar.urls, namespace='djdt')),
 ]
 
 if settings.DEBUG: 
-    path('__debug__/', include(debug_toolbar.urls, namespace='djdt')),
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)

@@ -7,14 +7,12 @@ Django
 django-cloudinary-storage
 django-debug-toolbar
 idna
-midtransclient
-mysqlclient
+# mysqlclient
 packaging
 Pillow
 psycopg2-binary
 pyotp
 python-dotenv
-python-memcached
 pytz
 requests
 six

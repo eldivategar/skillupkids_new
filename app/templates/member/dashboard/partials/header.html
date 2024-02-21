@@ -20,11 +20,7 @@
         <div class="my-student-list">
             <ul>
                 <li><a class="{% if request.path == '/member/dashboard/activity/' %} active{% endif %}"
-                        href="{% url 'app.member:member_dashboard_activity' %}">Kegiatan saya
-                    </a>
-                </li>
-               
-                <li><a href="{% url 'app.member:transactions' %}">Transaksi saya</a></li>
+                        href="{% url 'app.member:member_dashboard_activity' %}">Kegiatan saya</a></li>
             </ul>
         </div>
     </div>
