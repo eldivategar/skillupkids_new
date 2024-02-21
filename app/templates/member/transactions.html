@@ -29,32 +29,28 @@
                             {% endif %}
                             {% endwith %}
                             {% if transaction.transaction.expired_at %}
-                            <p id="remaining-time" class="fw-bold ms-2"></p>
+                            <p id="remaining-time-{{ forloop.counter }}" class="fw-bold ms-2"></p>
                             <script>
-                                function updateCountdownTimer(expiredAt) {
+                                function updateCountdownTimer(remainingTimeId, expiredAt) {
                                     var expiredDate = new Date(expiredAt);
-                                
                                     var now = new Date();
                                     var remainingTime = expiredDate - now;
-                                
                                     var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
                                     var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-                                
                                     var formattedTime = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-                                
-                                    $("#remaining-time").text(formattedTime);
-                                
+                                    $("#" + remainingTimeId).text(formattedTime);
                                     if (remainingTime <= 0) {
-                                        $("#remaining-time").text("");
+                                        $("#" + remainingTimeId).text("");
+                                        window.location.reload();
                                     }
                                 }
                                 
-                                var expiredAt = "{{ transaction.transaction.expired_at.isoformat }}";
+                                var expiredAt{{ forloop.counter }} = "{{ transaction.transaction.expired_at.isoformat }}";
                                 
                                 setInterval(function() {
-                                    updateCountdownTimer(expiredAt);
-                                }, 1000);
-                                </script>
+                                    updateCountdownTimer("remaining-time-{{ forloop.counter }}", expiredAt{{ forloop.counter }});
+                                }, 1000);    
+                            </script>
                             {% endif %}
                         </div>
 
@@ -66,7 +62,7 @@
 
                         <div class="d-flex align-items-center mt-2">                                                    
                             <img src="{% static 'assets/img/icon/icon-24.svg' %}" alt="" class="img-fluid d-flex" style="max-width: 20%;">
-                            <p id="remaining-time" class="fw-bold category">{{ transaction.activity.category|capfirst }}</p>                                            
+                            <p class="fw-bold category">{{ transaction.activity.category|capfirst }}</p>                                            
                         </div>
 
                         <h5>{{ transaction.activity.activity_name }} </h5>
@@ -94,7 +90,7 @@
                                      confirmButtonText: "Lanjut!"
                                  }).then((result) => {
                                      if (result.isConfirmed) {
-                                         var url = "{% url 'app.member:chat_to_pay' id='TRANSACTION_ID' %}".replace('TRANSACTION_ID', transactionId);
+                                         var url = `{% url 'app.member:chat_to_pay' transaction_id='TRANSACTION_ID' %}`.replace('TRANSACTION_ID', transactionId);
                                          window.open(url, '_blank');
                                      }
                                  });
@@ -126,7 +122,7 @@
                                     <p>{{ transaction.transaction.payment_method|capfirst }}</p>
                                 </div>
                             </div>
-                        </div>                                             {% endcomment %}
+                        </div> {% endcomment %}
                     </div>
                 </div>
             </div>

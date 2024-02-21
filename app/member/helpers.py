@@ -1,5 +1,6 @@
 from app.models import ActivityList, Transaction, Mitra, Testimonial
 from django.shortcuts import get_object_or_404
+from django.core import serializers
 
 def get_member_activity(id):
     get_activites = Transaction.objects.filter(member=id, status='Sukses').order_by('-date')
@@ -14,7 +15,19 @@ def get_member_activity(id):
         })
     # print(activites_data)
     return activites_data
-def get_transactions(id):
+
+def get_transaction(cust_id, transaction_id):
+    get_transaction = Transaction.objects.filter(member=cust_id, transaction_id=transaction_id)
+    transaction_data = []
+    
+    for transaction in get_transaction:
+        data = transaction.transaction_json()
+        transaction_data.append(data)
+
+    return transaction_data
+
+
+def get_all_transactions(id):
     transactions = Transaction.objects.filter(member=id).order_by('-date')
     transactions_data = []    
     
