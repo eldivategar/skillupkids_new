@@ -9,6 +9,7 @@ from app.helpers.decorators import cek_member_session
 from django.utils import timezone
 from django.core.cache import cache
 from django.views.decorators.cache import cache_page
+from app.transaction.transaction import generate_transaction_id
 
 def class_list(request):
     if request.method == 'GET':
@@ -81,6 +82,8 @@ def buy_activity(request, id):
         mitra = Mitra.objects.get(uuid=activity['mitra']['uuid'])
         price = activity['activity']['activity_informations']['price']
 
+        transaction_id = generate_transaction_id()
+
         if price == 0:
             is_free = True
             status = 'Sukses'
@@ -93,6 +96,7 @@ def buy_activity(request, id):
         expired_at = timezone.now() + timezone.timedelta(minutes=10)
     
         transaction = Transaction.objects.create(
+            transaction_id=transaction_id,
             member=member,
             mitra=mitra,
             activity_id=activity_id,
@@ -105,3 +109,45 @@ def buy_activity(request, id):
         transaction.save()
 
         return redirect('app.member:transactions')        
+    
+
+# from app.midtrans.tokenizer import generate_token_midtrans
+# from app.transaction.transaction import generate_transaction_id
+# ef buy_activity(request, id):
+#     if request.method == 'GET':
+#         customer_id = request.session.get('customer_id')[2:]
+#         member = Member.objects.get(uuid=customer_id)    
+#         activity = get_activity_detail(int(id))
+
+#         activity_id = activity['activity']['activity_id']
+#         activity_name = activity['activity']['activity_name']
+#         mitra = Mitra.objects.get(uuid=activity['mitra']['uuid'])
+#         price = activity['activity']['activity_informations']['price']
+
+#         transaction_id = generate_transaction_id()
+
+#         if price == 0:
+#             is_free = True
+#             status = 'Sukses'
+#             metode = '-'
+#         else:
+#             is_free = False
+#             status = 'Menunggu Pembayaran'
+#             metode = 'Transfer Bank'
+#             token = generate_token_midtrans(transaction_id, price, member.name, member.email, member.number, activity_id, activity_name)
+            
+#         transaction = Transaction.objects.create(
+#             transaction_id=transaction_id,
+#             member=member,
+#             mitra=mitra,
+#             activity_id=activity_id,
+#             is_free=is_free,
+#             total_price=price,
+#             status=status,
+#             payment_method=metode,
+#             token=token
+#             # expired_at=expired_at 
+#         )
+#         transaction.save()
+#         print(token)
+#         return redirect('app.member:transactions')        
