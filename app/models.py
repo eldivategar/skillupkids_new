@@ -183,7 +183,7 @@ class Transaction(models.Model):
     member = models.ForeignKey(Member, to_field='uuid', related_name='member_transaction', on_delete=models.CASCADE)
     mitra = models.ForeignKey(Mitra, to_field='uuid', related_name='mitra_transaction', on_delete=models.CASCADE)
     activity = models.ForeignKey(ActivityList, to_field='activity_id', related_name='activity_transaction', on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(null=True)
     
     IS_FREE = (
         (True, True),
@@ -217,14 +217,18 @@ class Transaction(models.Model):
     total_price = models.DecimalField(max_digits=10, decimal_places=3, default=0)
     payment_method = models.CharField(max_length=50, choices=PAYMENT_METHOD, default='Transfer Bank')
     expired_at = models.DateTimeField(null=True, blank=True, default=None)
+    token = models.CharField(max_length=100, default='', blank=True)
 
     def __str__(self):
         return str(self.transaction_id)
     
     def save(self, *args, **kwargs):
+        if not self.date:
+            self.date = timezone.now()
+
         if not self.is_free and self.expired_at is None:
             self.expired_at = self.date + timezone.timedelta(minutes=10)
-
+        
         super().save(*args, **kwargs)
     
     def transaction_json(self):
@@ -254,7 +258,8 @@ class Transaction(models.Model):
                     'status': self.status,
                     'total_price': self.total_price,
                     'payment_method': self.payment_method,
-                    'expired_at': self.expired_at
+                    'expired_at': self.expired_at,
+                    'token': self.token
                 }
         return data
     
@@ -269,10 +274,10 @@ def generate_transaction_id():
     return f'SUK-{tahun_sekarang}-{angka_unik:013d}'[:20]
 
 
-@receiver(pre_save, sender=Transaction)
-def set_transaction_id(sender, instance, **kwargs):
-    if not instance.transaction_id:
-        instance.transaction_id = generate_transaction_id()
+# @receiver(pre_save, sender=Transaction)
+# def set_transaction_id(sender, instance, **kwargs):
+#     # if not instance.transaction_id:
+#     #     instance.transaction_id = generate_transaction_id()
     
-    if not instance.date:
-        instance.date = timezone.now()
+#     if not instance.date:
+#         instance.date = timezone.now()

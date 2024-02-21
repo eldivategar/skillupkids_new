@@ -25,3 +25,7 @@ DATABASES = {
         # 'PORT': os.getenv('PGPORT'),
     }
 }
+
+MIDTRANS_CLIENT_KEY = os.getenv('MIDTRANS_CLIENT_KEY')
+MIDTRANS_SERVER_KEY = os.getenv('MIDTRANS_SERVER_KEY')
+SNAP_JS_URL = os.getenv('SNAP_JS_URL')

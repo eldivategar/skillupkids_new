@@ -8,6 +8,7 @@ from app.models import Member, Transaction, ActivityList, Testimonial
 from app.activity.helpers import get_activity_detail, get_activity_list, get_category, get_activity_detail_by_name
 from .helpers import get_transactions, get_member_activity, check_testimoni_member
 from app.helpers.utils import redirect_to_whatsapp
+from skillupkids import settings
 
 @cek_member_session
 def member_profile(request):
@@ -85,7 +86,7 @@ def transactions(request):
     member_id = request.session.get('customer_id')[2:]
     transactions = get_transactions(member_id)
         
-    return render(request, 'member/transactions.html', {'data': data, 'transactions': transactions})
+    return render(request, 'member/transactions.html', {'data': data, 'transactions': transactions, 'client_key': settings.MIDTRANS_CLIENT_KEY, 'snap_js_url': settings.SNAP_JS_URL})
 
 @cek_member_session
 def chat_to_pay(request, id):

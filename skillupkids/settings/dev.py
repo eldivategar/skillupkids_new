@@ -23,3 +23,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
+MIDTRANS_CLIENT_KEY = os.getenv('SB_MIDTRANS_CLIENT_KEY')
+MIDTRANS_SERVER_KEY = os.getenv('SB_MIDTRANS_SERVER_KEY')
+SNAP_JS_URL = os.getenv('SB_SNAP_JS_URL')
