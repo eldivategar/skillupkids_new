@@ -8,6 +8,7 @@ from app.activity.helpers import get_activity_detail
 from app.helpers.decorators import cek_member_session
 from django.utils import timezone
 from django.core.cache import cache
+from django.views.decorators.cache import cache_page
 
 def class_list(request):
     if request.method == 'GET':
@@ -41,7 +42,8 @@ def class_list(request):
             elif customer[:2] == 'me':
                 data = get_member_data(request)
                 return render(request, 'activity/class-list.html', {'data': data, 'list_of_activity': list_of_activity, 'category': categories})
-              
+
+@cache_page(60*60*24)              
 def class_detail(request, id, activity_name):
     if request.method == 'GET':        
         data_detail_activity = get_activity_detail(id)
