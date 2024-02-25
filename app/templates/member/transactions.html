@@ -41,15 +41,14 @@
                                     $("#" + remainingTimeId).text(formattedTime);
                                     if (remainingTime <= 0) {
                                         $("#" + remainingTimeId).text("");
-                                        window.location.reload();
-                                        clearInterval(updateCountdownTimer);
-                                        return;
+                                        clearInterval(interval);
+                                        window.location.reload();                                        
                                     }
                                 }
                                 
                                 var expiredAt{{ forloop.counter }} = "{{ transaction.transaction.expired_at.isoformat }}";
                                 
-                                setInterval(function() {
+                                var interval = setInterval(function() {
                                     updateCountdownTimer("remaining-time-{{ forloop.counter }}", expiredAt{{ forloop.counter }});
                                 }, 1000);    
                             </script>
