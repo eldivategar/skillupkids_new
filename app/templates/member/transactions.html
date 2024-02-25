@@ -42,6 +42,8 @@
                                     if (remainingTime <= 0) {
                                         $("#" + remainingTimeId).text("");
                                         window.location.reload();
+                                        clearInterval(updateCountdownTimer);
+                                        return;
                                     }
                                 }
                                 
