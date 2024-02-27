@@ -12,6 +12,8 @@ from django.views.decorators.cache import cache_page
 from app.transaction.transaction import generate_transaction_id
 from django.utils.decorators import method_decorator
 from django.views.generic import View
+from django.shortcuts import get_object_or_404
+from app.views import _500
 
 class ClassList(View):
     @method_decorator(cache_page(60*60*24))
@@ -50,33 +52,36 @@ def class_detail(request, id, activity_name):
         
         if not customer_id:
             return render(request, 'activity/activity-details.html', {'data_detail_activity': data_detail_activity})
-        else:
-            if customer_id.startswith('mi') :
-                data = get_mitra_data(request)
-            elif customer_id.startswith('me'):
-                data = get_member_data(request)
-            return render(request, 'activity/activity-details.html', {'data': data, 'data_detail_activity': data_detail_activity})
+
+        data = get_mitra_data(request) if customer_id.startswith('mi') else get_member_data(request)
+        
+        return render(request, 'activity/activity-details.html', {'data': data, 'data_detail_activity': data_detail_activity})
 
 def chat_to_admin(request, id, activity_name):
     if request.method == 'GET':
-        customer_id = request.session.get('customer_id')[2:]
-        member = Member.objects.get(uuid=customer_id)
         activity = get_activity_detail(id)
         activity_name = activity['activity']['activity_name']
         activity_category = activity['activity']['category']
 
-        message = f'Halo admin %F0%9F%98%8A \nSaya atas nama {member} mau daftar kegiatan {activity_name} dengan kategori {activity_category}!'
+        try:            
+            customer_id = request.session.get('customer_id')[2:]
+            member = get_object_or_404(Member, uuid=customer_id)
+
+            message = f'Halo admin %F0%9F%98%8A \nSaya atas nama {member.name} mau daftar kegiatan {activity_name} dengan kategori {activity_category}!'
+        except:
+            message = f'Halo admin %F0%9F%98%8A \nSaya mau daftar kegiatan {activity_name} dengan kategori {activity_category}!'
+
         return redirect_to_whatsapp(message)
 
 @cek_member_session
 def buy_activity(request, id):
     if request.method == 'GET':
         customer_id = request.session.get('customer_id')[2:]
-        member = Member.objects.get(uuid=customer_id)
+        member = get_object_or_404(Member, uuid=customer_id)
         activity = get_activity_detail(int(id))
 
         activity_id = activity['activity']['activity_id']
-        mitra = Mitra.objects.get(uuid=activity['mitra']['uuid'])
+        mitra = get_object_or_404(Mitra, uuid=activity['mitra']['uuid'])
         price = activity['activity']['activity_informations']['price']
 
         transaction_id = generate_transaction_id()
@@ -91,21 +96,26 @@ def buy_activity(request, id):
             metode = 'Transfer Bank'
         
         expired_at = timezone.now() + timezone.timedelta(minutes=10)
-    
-        transaction = Transaction.objects.create(
-            transaction_id=transaction_id,
-            member=member,
-            mitra=mitra,
-            activity_id=activity_id,
-            is_free=is_free,
-            total_price=price,
-            status=status,
-            payment_method=metode,
-            expired_at=expired_at 
-        )
-        transaction.save()
 
-        return redirect('app.member:transactions')        
+        existing_transaction = Transaction.objects.filter(member=member, activity_id=activity_id).first()
+        
+        try:
+            transaction = Transaction.objects.create(
+                transaction_id=transaction_id,
+                member=member,
+                mitra=mitra,
+                activity_id=activity_id,
+                is_free=is_free,
+                total_price=price,
+                status=status,
+                payment_method=metode,
+                expired_at=expired_at                      
+            )        
+
+            return redirect('app.member:transactions')        
+        except:
+            return _500(request)
+    
     
 
 # from app.midtrans.tokenizer import generate_token_midtrans

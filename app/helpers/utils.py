@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from urllib.parse import quote
 from django.utils.html import escape
 from django.conf import settings
+from django.shortcuts import redirect
 import pyotp
 import smtplib
 
@@ -100,4 +101,4 @@ def redirect_to_whatsapp(message, number=None):
             number = '+62' + number[1:]        
         
     redirect_to = f'https://api.whatsapp.com/send?phone={number}&text={message}'
-    return HttpResponseRedirect(redirect_to)
+    return redirect(redirect_to)

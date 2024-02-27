@@ -158,6 +158,6 @@ def rating(request, activity_id):
 def chat_to_admin(request):
     if request.method == 'GET':
         customer_id = request.session.get('customer_id')[2:]
-        member = Member.objects.get(uuid=customer_id)
-        message = f'Halo admin %F0%9F%98%80 \nSaya atas nama *{member}* ingin bertanya tentang...'
+        member = get_object_or_404(Member, uuid=customer_id)
+        message = f'Halo admin %F0%9F%98%80 \nSaya atas nama *{member.name}* ingin bertanya tentang...'
         return redirect_to_whatsapp(message)
