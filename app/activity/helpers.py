@@ -22,22 +22,21 @@ def get_activity_detail_by_name(activity_name):
     return data_detail_activity
 
 def get_activity_list(category, keyword=None):
-    if category == 'all' and keyword == None:
-        get_all_activity = ActivityList.objects.filter(activity_status='terbit')
+    filter_args = {'activity_status': 'terbit'}
+    
+    if category != 'all':
+        filter_args['category__icontains'] = category
+    if keyword:
+        filter_args['activity_name__icontains'] = keyword
 
-    elif category == 'all' and keyword != None:
-        get_all_activity = ActivityList.objects.filter(activity_status='terbit', activity_name__icontains=keyword)
-
-    elif category != 'all' and keyword == None:
-        get_all_activity = ActivityList.objects.filter(activity_status='terbit', category__icontains=category)
-
-    elif category != 'all' and keyword != None:
-        get_all_activity = ActivityList.objects.filter(activity_status='terbit', category__icontains=category, activity_name__icontains=keyword)
-        
+    get_all_activity = ActivityList.objects.filter(**filter_args)
+   
     all_data = []
 
+    mitra_data_dict = {mitra.name: mitra.mitra_json() for mitra in Mitra.objects.filter(mitra_activity__activity_status='terbit')}
+
     for activity in get_all_activity:
-        mitra_data = Mitra.objects.get(name=activity.mitra_activity.name)
+        mitra_data = mitra_data_dict.get(activity.mitra_activity.name)
         activity_data = activity.activity_json()           
         
         all_data.append({
@@ -46,7 +45,6 @@ def get_activity_list(category, keyword=None):
         })        
     
     return all_data
-     
     
 def get_category():
     get_categories_set = set(ActivityList.objects.filter(activity_status='terbit').values_list('category', flat=True).distinct())
@@ -55,8 +53,6 @@ def get_category():
     categories = list(set(categories))
 
     return categories
-
-
 
 def get_new_activity(num=None):
     if num == None:

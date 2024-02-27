@@ -13,52 +13,45 @@ from app.transaction.transaction import generate_transaction_id
 
 def class_list(request):
     if request.method == 'GET':
-        category = request.GET.get('category')
-        keyword = request.GET.get('keyword')        
+        category = request.GET.get('category', 'all')
+        keyword = request.GET.get('keyword', None)
 
-        if category == None and keyword == None:
+        if category == 'all' and keyword == None:
             list_of_activity = cache.get('list_of_activity')
             if list_of_activity == None:
                 list_of_activity = get_activity_list(category='all')
                 cache.set('list_of_activity', list_of_activity, 60*60*24)
         
-        elif category == None and keyword != None:
-            list_of_activity = get_activity_list(keyword=keyword)
-        
-        elif category != None and keyword == None:
-            list_of_activity = get_activity_list(category=category)
-        
-        elif category != None and keyword != None:
-            list_of_activity = get_activity_list(category=category, keyword=keyword)                
+        else:
+            list_of_activity = get_activity_list(category, keyword)               
 
         categories = get_category()
 
-        if 'customer_id' not in request.session:
+        customer_id = request.session.get('customer_id')
+
+        if not customer_id:
             return render(request, 'activity/class-list.html', {'list_of_activity': list_of_activity, 'category': categories})
         else:
-            customer = request.session.get('customer_id')
-            if customer[:2] == 'mi' :
+            if customer_id.startswith('mi'):
                 data = get_mitra_data(request)
-                return render(request, 'activity/class-list.html', {'data': data, 'list_of_activity': list_of_activity, 'category': categories})
-            elif customer[:2] == 'me':
-                data = get_member_data(request)
-                return render(request, 'activity/class-list.html', {'data': data, 'list_of_activity': list_of_activity, 'category': categories})
+            elif customer_id.startswith('me'):
+                data = get_member_data(request)            
+            return render(request, 'activity/class-list.html', {'data': data, 'list_of_activity': list_of_activity, 'category': categories})
 
 @cache_page(60*60*24)              
 def class_detail(request, id, activity_name):
     if request.method == 'GET':        
         data_detail_activity = get_activity_detail(id)
+        customer_id = request.session.get('customer_id')
         
-        if 'customer_id' not in request.session:
+        if not customer_id:
             return render(request, 'activity/activity-details.html', {'data_detail_activity': data_detail_activity})
         else:
-            customer = request.session.get('customer_id')
-            if customer[:2] == 'mi' :
+            if customer_id.startswith('mi') :
                 data = get_mitra_data(request)
-                return render(request, 'activity/activity-details.html', {'data': data, 'data_detail_activity': data_detail_activity})
-            elif customer[:2] == 'me':
+            elif customer_id.startswith('me'):
                 data = get_member_data(request)
-                return render(request, 'activity/activity-details.html', {'data': data, 'data_detail_activity': data_detail_activity})
+            return render(request, 'activity/activity-details.html', {'data': data, 'data_detail_activity': data_detail_activity})
 
 def chat_to_admin(request, id, activity_name):
     if request.method == 'GET':
