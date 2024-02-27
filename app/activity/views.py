@@ -10,9 +10,12 @@ from django.utils import timezone
 from django.core.cache import cache
 from django.views.decorators.cache import cache_page
 from app.transaction.transaction import generate_transaction_id
+from django.utils.decorators import method_decorator
+from django.views.generic import View
 
-def class_list(request):
-    if request.method == 'GET':
+class ClassList(View):
+    @method_decorator(cache_page(60*60*24))
+    def get(self, request):
         category = request.GET.get('category', 'all')
         keyword = request.GET.get('keyword', None)
 
@@ -37,6 +40,7 @@ def class_list(request):
             elif customer_id.startswith('me'):
                 data = get_member_data(request)            
             return render(request, 'activity/class-list.html', {'data': data, 'list_of_activity': list_of_activity, 'category': categories})
+
 
 @cache_page(60*60*24)              
 def class_detail(request, id, activity_name):
