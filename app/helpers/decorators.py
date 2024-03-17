@@ -17,6 +17,7 @@ def cek_member_session(view_func):
         if 'customer_id' in request.session and request.session['customer_id'][:2] == 'me':
             return view_func(request, *args, **kwargs)
         else:
+            request.session['next_url'] = request.path
             return redirect('app.member:login')
     return _wrapped_view
 

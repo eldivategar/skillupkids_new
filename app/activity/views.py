@@ -73,15 +73,19 @@ def chat_to_admin(request, id, activity_name):
 
         return redirect_to_whatsapp(message)
 
+    
+from app.midtrans.tokenizer import generate_token_midtrans
+from app.transaction.transaction import generate_transaction_id
 @cek_member_session
 def buy_activity(request, id):
     if request.method == 'GET':
         customer_id = request.session.get('customer_id')[2:]
-        member = get_object_or_404(Member, uuid=customer_id)
+        member = Member.objects.get(uuid=customer_id)    
         activity = get_activity_detail(int(id))
 
         activity_id = activity['activity']['activity_id']
-        mitra = get_object_or_404(Mitra, uuid=activity['mitra']['uuid'])
+        activity_name = activity['activity']['activity_name']
+        mitra = Mitra.objects.get(uuid=activity['mitra']['uuid'])
         price = activity['activity']['activity_informations']['price']
 
         transaction_id = generate_transaction_id()
@@ -94,41 +98,34 @@ def buy_activity(request, id):
             is_free = False
             status = 'Menunggu Pembayaran'
             metode = 'Transfer Bank'
-        
-        expired_at = timezone.now() + timezone.timedelta(minutes=10)
+            token = generate_token_midtrans(transaction_id, price, member.name, member.email, member.number, activity_id, activity_name)
+            
+        transaction = Transaction.objects.create(
+            transaction_id=transaction_id,
+            member=member,
+            mitra=mitra,
+            activity_id=activity_id,
+            is_free=is_free,
+            total_price=price,
+            status=status,
+            payment_method=metode,
+            token=token
+            # expired_at=expired_at 
+        )
+        transaction.save()
+        print(token)
+        return redirect('app.member:transactions')        
 
-        existing_transaction = Transaction.objects.filter(member=member, activity_id=activity_id).first()
-        
-        try:
-            transaction = Transaction.objects.create(
-                transaction_id=transaction_id,
-                member=member,
-                mitra=mitra,
-                activity_id=activity_id,
-                is_free=is_free,
-                total_price=price,
-                status=status,
-                payment_method=metode,
-                expired_at=expired_at                      
-            )        
 
-            return redirect('app.member:transactions')        
-        except:
-            return _500(request)
-    
-    
-
-# from app.midtrans.tokenizer import generate_token_midtrans
-# from app.transaction.transaction import generate_transaction_id
-# ef buy_activity(request, id):
+# @cek_member_session
+# def buy_activity(request, id):
 #     if request.method == 'GET':
 #         customer_id = request.session.get('customer_id')[2:]
-#         member = Member.objects.get(uuid=customer_id)    
+#         member = get_object_or_404(Member, uuid=customer_id)
 #         activity = get_activity_detail(int(id))
 
 #         activity_id = activity['activity']['activity_id']
-#         activity_name = activity['activity']['activity_name']
-#         mitra = Mitra.objects.get(uuid=activity['mitra']['uuid'])
+#         mitra = get_object_or_404(Mitra, uuid=activity['mitra']['uuid'])
 #         price = activity['activity']['activity_informations']['price']
 
 #         transaction_id = generate_transaction_id()
@@ -141,20 +138,24 @@ def buy_activity(request, id):
 #             is_free = False
 #             status = 'Menunggu Pembayaran'
 #             metode = 'Transfer Bank'
-#             token = generate_token_midtrans(transaction_id, price, member.name, member.email, member.number, activity_id, activity_name)
-            
-#         transaction = Transaction.objects.create(
-#             transaction_id=transaction_id,
-#             member=member,
-#             mitra=mitra,
-#             activity_id=activity_id,
-#             is_free=is_free,
-#             total_price=price,
-#             status=status,
-#             payment_method=metode,
-#             token=token
-#             # expired_at=expired_at 
-#         )
-#         transaction.save()
-#         print(token)
-#         return redirect('app.member:transactions')        
+        
+#         expired_at = timezone.now() + timezone.timedelta(minutes=10)
+
+#         existing_transaction = Transaction.objects.filter(member=member, activity_id=activity_id).first()
+        
+#         try:
+#             transaction = Transaction.objects.create(
+#                 transaction_id=transaction_id,
+#                 member=member,
+#                 mitra=mitra,
+#                 activity_id=activity_id,
+#                 is_free=is_free,
+#                 total_price=price,
+#                 status=status,
+#                 payment_method=metode,
+#                 expired_at=expired_at                      
+#             )        
+
+#             return redirect('app.member:transactions')        
+#         except:
+#             return _500(request)

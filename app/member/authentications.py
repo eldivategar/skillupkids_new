@@ -9,10 +9,13 @@ import pyotp
 
 def login(request):
     if request.method == 'GET':
+        if request.session.get('customer_id'):
+            next_url = request.session.get('next_url')
+            return redirect(f'app.member:{next_url}' if next_url else 'app.member:member_dashboard_activity')
         return render(request, 'member/auth/login.html')
     
     if request.method == 'POST':
-        request.session.flush()
+        # request.session.flush()
         email = request.POST.get('email')
         password = request.POST.get('password')
 
@@ -22,8 +25,14 @@ def login(request):
             if member:
                 if check_password(password, member.password):
                     customer_uuid = f'me{member.uuid_str()}'
-                    request.session['customer_id'] = customer_uuid                   
-                    return redirect('app.member:member_dashboard_activity')
+                    request.session['customer_id'] = customer_uuid
+
+                    next_url = request.session.get('next_url')
+                    if next_url:
+                        del request.session['next_url']
+                        return redirect(next_url)
+                    else:
+                        return redirect('app.member:member_dashboard_activity')
                 else:
                     messages.error(request, 'Ups, Password salah!')
                     return redirect('app.member:login')

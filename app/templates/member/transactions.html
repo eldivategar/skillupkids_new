@@ -78,23 +78,23 @@
                         <a target="_blank" class="btn btn-primary" id="pay-button" onclick="confirmBuy('{{ transaction.transaction.transaction_id }}')" data-token="{{ transaction.transaction.token }}">Bayar</a>
                         <script>
                              function confirmBuy(transactionId) {
-                                // token = document.getElementById('pay-button').getAttribute('data-token');
-                                // window.snap.pay(token);
-                                  Swal.fire({
-                                     title: "Selesaikan pembayaran?",
-                                     text: "Kamu akan dialihkan ke Whatsapp admin untuk pembayaran!",
-                                     icon: "warning",
-                                     showCancelButton: true,
-                                     confirmButtonColor: "#3085d6",
-                                     cancelButtonColor: "#d33",
-                                     cancelButtonText: "Kembali",
-                                     confirmButtonText: "Lanjut!"
-                                 }).then((result) => {
-                                     if (result.isConfirmed) {
-                                         var url = `{% url 'app.member:chat_to_pay' transaction_id='TRANSACTION_ID' %}`.replace('TRANSACTION_ID', transactionId);
-                                         window.open(url, '_blank');
-                                     }
-                                 });
+                                token = document.getElementById('pay-button').getAttribute('data-token');
+                                window.snap.pay(token);
+                                //  Swal.fire({
+                                //     title: "Selesaikan pembayaran?",
+                                //     text: "Kamu akan dialihkan ke Whatsapp admin untuk pembayaran!",
+                                //     icon: "warning",
+                                //     showCancelButton: true,
+                                //     confirmButtonColor: "#3085d6",
+                                //     cancelButtonColor: "#d33",
+                                //     cancelButtonText: "Kembali",
+                                //     confirmButtonText: "Lanjut!"
+                                // }).then((result) => {
+                                //     if (result.isConfirmed) {
+                                //         var url = `{% url 'app.member:chat_to_pay' transaction_id='TRANSACTION_ID' %}`.replace('TRANSACTION_ID', transactionId);
+                                //         window.open(url, '_blank');
+                                //     }
+                                // });
                             }
                         </script>
                         {% endif %}
