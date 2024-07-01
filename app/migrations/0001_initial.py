@@ -33,18 +33,7 @@ class Migration(migrations.Migration):
                 ('activity_status', models.CharField(choices=[('pending', 'Pending'), ('terbit', 'Terbit'), ('ditolak', 'Ditolak')], default='pending', max_length=10)),
                 ('message_status', models.TextField(blank=True, default='', null=True)),
             ],
-        ),
-        migrations.CreateModel(
-            name='Blog',
-            fields=[
-                ('blog_id', models.AutoField(primary_key=True, serialize=False)),
-                ('title', models.CharField(max_length=500)),
-                ('content', models.TextField(blank=True, null=True)),
-                ('image', models.ImageField(blank=True, default='blog/default-blog.jpg', null=True, upload_to='blog/')),
-                ('tag', models.CharField(default='', max_length=50)),
-                ('created_at', models.DateField(auto_now_add=True)),
-            ],
-        ),
+        ),       
         migrations.CreateModel(
             name='Member',
             fields=[
