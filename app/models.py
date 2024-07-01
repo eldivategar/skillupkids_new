@@ -281,3 +281,26 @@ def generate_transaction_id():
     
 #     if not instance.date:
 #         instance.date = timezone.now()
+
+
+class Blog(models.Model):
+    blog_id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=500)
+    content = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='blog/', default='blog/default-blog.jpg', null=True, blank=True)
+    tag = models.CharField(max_length=50, default='')
+    created_at = models.DateField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.title
+    
+    def blog_json(self):
+        data = {
+            'blog_id': self.blog_id,
+            'title': self.title,
+            'content': self.content,
+            'image': self.image,
+            'tag': self.tag,
+            'created_at': self.created_at
+        }
+        return data

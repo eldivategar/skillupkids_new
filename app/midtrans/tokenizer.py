@@ -1,6 +1,7 @@
 import os
 import midtransclient
 from decimal import Decimal
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from app.models import Transaction
 from skillupkids import settings
@@ -60,7 +61,7 @@ def generate_token_midtrans(order_id, gross_amount, name, email, phone, item_id,
     print(transaction_token)
     return transaction_token
 
-def midtrans_callbackk(request):
+def midtrans_callback(request):
     if request.method == 'POST':
         notification = request.body.decode('utf-8')
 
@@ -73,4 +74,4 @@ def midtrans_callbackk(request):
             transaction = Transaction.objects.get(transaction_id=order_id)
             transaction.status = 'Sukses'
             transaction.save()
-            return HttpResponse(status=200)
+            return redirect('app.member:transactions')

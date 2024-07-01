@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Member, Mitra, ActivityList, Testimonial, Transaction
+from .models import Member, Mitra, ActivityList, Testimonial, Transaction, Blog
 
 class TransactionAdmin(admin.ModelAdmin):
     list_display = ('transaction_id', 'member', 'mitra', 'activity', 'date', 'status', 'total_price', 'payment_method', 'expired_at')
@@ -17,3 +17,4 @@ admin.site.register(Mitra)
 admin.site.register(ActivityList, ActivityAdmin)
 admin.site.register(Testimonial)
 admin.site.register(Transaction, TransactionAdmin)
+admin.site.register(Blog)

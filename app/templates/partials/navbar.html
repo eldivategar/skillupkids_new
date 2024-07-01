@@ -43,6 +43,7 @@
                             <ul class="submenu first-submenu">
                                 {% comment %} <li><a href="{% url 'about' %}">Tentang Kami</a></li> {% endcomment %}
                                 <li><a href="{% url 'blog' %}">Blog</a></li>
+                                <li><a href="{% url 'about' %}">Tentang Kami</a></li>
                                 <li><a href="{% url 'contact' %}">Kontak</a></li>
                                 {% if not request.session.customer_id %}
                                 <li><a href="{% url 'app.mitra:login' %}">Masuk sebagai Mitra</a></li>

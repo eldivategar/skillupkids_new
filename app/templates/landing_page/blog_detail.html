@@ -1,0 +1,55 @@
+{% extends "layout/base.html" %} {% load static %}
+{% block content %}
+
+<div class="breadcrumb-bar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-12">
+                <div class="breadcrumb-list">
+                    <nav aria-label="breadcrumb" class="page-breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'blog' %}">Blog</a></li>
+                            <li class="breadcrumb-item" aria-current="page">{{ get_blog.title }}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="course-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+
+                <div class="blog">
+                    <div class="blog-image">
+                        <a href="{% url 'blog_detail' blog_id=get_blog.blog_id blog_title=get_blog.title|slugify %}"><img class="img-fluid" src="{{ get_blog.image.url }}"
+                                alt="Post Image"></a>
+                    </div>
+                    <div class="blog-info clearfix">
+                        <div class="post-left">
+                            <ul>                                
+                                <li><img class="img-fluid" src="{% static 'assets/img/icon/icon-22.svg' %}" alt="Img">{{ get_blog.created_at|date:"j F Y" }}
+                                </li>
+                                <li><img class="img-fluid" src="{% static 'assets/img/icon/icon-23.svg' %}" alt="Img">{{ get_blog.tag }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h3 class="blog-title"><a href="{% url 'blog_detail' blog_id=get_blog.blog_id blog_title=get_blog.title|slugify %}">{{ get_blog.title }}</a></h3>
+                    <div class="blog-content">
+                        <p style="text-align: justify;">{{ get_blog.content }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+{% include 'partials/footer.html' %}
+<!-- /Footer -->
+
+{% endblock %}
