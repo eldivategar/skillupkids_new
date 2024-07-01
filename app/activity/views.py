@@ -1,3 +1,7 @@
+import logging
+
+logger = logging.getLogger(__name__)
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from app.helpers.utils import get_member_data, get_mitra_data
@@ -78,43 +82,47 @@ from app.midtrans.tokenizer import generate_token_midtrans
 from app.transaction.transaction import generate_transaction_id
 @cek_member_session
 def buy_activity(request, id):
-    if request.method == 'GET':
-        customer_id = request.session.get('customer_id')[2:]
-        member = Member.objects.get(uuid=customer_id)    
-        activity = get_activity_detail(int(id))
+    try:
+        if request.method == 'GET':
+            customer_id = request.session.get('customer_id')[2:]
+            member = Member.objects.get(uuid=customer_id)    
+            activity = get_activity_detail(int(id))
 
-        activity_id = activity['activity']['activity_id']
-        activity_name = activity['activity']['activity_name']
-        mitra = Mitra.objects.get(uuid=activity['mitra']['uuid'])
-        price = activity['activity']['activity_informations']['price']
+            activity_id = activity['activity']['activity_id']
+            activity_name = activity['activity']['activity_name']
+            mitra = Mitra.objects.get(uuid=activity['mitra']['uuid'])
+            price = activity['activity']['activity_informations']['price']
 
-        transaction_id = generate_transaction_id()
+            transaction_id = generate_transaction_id()
 
-        if price == 0:
-            is_free = True
-            status = 'Sukses'
-            metode = '-'
-        else:
-            is_free = False
-            status = 'Menunggu Pembayaran'
-            metode = 'Transfer Bank'
-        
-        token = generate_token_midtrans(transaction_id, price, member.name, member.email, member.number, activity_id, activity_name)
+            if price == 0:
+                is_free = True
+                status = 'Sukses'
+                metode = '-'
+            else:
+                is_free = False
+                status = 'Menunggu Pembayaran'
+                metode = 'Transfer Bank'
             
-        transaction = Transaction.objects.create(
-            transaction_id=transaction_id,
-            member=member,
-            mitra=mitra,
-            activity_id=activity_id,
-            is_free=is_free,
-            total_price=price,
-            status=status,
-            payment_method=metode,
-            token=token
-            # expired_at=expired_at 
-        )
-        transaction.save()
-        return redirect('app.member:transactions')        
+            token = generate_token_midtrans(transaction_id, price, member.name, member.email, member.number, activity_id, activity_name)
+                
+            transaction = Transaction.objects.create(
+                transaction_id=transaction_id,
+                member=member,
+                mitra=mitra,
+                activity_id=activity_id,
+                is_free=is_free,
+                total_price=price,
+                status=status,
+                payment_method=metode,
+                token=token
+                # expired_at=expired_at 
+            )
+            transaction.save()
+            return redirect('app.member:transactions')
+    except Exception as e:
+        logger.error(f"Terjadi kesalahan saat melakukan pembelian aktivitas: {e}")
+        return redirect('app.member:transactions')     
 
 
 # @cek_member_session
