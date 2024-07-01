@@ -27,20 +27,22 @@ def get_transaction(cust_id, transaction_id):
     return transaction_data
 
 
-def get_all_transactions(id):
-    transactions = Transaction.objects.filter(member=id).order_by('-date')
-    transactions_data = []    
+def get_all_transactions(member_id):
+    transactions = Transaction.objects.filter(member=member_id).select_related('activity').order_by('-date')
+    activities = ActivityList.objects.filter(activity_id__in=transactions.values_list('activity_id', flat=True))
+    activity_dict = {activity.activity_id: activity.activity_json() for activity in activities}
     
+    transactions_data = []
     for transaction in transactions:
-        activity = ActivityList.objects.filter(activity_id=transaction.activity.activity_id)
-        
         transaction_data = transaction.transaction_json()
+        activity_data = activity_dict.get(transaction.activity.activity_id, {})
         transactions_data.append({
             'transaction': transaction_data,
-            'activity': activity[0].activity_json()
+            'activity': activity_data
         })
 
     return transactions_data
+
 
 def check_testimoni_member(member_id, activity_id):
     testimoni = Testimonial.objects.filter(member=member_id, activity=activity_id)
