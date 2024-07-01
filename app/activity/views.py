@@ -77,7 +77,7 @@ def chat_to_admin(request, id, activity_name):
 from app.midtrans.tokenizer import generate_token_midtrans
 from app.transaction.transaction import generate_transaction_id
 @cek_member_session
-def buy_activity(request, id):
+async def buy_activity(request, id):
     if request.method == 'GET':
         customer_id = request.session.get('customer_id')[2:]
         member = Member.objects.get(uuid=customer_id)    
@@ -98,7 +98,7 @@ def buy_activity(request, id):
             is_free = False
             status = 'Menunggu Pembayaran'
             metode = 'Transfer Bank'
-            token = generate_token_midtrans(transaction_id, price, member.name, member.email, member.number, activity_id, activity_name)
+            token = await generate_token_midtrans(transaction_id, price, member.name, member.email, member.number, activity_id, activity_name)
             
         transaction = Transaction.objects.create(
             transaction_id=transaction_id,
@@ -113,7 +113,6 @@ def buy_activity(request, id):
             # expired_at=expired_at 
         )
         transaction.save()
-        print(token)
         return redirect('app.member:transactions')        
 
 

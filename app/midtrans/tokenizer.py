@@ -1,8 +1,6 @@
 import os
 import midtransclient
-from decimal import Decimal
 from django.shortcuts import redirect
-from django.http import HttpResponse
 from app.models import Transaction
 from skillupkids import settings
 
@@ -27,11 +25,13 @@ else:
 
 snap = midtransclient.Snap(
     # Set to true if you want Production Environment (accept real transaction).
-    is_production=is_production,
-    server_key=settings.MIDTRANS_SERVER_KEY,
+    is_production=True,
+    server_key="Mid-server-Ctf7jHS1Upw1Mlre0BX_K0B2",
+    client_key="Mid-client-YLQJvXJDZTz_x_AJ"
 )
 
-def generate_token_midtrans(order_id, gross_amount, name, email, phone, item_id, item_name, quantity=1):
+
+async def generate_token_midtrans(order_id, gross_amount, name, email, phone, item_id, item_name, quantity=1):
     # Create Snap API instance
     # Build API parameter
     gross_amount = int(gross_amount * 1000)
@@ -55,10 +55,9 @@ def generate_token_midtrans(order_id, gross_amount, name, email, phone, item_id,
         }
     }
 
-    transaction = snap.create_transaction(param)
+    transaction = await snap.create_transaction(param)
     transaction_token = transaction['token']
 
-    print(transaction_token)
     return transaction_token
 
 def midtrans_callback(request):
