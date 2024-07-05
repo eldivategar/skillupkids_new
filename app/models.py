@@ -4,7 +4,7 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from datetime import datetime, timedelta
 from django.utils import timezone
-from ckeditor_uploader.fields import RichTextUploadingField
+from tinymce.models import HTMLField
 import uuid
 
 class Member(models.Model):
@@ -287,7 +287,7 @@ def generate_transaction_id():
 class Blog(models.Model):
     blog_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=500)
-    content = RichTextUploadingField(null=True, blank=True)
+    content = HTMLField(null=True, blank=True)
     image = models.ImageField(upload_to='blog/', default='blog/default-blog.jpg', null=True, blank=True)
     tag = models.CharField(max_length=50, default='')
     created_at = models.DateField(auto_now_add=True)

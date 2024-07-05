@@ -39,8 +39,7 @@ INSTALLED_APPS = [
     
     'cloudinary_storage',
     'cloudinary',
-    'ckeditor',
-    'ckeditor_uploader',
+    'tinymce',
     # 'debug_toolbar'
 ]
 
@@ -165,34 +164,25 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.getenv('API_SECRET')
 }
 
-# Pengaturan lainnya...
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'full',
-        'extraPlugins': 'liststyle',
-        'toolbarGroups': [
-            {'name': 'document', 'groups': ['mode', 'document', 'doctools']},
-            {'name': 'clipboard', 'groups': ['clipboard', 'undo']},
-            {'name': 'editing', 'groups': ['find', 'selection', 'spellchecker', 'editing']},
-            {'name': 'forms', 'groups': ['forms']},
-            {'name': 'basicstyles', 'groups': ['basicstyles', 'cleanup']},
-            {'name': 'paragraph', 'groups': ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
-            {'name': 'links', 'groups': ['links']},
-            {'name': 'insert', 'groups': ['insert']},
-            {'name': 'styles', 'groups': ['styles']},
-            {'name': 'colors', 'groups': ['colors']},
-            {'name': 'tools', 'groups': ['tools']},
-            {'name': 'others', 'groups': ['others']},
-            {'name': 'about', 'groups': ['about']}
-        ],
-        'removeButtons': '',
-        'height': 300,
-        'width': '100%',
-    },
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 500,
+    'width': '100%',
+    'plugins': '''
+        advlist autolink lists link image charmap print preview anchor
+        searchreplace visualblocks code fullscreen
+        insertdatetime media table paste code help wordcount spellchecker
+    ''',
+    'toolbar': '''
+        undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft 
+        aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor 
+        backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | 
+        fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | 
+        a11ycheck ltr rtl | showcomments addcomment code
+        ''',
 }
 
+TINYMCE_SPELLCHECKER = True
 
 # NO_ADMIN = os.getenv('NO_ADMIN')
 NO_ADMIN = '+6285726631291'
