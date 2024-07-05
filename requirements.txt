@@ -24,3 +24,4 @@ tzdata
 tzlocal
 urllib3==1.26.6
 whitenoise
+django-ckeditor

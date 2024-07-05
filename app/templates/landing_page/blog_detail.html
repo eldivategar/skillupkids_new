@@ -38,8 +38,12 @@
                         </div>
                     </div>
                     <h3 class="blog-title"><a href="{% url 'blog_detail' blog_id=get_blog.blog_id blog_title=get_blog.title|slugify %}">{{ get_blog.title }}</a></h3>
-                    <div class="blog-content">
-                        <p style="text-align: justify;">{{ get_blog.content }}</p>
+                    <div class="card">
+                        <div class="m-3">
+                            <div class="blog-content">
+                                <p style="text-align: justify;">{{ get_blog.content|safe }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

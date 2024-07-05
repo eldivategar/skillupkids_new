@@ -40,6 +40,7 @@ urlpatterns = [
 
     re_path(r'^(?P<requested_url>.+)$', views._404, name='notfound'),  
     path('server_error/', views._500, name='server_error'),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 if settings.DEBUG: 

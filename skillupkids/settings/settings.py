@@ -33,10 +33,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'app',
+    'skillupkids',
+    
     'cloudinary_storage',
     'cloudinary',
-    'skillupkids',
-    'app',
+    'ckeditor',
+    'ckeditor_uploader',
     # 'debug_toolbar'
 ]
 
@@ -78,10 +82,6 @@ CACHES = {
       'LOCATION': '127.0.0.1:11211',
    }
 }
-
-import socket
-hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
 
 ROOT_URLCONF = 'skillupkids.urls'
 
@@ -164,6 +164,35 @@ CLOUDINARY_STORAGE = {
     'API_KEY': os.getenv('API_KEY'),
     'API_SECRET': os.getenv('API_SECRET')
 }
+
+# Pengaturan lainnya...
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'extraPlugins': 'liststyle',
+        'toolbarGroups': [
+            {'name': 'document', 'groups': ['mode', 'document', 'doctools']},
+            {'name': 'clipboard', 'groups': ['clipboard', 'undo']},
+            {'name': 'editing', 'groups': ['find', 'selection', 'spellchecker', 'editing']},
+            {'name': 'forms', 'groups': ['forms']},
+            {'name': 'basicstyles', 'groups': ['basicstyles', 'cleanup']},
+            {'name': 'paragraph', 'groups': ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
+            {'name': 'links', 'groups': ['links']},
+            {'name': 'insert', 'groups': ['insert']},
+            {'name': 'styles', 'groups': ['styles']},
+            {'name': 'colors', 'groups': ['colors']},
+            {'name': 'tools', 'groups': ['tools']},
+            {'name': 'others', 'groups': ['others']},
+            {'name': 'about', 'groups': ['about']}
+        ],
+        'removeButtons': '',
+        'height': 300,
+        'width': '100%',
+    },
+}
+
 
 # NO_ADMIN = os.getenv('NO_ADMIN')
 NO_ADMIN = '+6285726631291'

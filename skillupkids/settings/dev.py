@@ -7,12 +7,11 @@ DEBUG = True
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'app/static')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
-# STATIC_ROOT = 'https://sukcdn.netlify.app/'
 
 MEDIA_URL='/media/'
 # MEDIA_ROOT = BASE_DIR /'media'
 
-ALLOWED_HOSTS = ['*', 'https://6b8a-202-65-119-130.ngrok-free.app']
+ALLOWED_HOSTS = ['*']
 
 DATABASES = {
     'default': {
@@ -25,6 +24,6 @@ DATABASES = {
     }
 }
 
-MIDTRANS_CLIENT_KEY = os.getenv('SB_MIDTRANS_CLIENT_KEY')
-MIDTRANS_SERVER_KEY = os.getenv('SB_MIDTRANS_SERVER_KEY')
-SNAP_JS_URL = os.getenv('SB_SNAP_JS_URL')
+MIDTRANS_CLIENT_KEY = os.getenv('MIDTRANS_CLIENT_KEY')
+MIDTRANS_SERVER_KEY = os.getenv('MIDTRANS_SERVER_KEY')
+SNAP_JS_URL = os.getenv('SNAP_JS_URL')
