@@ -94,17 +94,17 @@ def buy_activity(request, id):
             price = activity['activity']['activity_informations']['price']
 
             transaction_id = generate_transaction_id()
-
-            if price == 0:
+            
+            if price == '0':
                 is_free = True
                 status = 'Sukses'
                 metode = '-'
+                token = None
             else:
                 is_free = False
                 status = 'Menunggu Pembayaran'
-                metode = 'Transfer Bank'
-            
-            token = generate_token_midtrans(transaction_id, price, member.name, member.email, member.number, activity_id, activity_name)
+                metode = 'Transfer Bank'            
+                token = generate_token_midtrans(transaction_id, price, member.name, member.email, member.number, activity_id, activity_name)
                 
             transaction = Transaction.objects.create(
                 transaction_id=transaction_id,
