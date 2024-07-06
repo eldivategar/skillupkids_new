@@ -103,7 +103,7 @@ class ActivityList(models.Model):
 
     # Activity Information
     day = models.TextField(default='')
-    price = MoneyField(max_digits=10, decimal_places=3, default_currency='IDR')
+    price = MoneyField(max_digits=10, decimal_places=2, default_currency='IDR')
     duration = models.IntegerField(default='')
     age = models.TextField(default='')
     description = models.TextField(default='')
