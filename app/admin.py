@@ -7,7 +7,7 @@ class TransactionAdmin(admin.ModelAdmin):
     ordering = ('-date',)
 
 class ActivityAdmin(admin.ModelAdmin):
-    list_display = ('activity_id', 'activity_name', 'mitra_activity', 'category', 'activity_status')
+    list_display = ('activity_name', 'price', 'mitra_activity', 'category', 'activity_status')
     list_filter = ('mitra_activity', 'activity_status', 'category')
     
 
