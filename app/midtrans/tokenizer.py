@@ -30,8 +30,8 @@ else:
 snap = midtransclient.Snap(
     # Set to true if you want Production Environment (accept real transaction).
     is_production=True,
-    server_key="Mid-server-ijnROnaZYxxXyndm4Uc9v2P9",
-    client_key="Mid-client-mEU5ZZBSNLe52x16"
+    server_key=settings.MIDTRANS_SERVER_KEY,
+    client_key=settings.MIDTRANS_CLIENT_KEY
 )
 
 
