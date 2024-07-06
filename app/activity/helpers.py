@@ -1,5 +1,6 @@
 from app.models import Member, Mitra, ActivityList, Testimonial
 from django.shortcuts import get_object_or_404
+from babel.numbers import format_currency
 
 def get_activity_detail(id):
     detail_activity = get_object_or_404(ActivityList, activity_id=id).activity_json()
@@ -14,6 +15,8 @@ def get_activity_detail(id):
 def get_activity_detail_by_name(activity_name):
     detail_activity = get_object_or_404(ActivityList, activity_name=activity_name).activity_json()
     mitra_data = Mitra.objects.get(name=detail_activity['mitra_activity']).mitra_json()
+    
+    detail_activity['price']
         
     data_detail_activity = {
         'mitra': mitra_data,
@@ -106,3 +109,5 @@ def get_testimonial(num=5):
         })        
 
     return all_data
+
+

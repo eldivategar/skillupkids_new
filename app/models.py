@@ -5,7 +5,12 @@ from django.dispatch import receiver
 from datetime import datetime, timedelta
 from django.utils import timezone
 from tinymce.models import HTMLField
+from djmoney.models.fields import MoneyField
+from babel.numbers import format_currency
 import uuid
+
+def format_rupiah(amount):
+    return format_currency(amount.amount, 'IDR', locale='id_ID').replace(',00', '').replace('Rp', '').strip()
 
 class Member(models.Model):
     cust_id = models.AutoField(primary_key=True)
@@ -98,7 +103,7 @@ class ActivityList(models.Model):
 
     # Activity Information
     day = models.TextField(default='')
-    price = models.DecimalField(max_digits=10, decimal_places=3, default='')
+    price = MoneyField(max_digits=10, decimal_places=3, default_currency='IDR')
     duration = models.IntegerField(default='')
     age = models.TextField(default='')
     description = models.TextField(default='')
@@ -139,7 +144,7 @@ class ActivityList(models.Model):
                 'day': self.day,
                 'duration': self.duration,
                 'age': self.age,
-                'price': self.price,
+                'price': format_rupiah(self.price),
                 'description': self.description,
                 'sub_description': self.sub_description,
                 'learning_method': self.learning_method
@@ -228,7 +233,7 @@ class Transaction(models.Model):
             self.date = timezone.now()
 
         if not self.is_free and self.expired_at is None:
-            self.expired_at = self.date + timezone.timedelta(minutes=10)
+            self.expired_at = self.date + timezone.timedelta(minutes=60)
         
         super().save(*args, **kwargs)
     

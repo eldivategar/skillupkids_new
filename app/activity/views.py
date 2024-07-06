@@ -29,7 +29,7 @@ class ClassList(View):
             list_of_activity = cache.get('list_of_activity')
             if list_of_activity == None:
                 list_of_activity = get_activity_list(category='all')
-                cache.set('list_of_activity', list_of_activity, 60*60*24)
+                # cache.set('list_of_activity', list_of_activity, 60*60*24)
         
         else:
             list_of_activity = get_activity_list(category, keyword)               
@@ -48,7 +48,7 @@ class ClassList(View):
             return render(request, 'activity/class-list.html', {'data': data, 'list_of_activity': list_of_activity, 'category': categories})
 
 
-@cache_page(60*60*24)              
+@cache_page(60*60*24)
 def class_detail(request, id, activity_name):
     if request.method == 'GET':        
         data_detail_activity = get_activity_detail(id)

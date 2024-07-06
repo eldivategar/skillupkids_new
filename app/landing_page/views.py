@@ -21,7 +21,7 @@ def home(request):
     
     return render(request, 'landing_page/index.html', {'data': data, 'category': category, 'new_activity': new_activity, 'testimonials': testimonials})
 
-# @cache_page(604800)
+@cache_page(60*60*24)
 def about(request):
     if request.method == 'GET':
         if 'customer_id' not in request.session:
@@ -35,7 +35,7 @@ def about(request):
         
         return render(request, 'landing_page/about.html', {'data': data})
 
-# @cache_page(604800)
+@cache_page(60*60*24)
 def contact(request):
     if 'customer_id' not in request.session:
         return render(request, 'landing_page/contact.html')
@@ -48,7 +48,7 @@ def contact(request):
         
         return render(request, 'landing_page/contact.html', {'data': data})
 
-
+@cache_page(60*60*6)
 def blog(request):
     if request.method == 'GET':
         get_blogs = Blog.objects.all()
@@ -64,6 +64,7 @@ def blog(request):
                 data = get_member_data(request)
         return render(request, 'landing_page/blog.html', {'data': data, 'get_blogs': get_blogs})
 
+@cache_page(60*60*6)
 def blog_detail(request, blog_id, blog_title):
     if request.method == 'GET':
         get_blog = Blog.objects.get(blog_id=blog_id)

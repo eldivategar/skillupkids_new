@@ -1,3 +1,7 @@
+import logging
+
+logger = logging.getLogger(__name__)
+
 import os
 import midtransclient
 from django.shortcuts import redirect
@@ -26,15 +30,21 @@ else:
 snap = midtransclient.Snap(
     # Set to true if you want Production Environment (accept real transaction).
     is_production=True,
-    server_key="Mid-server-Ctf7jHS1Upw1Mlre0BX_K0B2",
-    client_key="Mid-client-YLQJvXJDZTz_x_AJ"
+    server_key="Mid-server-ijnROnaZYxxXyndm4Uc9v2P9",
+    client_key="Mid-client-mEU5ZZBSNLe52x16"
 )
 
 
-async def generate_token_midtrans(order_id, gross_amount, name, email, phone, item_id, item_name, quantity=1):
+def generate_token_midtrans(order_id, gross_amount, name, email, phone, item_id, item_name, quantity=1):
     # Create Snap API instance
     # Build API parameter
-    gross_amount = int(gross_amount * 1000)
+    try:
+        # Mengubah gross_amount menjadi integer
+        gross_amount = int(float(gross_amount) * 1000)
+    except ValueError:
+        logger.error(f"Nilai gross_amount tidak valid: {gross_amount}")
+        raise ValueError("Nilai gross_amount tidak valid")
+    
     param = {
         "transaction_details": {
             "order_id": order_id,
@@ -55,7 +65,7 @@ async def generate_token_midtrans(order_id, gross_amount, name, email, phone, it
         }
     }
 
-    transaction = await snap.create_transaction(param)
+    transaction = snap.create_transaction(param)
     transaction_token = transaction['token']
 
     return transaction_token
