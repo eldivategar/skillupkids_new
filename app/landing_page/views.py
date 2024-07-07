@@ -19,6 +19,7 @@ def home(request):
         elif customer[:2] == 'me':
             data = get_member_data(request)
     
+    
     return render(request, 'landing_page/index.html', {'data': data, 'category': category, 'new_activity': new_activity, 'testimonials': testimonials})
 
 @cache_page(60*60*24)

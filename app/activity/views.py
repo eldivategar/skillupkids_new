@@ -3,21 +3,19 @@ import logging
 logger = logging.getLogger(__name__)
 
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from app.helpers.utils import get_member_data, get_mitra_data
+from app.helpers.utils import get_member_data, get_mitra_data, send_email
 from .helpers import get_activity_detail, get_activity_list, get_category
 from app.helpers.utils import redirect_to_whatsapp
 from app.models import Member, Transaction, Mitra
 from app.activity.helpers import get_activity_detail
 from app.helpers.decorators import cek_member_session
-from django.utils import timezone
 from django.core.cache import cache
 from django.views.decorators.cache import cache_page
 from app.transaction.transaction import generate_transaction_id
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django.shortcuts import get_object_or_404
-from app.views import _500
+
 
 class ClassList(View):
     @method_decorator(cache_page(60*60*24))
@@ -119,6 +117,49 @@ def buy_activity(request, id):
                 # expired_at=expired_at 
             )
             transaction.save()
+            
+            if is_free:
+                try:
+                    context = {
+                        'tanggal': transaction.date.strftime('%d %B %Y %H:%M:%S'),
+                        'total_pembayaran': '0',
+                        'id_pesanan': transaction_id,        
+                    }
+                    subject = 'Transaksi Berhasil'
+                    receiver = member.email
+                    send_email(subject, receiver, context, 'success')
+                except Exception as e:
+                    logger.error(f"Terjadi kesalahan saat mengirim email: {e}")
+                    return redirect('app.member:transactions')
+            
+            try:
+                context = {
+                    'data': {
+                        'tanggal': transaction.date.strftime('%d %B %Y %H:%M:%S'),
+                        'nama_kegiatan': activity_name,
+                        'waktu_kegiatan': activity['activity']['activity_informations']['day'],
+                        'member': {
+                            'nama': member.name,
+                            'email': member.email,
+                            'no_hp': member.number,
+                            'alamat': member.address,
+                            },
+                        'mitra': {
+                            'nama': mitra.name,
+                            'email': mitra.email,
+                            'no_hp': mitra.number,
+                            'alamat': mitra.address,                                
+                        }
+                        }
+                    }
+                    
+                subject = 'Notifikasi Pembelian Aktivitas'
+                receiver = mitra.email
+                send_email(subject, receiver, context, 'new_activity')
+            except Exception as e:
+                logger.error(f"Terjadi kesalahan saat mengirim email: {e}")
+                return redirect('app.member:transactions')
+            
             return redirect('app.member:transactions')
     except Exception as e:
         logger.error(f"Terjadi kesalahan saat melakukan pembelian aktivitas: {e}")

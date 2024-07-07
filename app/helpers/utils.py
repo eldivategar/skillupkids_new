@@ -3,7 +3,8 @@ from app.models import Member, Mitra
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import datetime
-from django.http import HttpResponseRedirect
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from urllib.parse import quote
 from django.utils.html import escape
 from django.conf import settings
@@ -47,6 +48,27 @@ def send_otp(request, email):
     except Exception as e:
         print(f'Gagal mengirim email: {str(e)}')
 
+def send_email(subject, receiver, context, template_name=['success', 'new_activity']):
+    reveiver_email = receiver
+    subject = escape(subject)
+    
+    if template_name == 'success':
+        template_message = render_to_string('email_template/success_transaction.html', context)
+    else:
+        template_message = render_to_string('email_template/new_activity_for_admin_mitra.html', context)
+        
+    email = EmailMessage(
+        subject=subject,
+        body=template_message,
+        from_email=settings.EMAIL_HOST_USER,
+        to=[reveiver_email],        
+    )
+    email.content_subtype = 'html'
+    
+    try:
+        email.send()
+    except Exception as e:
+        print(f'Gagal mengirim email: {str(e)}')   
 
 def get_mitra_data(request):
     customer_id = request.session['customer_id']

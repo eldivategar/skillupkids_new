@@ -1,0 +1,106 @@
+<!-- templates/email_template.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skill Up Kids</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Arial&display=swap");
+
+        .text-center {
+            text-align: center;
+        }
+
+        .fw-bold {
+            font-weight: bold;
+        }
+
+        .fs-3 {
+            font-size: 1.5rem;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 25px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .email-header {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: "Helvetica", sans-serif;
+        }
+
+        .email-body {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-family: "Roboto", sans-serif;
+        }
+
+        .email-footer {
+            text-align: center;
+            font-family: "Roboto", sans-serif;
+        }
+
+        .status-success {
+            color: green;
+            font-weight: bold;
+        }
+
+        .support-container {
+            max-width: 600px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: "Arial", sans-serif;
+        }
+    </style>
+</head>
+
+<body style="background-color: #1cbeef">
+    <br>
+    <div class="email-container">
+        <div class="email-header">
+            <h1 class="fw-bold">Skill Up Kids</h1>
+            <hr />
+        </div>
+        <div class="email-body">
+            <p class="text-center">Tanggal: {{ tanggal }}</p>
+            <h4 class="text-center">Total Pembayaran</h4>
+            <p class="text-center fw-bold fs-3">IDR {{ total_pembayaran }}</p>
+            <p>Status transaksi: <span class="status-success">Berhasil</span></p>
+            <p>ID Pesanan: <span class="fw-bold">{{ id_pesanan }}</span></p>
+            <!-- <p>Metode Bayar: {{ metode_bayar }}</p> -->
+            <hr />
+        </div>
+        <div class="email-footer">
+            <p>Terima kasih telah bertransaksi di SkillUpKids.</p>
+        </div>
+    </div>
+    <div class="support-container">
+        <p>
+            Untuk informasi lebih lanjut, silahkan hubungi SkillUpKids via e-mail atau Whatsapp:
+        </p>
+        <hr />
+        <p>
+            Email:
+            <a href="mailto:skillupkidscontact@gmail.com">skillupkidscontact@gmail.com</a>
+        </p>
+        <p>Whatsapp: 0857-2663-1291</p>
+    </div><br>
+</body>
+
+</html>
