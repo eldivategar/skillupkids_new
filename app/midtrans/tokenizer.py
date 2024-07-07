@@ -54,6 +54,10 @@ def generate_token_midtrans(order_id, gross_amount, name, email, phone, item_id,
             "duration": 1,
             "unit": "hours"
         },
+          "expiry": {
+            "duration": 1,
+            "unit": "hours"
+        },
         "item_details": [
             {
                 "id": item_id,

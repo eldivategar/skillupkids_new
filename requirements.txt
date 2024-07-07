@@ -26,3 +26,4 @@ urllib3==1.26.6
 whitenoise
 django-tinymce
 django-money
+django_compressor
