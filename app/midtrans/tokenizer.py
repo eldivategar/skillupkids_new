@@ -6,6 +6,7 @@ import os
 import midtransclient
 from django.shortcuts import redirect
 from app.models import Transaction
+from django.http import HttpResponse
 from skillupkids import settings
 
 
@@ -91,4 +92,4 @@ def midtrans_callback(request):
             transaction = Transaction.objects.get(transaction_id=order_id)
             transaction.status = 'Sukses'
             transaction.save()
-            return redirect('app.member:transactions')
+            return HttpResponse(status=307)

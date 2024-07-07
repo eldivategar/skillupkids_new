@@ -122,48 +122,4 @@ def buy_activity(request, id):
             return redirect('app.member:transactions')
     except Exception as e:
         logger.error(f"Terjadi kesalahan saat melakukan pembelian aktivitas: {e}")
-        return redirect('app.member:transactions')     
-
-
-# @cek_member_session
-# def buy_activity(request, id):
-#     if request.method == 'GET':
-#         customer_id = request.session.get('customer_id')[2:]
-#         member = get_object_or_404(Member, uuid=customer_id)
-#         activity = get_activity_detail(int(id))
-
-#         activity_id = activity['activity']['activity_id']
-#         mitra = get_object_or_404(Mitra, uuid=activity['mitra']['uuid'])
-#         price = activity['activity']['activity_informations']['price']
-
-#         transaction_id = generate_transaction_id()
-
-#         if price == 0:
-#             is_free = True
-#             status = 'Sukses'
-#             metode = '-'
-#         else:
-#             is_free = False
-#             status = 'Menunggu Pembayaran'
-#             metode = 'Transfer Bank'
-        
-#         expired_at = timezone.now() + timezone.timedelta(minutes=10)
-
-#         existing_transaction = Transaction.objects.filter(member=member, activity_id=activity_id).first()
-        
-#         try:
-#             transaction = Transaction.objects.create(
-#                 transaction_id=transaction_id,
-#                 member=member,
-#                 mitra=mitra,
-#                 activity_id=activity_id,
-#                 is_free=is_free,
-#                 total_price=price,
-#                 status=status,
-#                 payment_method=metode,
-#                 expired_at=expired_at                      
-#             )        
-
-#             return redirect('app.member:transactions')        
-#         except:
-#             return _500(request)
+        return redirect('app.member:transactions')
