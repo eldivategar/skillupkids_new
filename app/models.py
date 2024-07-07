@@ -106,18 +106,18 @@ class ActivityList(models.Model):
     price = MoneyField(max_digits=10, decimal_places=2, default_currency='IDR')
     duration = models.IntegerField(default='')
     age = models.TextField(default='')
-    description = models.TextField(default='')
     sub_description = models.TextField(default='')
-    learning_method = models.TextField(default='')    
+    description = HTMLField(default='')
+    learning_method = HTMLField(default='')    
 
     # Benefit
-    benefit = models.TextField(default='', null=True, blank=True)
+    benefit = HTMLField(default='', null=True, blank=True)
 
     # Requirements
-    requirements = models.TextField(default='', null=True, blank=True)
+    requirements = HTMLField(default='', null=True, blank=True)
 
     # Additional Information
-    additional_information = models.TextField(default='', null=True, blank=True)
+    additional_information = HTMLField(default='', null=True, blank=True)
 
     # Activity Image
     activity_image = models.ImageField(upload_to='activity/', default='activity/default-activity.jpg', null=True, blank=True)

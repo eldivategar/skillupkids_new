@@ -10,11 +10,29 @@ class ActivityAdmin(admin.ModelAdmin):
     list_display = ('activity_name', 'price', 'mitra_activity', 'category', 'activity_status')
     list_filter = ('mitra_activity', 'activity_status', 'category')
     
+    
+class MemberAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'number', 'address')
+    # list_filter = ('city')
+    
+    
+class MitraAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'number', 'address')
+    # list_filter = ('city')
+
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at', 'tag')
+    list_filter = ('created_at', 'tag')    
+    
+class TestimoniAdmin(admin.ModelAdmin):
+    list_display = ('member', 'activity', 'testimonial', 'date')
+    list_filter = ('date',)
+    
 
 # Register your models here.
-admin.site.register(Member)
-admin.site.register(Mitra)
+admin.site.register(Member, MemberAdmin)
+admin.site.register(Mitra, MitraAdmin)
 admin.site.register(ActivityList, ActivityAdmin)
-admin.site.register(Testimonial)
+admin.site.register(Testimonial, TestimoniAdmin)
 admin.site.register(Transaction, TransactionAdmin)
-admin.site.register(Blog)
+admin.site.register(Blog, BlogAdmin)
