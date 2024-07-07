@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'cloudinary',
     'tinymce',
-    'djmoney'
+    'djmoney',
+    'compressor',
     # 'debug_toolbar'
 ]
 
@@ -79,7 +80,7 @@ CACHES = {
    'default': {
     #   'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
       'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-      'LOCATION': '127.0.0.1:11211',
+      'LOCATION': 'unique-snowflake',
    }
 }
 
@@ -184,6 +185,15 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 TINYMCE_SPELLCHECKER = True
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
+
+COMPRESS_ENABLED = True
 
 # NO_ADMIN = os.getenv('NO_ADMIN')
 NO_ADMIN = '+6285726631291'
