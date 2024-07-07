@@ -79,4 +79,17 @@ def blog_detail(request, blog_id, blog_title):
             elif customer[:2] == 'me':
                 data = get_member_data(request)
         
-        return render(request, 'landing_page/blog_detail.html', {'data': data, 'get_blog': get_blog})            
+        return render(request, 'landing_page/blog_detail.html', {'data': data, 'get_blog': get_blog})
+
+@cache_page(60*60*6)
+def terms_of_use(request):
+    if 'customer_id' not in request.session:
+        return render(request, 'landing_page/terms.html')
+    else:
+        customer = request.session.get('customer_id')
+        if customer[:2] == 'mi' :
+            data = get_mitra_data(request)
+        elif customer[:2] == 'me':
+            data = get_member_data(request)
+        
+        return render(request, 'landing_page/terms.html', {'data': data})

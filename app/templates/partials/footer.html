@@ -94,17 +94,16 @@
             <!-- Copyright -->
             <div class="copyright">
                 <div class="row">
+                    <!-- <div class="col-md-6">
+                        <div class="privacy-policy">
+                            <a href="term-condition.html">Terms & Condition</a>
+                        </div>
+                    </div> -->
                     <div class="col-md-6">
-                        {% comment %} <div class="privacy-policy">
-                            <ul>
-                                <li><a href="term-condition.html">Terms</a></li>
-                                <li><a href="privacy-policy.html">Privacy</a></li>
-                            </ul>
-                        </div> {% endcomment %}
-                    </div>
-                    <div class="col-md-6">
-                        <div class="copyright-text">
+                        <div class="d-flex">
                             <p class="mb-0">&copy; 2023-<script>document.write( new Date().getFullYear() );</script> SkillUpKids. All rights reserved.</p>
+                            <span class="px-2"> | </span>
+                            <a href="{% url 'terms' %}">Syarat & Ketentuan</a>
                         </div>
                     </div>
                 </div>
