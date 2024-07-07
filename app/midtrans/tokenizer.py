@@ -50,6 +50,10 @@ def generate_token_midtrans(order_id, gross_amount, name, email, phone, item_id,
             "order_id": order_id,
             "gross_amount": gross_amount
         }, 
+        "page_expiry": {
+            "duration": 1,
+            "unit": "hours"
+        },
         "item_details": [
             {
                 "id": item_id,
@@ -62,7 +66,7 @@ def generate_token_midtrans(order_id, gross_amount, name, email, phone, item_id,
             "first_name": name,
             "email": email,
             "phone": phone
-        }
+        },
     }
 
     transaction = snap.create_transaction(param)
