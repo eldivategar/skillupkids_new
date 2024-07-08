@@ -80,29 +80,25 @@ from app.midtrans.tokenizer import generate_token_midtrans
 from app.transaction.transaction import generate_transaction_id
 @cek_member_session
 def buy_activity(request, id):
-    try:
-        if request.method == 'GET':
+    if request.method == 'GET':
+        try:
             customer_id = request.session.get('customer_id')[2:]
-            member = Member.objects.get(uuid=customer_id)    
+            member = get_object_or_404(Member, uuid=customer_id)
             activity = get_activity_detail(int(id))
 
-            activity_id = activity['activity']['activity_id']
-            activity_name = activity['activity']['activity_name']
-            mitra = Mitra.objects.get(uuid=activity['mitra']['uuid'])
-            price = activity['activity']['activity_informations']['price']
+            activity_details = activity['activity']
+            activity_id = activity_details['activity_id']
+            activity_name = activity_details['activity_name']
+            price = activity_details['activity_informations']['price']
+            
+            mitra = get_object_or_404(Mitra, uuid=activity['mitra']['uuid'])
 
             transaction_id = generate_transaction_id()
             
-            if price == '0':
-                is_free = True
-                status = 'Sukses'
-                metode = '-'
-                token = None
-            else:
-                is_free = False
-                status = 'Menunggu Pembayaran'
-                metode = 'Transfer Bank'              
-                token = generate_token_midtrans(transaction_id, price, member.name, member.email, member.number, activity_id, activity_name)
+            is_free = price == '0'
+            status = 'Sukses' if is_free else 'Menunggu Pembayaran'
+            metode = '-' if is_free else 'Transfer Bank'
+            token = None if is_free else generate_token_midtrans(transaction_id, price, member.name, member.email, member.number, activity_id, activity_name)                     
                 
             transaction = Transaction.objects.create(
                 transaction_id=transaction_id,
@@ -115,52 +111,47 @@ def buy_activity(request, id):
                 payment_method=metode,
                 token=token
                 # expired_at=expired_at 
-            )
-            transaction.save()
+            )            
             
             if is_free:
                 try:
-                    context = {
+                    context_member = {
                         'tanggal': transaction.date.strftime('%d %B %Y %H:%M:%S'),
                         'total_pembayaran': '0',
                         'id_pesanan': transaction_id,        
                     }
-                    subject = 'Transaksi Berhasil'
-                    receiver = member.email
-                    send_email(subject, receiver, context, 'success')
-                except Exception as e:
-                    logger.error(f"Terjadi kesalahan saat mengirim email: {e}")
-                    return redirect('app.member:transactions')
-            
-            try:
-                context = {
-                    'data': {
-                        'tanggal': transaction.date.strftime('%d %B %Y %H:%M:%S'),
-                        'nama_kegiatan': activity_name,
-                        'waktu_kegiatan': activity['activity']['activity_informations']['day'],
-                        'member': {
-                            'nama': member.name,
-                            'email': member.email,
-                            'no_hp': member.number,
-                            'alamat': member.address,
+                    subject_member = 'Transaksi Berhasil'
+                    receiver_member = member.email
+                    send_email(subject_member, receiver_member, context_member, 'success')
+                    
+                    context_mitra = {
+                        'data': {
+                            'tanggal': transaction.date.strftime('%d %B %Y %H:%M:%S'),
+                            'nama_kegiatan': activity_name,
+                            'waktu_kegiatan': activity_details['activity_informations']['day'],
+                            'member': {
+                                'nama': member.name,
+                                'email': member.email,
+                                'no_hp': member.number,
+                                'alamat': member.address,
                             },
-                        'mitra': {
-                            'nama': mitra.name,
-                            'email': mitra.email,
-                            'no_hp': mitra.number,
-                            'alamat': mitra.address,                                
-                        }
+                            'mitra': {
+                                'nama': mitra.name,
+                                'email': mitra.email,
+                                'no_hp': mitra.number,
+                                'alamat': mitra.address,                                
+                            }
                         }
                     }
                     
-                subject = 'Notifikasi Pembelian Aktivitas'
-                receiver = mitra.email
-                send_email(subject, receiver, context, 'new_activity')
-            except Exception as e:
-                logger.error(f"Terjadi kesalahan saat mengirim email: {e}")
-                return redirect('app.member:transactions')
-            
+                    subject_mitra = 'Notifikasi Pembelian Aktivitas'
+                    receiver_mitra = mitra.email
+                    send_email(subject_mitra, receiver_mitra, context_mitra, 'new_activity')
+                except Exception as e:
+                    logger.error(f"Terjadi kesalahan saat mengirim email: {e}")
+                    return redirect('app.member:transactions')
+                        
             return redirect('app.member:transactions')
-    except Exception as e:
-        logger.error(f"Terjadi kesalahan saat melakukan pembelian aktivitas: {e}")
-        return redirect('app.member:transactions')
+        except Exception as e:
+            logger.error(f"Terjadi kesalahan saat melakukan pembelian aktivitas: {e}")
+            return redirect('app.member:transactions')

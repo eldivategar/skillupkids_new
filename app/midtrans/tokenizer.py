@@ -8,6 +8,10 @@ from django.shortcuts import redirect
 from app.models import Transaction
 from django.http import HttpResponse
 from skillupkids import settings
+from django.shortcuts import get_object_or_404
+from app.models import Member, Mitra
+from app.activity.helpers import get_activity_detail
+from app.helpers.utils import send_email
 
 
 def get_current_environment():
@@ -92,6 +96,35 @@ def midtrans_callback(request):
             transaction = Transaction.objects.get(transaction_id=order_id)
             transaction.status = 'Sukses'
             transaction.save()
+            
+            activity = get_activity_detail(transaction.activity)
+            activity_details = activity['activity']
+            activity_name = activity_details['activity_name']
+            member = get_object_or_404(Member, uuid=transaction.member)
+            mitra = get_object_or_404(Mitra, uuid=transaction.mitra)
+            
+            context = {
+                'data': {
+                    'tanggal': transaction.date.strftime('%d %B %Y %H:%M:%S'),
+                    'nama_kegiatan': activity_name,
+                    'waktu_kegiatan': activity_details['activity_informations']['day'],
+                    'member': {
+                        'nama': member.name,
+                        'email': member.email,
+                        'no_hp': member.number,
+                        'alamat': member.address,
+                    },
+                    'mitra': {
+                        'nama': mitra.name,
+                        'email': mitra.email,
+                        'no_hp': mitra.number,
+                        'alamat': mitra.address,                                
+                    }
+                }
+            }
+            subject_mitra = 'Notifikasi Pembelian Aktivitas'
+            receiver_mitra = mitra.email
+            send_email(subject_mitra, receiver_mitra, context, 'new_activity')
             return HttpResponse(status=200)
         
         # handle transaction status if failed
