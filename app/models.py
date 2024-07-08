@@ -256,15 +256,6 @@ def generate_transaction_id():
     angka_unik = uuid.uuid4().int & (1<<64)-1
     return f'SUK-{tahun_sekarang}-{angka_unik:013d}'[:20]
 
-
-# @receiver(pre_save, sender=Transaction)
-# def set_transaction_id(sender, instance, **kwargs):
-#     # if not instance.transaction_id:
-#     #     instance.transaction_id = generate_transaction_id()
-    
-#     if not instance.date:
-#         instance.date = timezone.now()
-
 class Testimonial(models.Model):
     testimonial_id = models.AutoField(primary_key=True)
     member = models.ForeignKey(Member, to_field='uuid', related_name='member_testimonial', on_delete=models.CASCADE)
@@ -313,4 +304,39 @@ class Blog(models.Model):
             'tag': self.tag,
             'created_at': self.created_at
         }
+        return data
+    
+class FeaturedActivity(models.Model):
+    activity = models.OneToOneField(ActivityList, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.activity.activity_name
+    
+    def featured_activity_json(self):
+        data = {
+            'activity_id': self.activity.activity_id,
+            'activity_name': self.activity.activity_name,
+            'mitra_activity': {
+                'name': self.activity.mitra_activity.name,
+                'profile_image': self.activity.mitra_activity.profile_image,
+                },
+            'category': self.activity.category,
+            'activity_informations': {
+                'day': self.activity.day,
+                'duration': self.activity.duration,
+                'age': self.activity.age,
+                'price': format_rupiah(self.activity.price),
+                'description': self.activity.description,
+                'sub_description': self.activity.sub_description,
+                'learning_method': self.activity.learning_method
+            },
+            'benefit': self.activity.benefit,            
+            'requirements': self.activity.requirements,
+            'additional_information': self.activity.additional_information,
+            'activity_image': self.activity.activity_image,
+            'activity_status': {
+                'status': self.activity.activity_status,
+                'message_status': self.activity.message_status
+            }
+        }        
         return data

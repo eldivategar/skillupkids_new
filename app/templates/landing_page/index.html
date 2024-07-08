@@ -143,7 +143,7 @@
 				<div class="home-three-head section-header-title" data-aos="fade-up">
 					<div class="row align-items-center d-flex justify-content-between">
 						<div class="col-lg-6 col-sm-8">
-							<h2>Kegiatan Terbaru</h2>
+							<h2>Kegiatan Pilihan</h2>
 						</div>
 						<div class="col-lg-6 col-sm-4">
 							<div class="see-all">
@@ -165,35 +165,35 @@
 									<div class="row">
 
 										<!-- Col -->
-										{% for item in new_activity %}
+										{% for item in featured_activities %}
 										<div class="col-xl-3 col-lg-6 col-md-6 col-12" data-aos="fade-up">
 											<div class="course-box-three">
 												<div class="course-three-item">
 													<div class="course-three-img">
-														<a href="{% url 'class_detail' id=item.activity.activity_id activity_name=item.activity.activity_name|slugify %}">
+														<a href="{% url 'class_detail' id=item.activity_id activity_name=item.activity_name|slugify %}">
 															<img class="img-fluid" alt=""
-																src="{{ item.activity.activity_image.url }}">
+																src="{{ item.activity_image.url }}">
 														</a>
 														<div class="heart-three">
-															<a href="#!"><i class="fa-regular fa-heart"></i></a>
+															<a><i class="fa-regular fa-heart"></i></a>
 														</div>
 													</div>
 													<div class="course-three-content">
 														<div class="course-group-three">
 															<div class="group-three-img">
-																<a href="#!"><img
-																		src="{{ item.mitra.profile_image.url }}"
+																<a><img
+																		src="{{ item.mitra_activity.profile_image.url }}"
 																		alt="" class="img-fluid"></a>
 															</div>
 														</div>
 
 														<div class="course-three-text">
-															<a href="{% url 'class_detail' id=item.activity.activity_id activity_name=item.activity.activity_name|slugify %}">
+															<a href="{% url 'class_detail' id=item.activity_id activity_name=item.activity_name|slugify %}">
 																<div class="d-flex align-items-center">
 																	<img src="{% static 'assets/img/icon/icon-24.svg' %}" alt="" class="img-fluid d-flex" style="max-width: 20%;">
-																	<p class="fw-bold mt-3 ms-1">{{ item.activity.category|capfirst }}</p>
+																	<p class="fw-bold mt-3 ms-1">{{ item.category|capfirst }}</p>
 																</div>
-																<h3 class="title instructor-text">{{ item.activity.activity_name|capfirst }}</h3>
+																<h3 class="title instructor-text">{{ item.activity_name|capfirst }}</h3>
 															</a>
 														</div>
 
@@ -202,11 +202,11 @@
 																class="students-three-counts d-flex align-items-center">
 																<img src="{% static 'assets/img/icon/user-icon.svg' %}"
 																	alt="">
-																{% with umur=item.activity.activity_informations.age %}
+																{% with umur=item.activity_informations.age %}
 																	{% if 'semua' in umur|lower or 'umur' in umur|lower %}
-																		<p>{{ item.activity.activity_informations.age|capfirst }}</p>
+																		<p>{{ item.activity_informations.age|capfirst }}</p>
 																	{% else %}
-																		<p>{{ item.activity.activity_informations.age|capfirst }} tahun </p>
+																		<p>{{ item.activity_informations.age|capfirst }} tahun </p>
 																	{% endif %}
 																{% endwith %}
 															</div>
@@ -216,7 +216,7 @@
 															class="price-three-group d-flex align-items-center justify-content-between justify-content-between">
 															<div class="price-three-view d-flex align-items-center">
 																<div class="course-price-three">
-																	{% with price=item.activity.activity_informations.price %}
+																	{% with price=item.activity_informations.price %}
 																	{% if price == 0 or price == '0' %}
 																	<h3>Gratis</h3>
 																	{% else %}
@@ -228,7 +228,7 @@
 															<div
 																class="price-three-time d-inline-flex align-items-center">
 																<i class="fa-regular fa-clock me-2"></i>
-																<span>{{ item.activity.activity_informations.duration }} menit</span>
+																<span>{{ item.activity_informations.duration }} menit</span>
 															</div>
 														</div>
 													</div>
@@ -295,7 +295,7 @@
 					<div class="total-course d-flex align-items-center">
 						<div class="blur-border">
 							<div class="enroll-img ">
-								<img src="{% static 'assets/img/activity.svg' %}" alt="Img" class="img-fluid" width="80">
+								<img src="{% static 'assets/img/svg' %}" alt="Img" class="img-fluid" width="80">
 							</div>
 						</div>
 						<div class="course-count">

@@ -2,26 +2,36 @@ from django.shortcuts import render, redirect
 from app.helpers.utils import get_member_data, get_mitra_data
 from app.activity.helpers import get_category, get_new_activity, get_testimonial
 from django.views.decorators.cache import cache_page
-from app.models import Blog
+from app.models import Blog, FeaturedActivity
 from .helpers import get_achievements
 
-# @cache_page(604800)
 def home(request):
+    featured_activities = FeaturedActivity.objects.select_related('activity').all()
+    featured_activities_json = [fa.featured_activity_json() for fa in featured_activities]    
     category = get_category()
     new_activity = get_new_activity(num=8)
     testimonials = get_testimonial()
     achievements = get_achievements(request)
 
+    context = {
+        'category': category,
+        'new_activity': new_activity,
+        'testimonials': testimonials,
+        'achievements': achievements,
+        'featured_activities': featured_activities_json
+    }
+
     if 'customer_id' not in request.session:
-        return render(request, 'landing_page/index.html', {'category': category, 'new_activity': new_activity, 'testimonials': testimonials, 'achievements': achievements})
+        return render(request, 'landing_page/index.html', context)
     else:
         customer = request.session.get('customer_id')
         if customer[:2] == 'mi' :
             data = get_mitra_data(request)
         elif customer[:2] == 'me':
             data = get_member_data(request)
-    print(achievements)
-    return render(request, 'landing_page/index.html', {'data': data, 'category': category, 'new_activity': new_activity, 'testimonials': testimonials, 'achievements': achievements})
+        context['data'] = data
+    print(featured_activities_json)
+    return render(request, 'landing_page/index.html', context)
 
 @cache_page(60*60*24)
 def about(request):
