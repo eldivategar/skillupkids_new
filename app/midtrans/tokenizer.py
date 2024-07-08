@@ -92,4 +92,4 @@ def midtrans_callback(request):
             transaction = Transaction.objects.get(transaction_id=order_id)
             transaction.status = 'Sukses'
             transaction.save()
-            return HttpResponse(status=307)
+            return HttpResponse(status=200)
