@@ -9,13 +9,13 @@ def home(request):
     featured_activities = FeaturedActivity.objects.select_related('activity').all()
     featured_activities_json = [fa.featured_activity_json() for fa in featured_activities]    
     category = get_category()
-    new_activity = get_new_activity(num=8)
+    # new_activity = get_new_activity(num=8)
     testimonials = get_testimonial()
     achievements = get_achievements(request)
 
     context = {
         'category': category,
-        'new_activity': new_activity,
+        # 'new_activity': new_activity,
         'testimonials': testimonials,
         'achievements': achievements,
         'featured_activities': featured_activities_json
