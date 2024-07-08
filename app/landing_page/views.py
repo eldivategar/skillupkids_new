@@ -3,12 +3,14 @@ from app.helpers.utils import get_member_data, get_mitra_data
 from app.activity.helpers import get_category, get_new_activity, get_testimonial
 from django.views.decorators.cache import cache_page
 from app.models import Blog
+from .helpers import get_achievements
 
 # @cache_page(604800)
 def home(request):
     category = get_category()
     new_activity = get_new_activity(num=8)
     testimonials = get_testimonial()
+    achievements = get_achievements(request)
 
     if 'customer_id' not in request.session:
         return render(request, 'landing_page/index.html', {'category': category, 'new_activity': new_activity, 'testimonials': testimonials})
@@ -19,8 +21,8 @@ def home(request):
         elif customer[:2] == 'me':
             data = get_member_data(request)
     
-    
-    return render(request, 'landing_page/index.html', {'data': data, 'category': category, 'new_activity': new_activity, 'testimonials': testimonials})
+    print(achievements)
+    return render(request, 'landing_page/index.html', {'data': data, 'category': category, 'new_activity': new_activity, 'testimonials': testimonials, 'achievements': achievements})
 
 @cache_page(60*60*24)
 def about(request):

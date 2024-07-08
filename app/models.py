@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.hashers import make_password
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
@@ -160,30 +161,6 @@ class ActivityList(models.Model):
         }        
         return data        
 
-class Testimonial(models.Model):
-    testimonial_id = models.AutoField(primary_key=True)
-    member = models.ForeignKey(Member, to_field='uuid', related_name='member_testimonial', on_delete=models.CASCADE)
-    # mitra = models.ForeignKey(Mitra, to_field='uuid', related_name='mitra_testimonial', on_delete=models.CASCADE)
-    activity = models.ForeignKey(ActivityList, to_field='activity_id', related_name='activity_testimonial', on_delete=models.CASCADE)
-    testimonial = models.TextField(default='')
-    rating = models.IntegerField(default=0)
-    date = models.DateField(auto_now_add=True)
-    
-    def __str__(self):
-        return self.testimonial
-    
-    def testimonial_json(self):
-        data = {
-            'testimonial_id': self.testimonial_id,
-            'member': self.member.name,
-            'mitra': self.activity.mitra_activity.name,
-            'activity': self.activity.activity_name,
-            'testimonial': self.testimonial,
-            'rating': self.rating,
-            'date': self.date
-        }
-        return data
-
 class Transaction(models.Model):
     transaction_id = models.CharField(primary_key=True, max_length=20, editable=False)
     member = models.ForeignKey(Member, to_field='uuid', related_name='member_transaction', on_delete=models.CASCADE)
@@ -288,6 +265,33 @@ def generate_transaction_id():
 #     if not instance.date:
 #         instance.date = timezone.now()
 
+class Testimonial(models.Model):
+    testimonial_id = models.AutoField(primary_key=True)
+    member = models.ForeignKey(Member, to_field='uuid', related_name='member_testimonial', on_delete=models.CASCADE)
+    # mitra = models.ForeignKey(Mitra, to_field='uuid', related_name='mitra_testimonial', on_delete=models.CASCADE)
+    activity = models.ForeignKey(ActivityList, to_field='activity_id', related_name='activity_testimonial', on_delete=models.CASCADE)
+    testimonial = models.TextField(default='')
+    rating = models.IntegerField(default=0, 
+                                 validators=[
+                                    MaxValueValidator(5),
+                                    MinValueValidator(0)
+                                 ])
+    date = models.DateField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.testimonial
+    
+    def testimonial_json(self):
+        data = {
+            'testimonial_id': self.testimonial_id,
+            'member': self.member.name,
+            'mitra': self.activity.mitra_activity.name,
+            'activity': self.activity.activity_name,
+            'testimonial': self.testimonial,
+            'rating': self.rating,
+            'date': self.date
+        }
+        return data
 
 class Blog(models.Model):
     blog_id = models.AutoField(primary_key=True)

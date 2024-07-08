@@ -7,11 +7,9 @@ from django.core.mail import EmailMessage, send_mail
 from django.template.loader import render_to_string
 from urllib.parse import quote
 from django.utils.html import escape
-from django.conf import settings
 from django.shortcuts import redirect
 from django.conf import settings
 import pyotp
-import smtplib
 
 def send_otp(request, email):
     

@@ -93,3 +93,12 @@ def midtrans_callback(request):
             transaction.status = 'Sukses'
             transaction.save()
             return HttpResponse(status=200)
+        
+        # handle transaction status if failed
+        elif transaction_status == 'deny' or transaction_status == 'cancel' or transaction_status == 'expire':
+            transaction = Transaction.objects.get(transaction_id=order_id)
+            transaction.status = 'Gagal'
+            transaction.save()
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=200)
