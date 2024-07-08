@@ -97,35 +97,39 @@ def midtrans_callback(request):
             transaction.status = 'Sukses'
             transaction.save()
             
-            activity = get_activity_detail(transaction.activity)
-            activity_details = activity['activity']
-            activity_name = activity_details['activity_name']
-            member = get_object_or_404(Member, uuid=transaction.member)
-            mitra = get_object_or_404(Mitra, uuid=transaction.mitra)
-            
-            context = {
-                'data': {
-                    'tanggal': transaction.date.strftime('%d %B %Y %H:%M:%S'),
-                    'nama_kegiatan': activity_name,
-                    'waktu_kegiatan': activity_details['activity_informations']['day'],
-                    'member': {
-                        'nama': member.name,
-                        'email': member.email,
-                        'no_hp': member.number,
-                        'alamat': member.address,
-                    },
-                    'mitra': {
-                        'nama': mitra.name,
-                        'email': mitra.email,
-                        'no_hp': mitra.number,
-                        'alamat': mitra.address,                                
+            try:
+                activity = get_activity_detail(transaction.activity.activity_id)
+                activity_details = activity['activity']
+                activity_name = activity_details['activity_name']
+                member = get_object_or_404(Member, uuid=transaction.member.uuid)
+                mitra = get_object_or_404(Mitra, uuid=transaction.mitra.uuid)
+                
+                context = {
+                    'data': {
+                        'tanggal': transaction.date.strftime('%d %B %Y %H:%M:%S'),
+                        'nama_kegiatan': activity_name,
+                        'waktu_kegiatan': activity_details['activity_informations']['day'],
+                        'member': {
+                            'nama': member.name,
+                            'email': member.email,
+                            'no_hp': member.number,
+                            'alamat': member.address,
+                        },
+                        'mitra': {
+                            'nama': mitra.name,
+                            'email': mitra.email,
+                            'no_hp': mitra.number,
+                            'alamat': mitra.address,                                
+                        }
                     }
                 }
-            }
-            subject_mitra = 'Notifikasi Pembelian Aktivitas'
-            receiver_mitra = mitra.email
-            send_email(subject_mitra, receiver_mitra, context, 'new_activity')
-            return HttpResponse(status=200)
+                subject_mitra = 'Notifikasi Pembelian Aktivitas'
+                receiver_mitra = mitra.email
+                send_email(subject_mitra, receiver_mitra, context, 'new_activity')
+                return HttpResponse(status=200)
+            except Exception as e:
+                logger.error(f"Error saat mengirim email notifikasi: {e}")
+                return HttpResponse(status=200)
         
         # handle transaction status if failed
         elif transaction_status == 'deny' or transaction_status == 'cancel' or transaction_status == 'expire':
