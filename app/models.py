@@ -135,6 +135,9 @@ class ActivityList(models.Model):
     def __str__(self):
         return self.activity_name
     
+    def full_activity_name(self):
+        return f"{self.activity_name} - [{self.mitra_activity.name}]"
+    
     def activity_json(self):
         data = {
             'activity_id': self.activity_id,
