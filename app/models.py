@@ -220,7 +220,7 @@ class Transaction(models.Model):
 
     status = models.CharField(max_length=50, choices=STATUS, default='Menunggu Pembayaran')
     message_status = models.TextField(default='', blank=True)
-    total_price = models.DecimalField(max_digits=10, decimal_places=3, default=0)
+    total_price = MoneyField(max_digits=10, decimal_places=2, default_currency='IDR')
     payment_method = models.CharField(max_length=50, choices=PAYMENT_METHOD, default='Transfer Bank')
     expired_at = models.DateTimeField(null=True, blank=True, default=None)
     token = models.CharField(max_length=100, default='', blank=True, null=True)
@@ -249,7 +249,7 @@ class Transaction(models.Model):
                 'date': self.date,
                 'is_free': self.is_free,
                 'status': self.status,
-                'total_price': self.total_price,
+                'total_price': format_rupiah(self.total_price),
                 'payment_method': self.payment_method,                            
             }
 
@@ -262,7 +262,7 @@ class Transaction(models.Model):
                     'date': self.date,
                     'is_free': self.is_free,
                     'status': self.status,
-                    'total_price': self.total_price,
+                    'total_price': format_rupiah(self.total_price),
                     'payment_method': self.payment_method,
                     'expired_at': self.expired_at,
                     'token': self.token

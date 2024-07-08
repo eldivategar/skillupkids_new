@@ -101,7 +101,7 @@ def buy_activity(request, id):
             else:
                 is_free = False
                 status = 'Menunggu Pembayaran'
-                metode = 'Transfer Bank'            
+                metode = 'Transfer Bank'              
                 token = generate_token_midtrans(transaction_id, price, member.name, member.email, member.number, activity_id, activity_name)
                 
             transaction = Transaction.objects.create(

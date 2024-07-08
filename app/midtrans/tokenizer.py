@@ -41,7 +41,8 @@ def generate_token_midtrans(order_id, gross_amount, name, email, phone, item_id,
     # Build API parameter
     try:
         # Mengubah gross_amount menjadi integer
-        gross_amount = int(float(gross_amount) * 1000)
+        # gross_amount = int(float(gross_amount) * 1000)
+        gross_amount = str(gross_amount)
     except ValueError:
         logger.error(f"Nilai gross_amount tidak valid: {gross_amount}")
         raise ValueError("Nilai gross_amount tidak valid")
@@ -73,7 +74,6 @@ def generate_token_midtrans(order_id, gross_amount, name, email, phone, item_id,
             "phone": phone
         },
     }
-
     transaction = snap.create_transaction(param)
     transaction_token = transaction['token']
 
