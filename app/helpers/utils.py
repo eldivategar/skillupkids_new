@@ -44,26 +44,29 @@ def send_otp(request, email):
         print(f'Gagal mengirim email: {str(e)}')
 
 def send_email(subject, receiver, context, template_name=['success', 'new_activity']):
-    reveiver_email = receiver
+    receiver_email = receiver
     subject = escape(subject)
     
     if template_name == 'success':
         template_message = render_to_string('email_template/success_transaction.html', context)
+        to = [receiver_email]
     else:
         template_message = render_to_string('email_template/new_activity_for_admin_mitra.html', context)
+        to = ['skillupkidscontact@gmail.com', receiver_email]
         
     email = EmailMessage(
         subject=subject,
         body=template_message,
         from_email=settings.EMAIL_HOST_USER,
-        to=['skillupkidscontact@gmail.com', reveiver_email],        
+        to=to
     )
     email.content_subtype = 'html'
     
     try:
         email.send()
     except Exception as e:
-        print(f'Gagal mengirim email: {str(e)}')   
+        print(f'Gagal mengirim email: {str(e)}')
+  
 
 def get_mitra_data(request):
     customer_id = request.session['customer_id']

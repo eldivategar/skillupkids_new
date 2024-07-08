@@ -1,4 +1,3 @@
-<!-- templates/email_template.html -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,12 +25,9 @@
             margin-top: 5px;
         }
 
-
-
         .email-container {
             max-width: 600px;
             margin: 25px auto;
-            /* padding: 20px; */
             background-color: #ffffff;
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -45,8 +41,7 @@
 
         .email-body {
             background-color: #ffffff;
-            padding-left: 20px;
-            padding-right: 20px;
+            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             font-family: "Roboto", sans-serif;
@@ -75,19 +70,24 @@
             font-family: "Arial", sans-serif;
         }
 
-        .data {
-            line-height: 1;
-            display: flex;
-            justify-content: space-between;
-        }
+        @media only screen and (max-width: 600px) {
 
-        .activity {
-            line-height: 1
+            .email-container,
+            .support-container {
+                width: 100% !important;
+                padding: 0 !important;
+            }
+
+            .column {
+                display: block !important;
+                width: 100% !important;
+                padding: 10px 0 !important;
+            }
         }
     </style>
 </head>
 
-<body style="background-color: #1cbeef">
+<body style="background-color: #1cbeef; margin: 0; padding: 0;">
     <br>
     <div class="email-container">
         <div class="email-header">
@@ -96,23 +96,27 @@
             <hr />
         </div>
         <div class="email-body">
-            <div class="data">
-                <div class="member">
-                    <h4>Member yang mendaftar:</h4>
-                    <p>Nama: {{ data.member.nama }}</p>
-                    <p>Email: {{ data.member.email }}</p>
-                    <p>No. HP: {{ data.member.no_hp }}</p>
-                    <p>Alamat: {{ data.member.alamat }}</p>
-                </div>
-                <div class="mitra">
-                    <h4>Data Mitra:</h4>
-                    <p>Nama: {{ data.mitra.nama }}</p>
-                    <p>Email: {{ data.mitra.email }}</p>
-                    <p>No. HP: {{ data.mitra.no_hp }}</p>
-                    <p>Alamat: {{ data.mitra.alamat }}</p>
-                </div>
-            </div>
-            <div class="activity text-center">                
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td class="column"
+                        style="width: 50%; padding: 10px; vertical-align: top;">
+                        <h4>Member yang mendaftar:</h4>
+                        <p>Nama: {{ data.member.nama }}</p>
+                        <p>Email: {{ data.member.email }}</p>
+                        <p>No. HP: {{ data.member.no_hp }}</p>
+                        <p>Alamat: {{ data.member.alamat }}</p>
+                    </td>
+                    <td class="column"
+                        style="width: 50%; padding: 10px; vertical-align: top;">
+                        <h4>Data Mitra:</h4>
+                        <p>Nama: {{ data.mitra.nama }}</p>
+                        <p>Email: {{ data.mitra.email }}</p>
+                        <p>No. HP: {{ data.mitra.no_hp }}</p>
+                        <p>Alamat: {{ data.mitra.alamat }}</p>
+                    </td>
+                </tr>
+            </table>
+            <div class="activity text-center" style="margin-top: 20px;">
                 <h4>Kegiatan yang diikuti:</h4>
                 <p>Nama Kegiatan: {{ data.nama_kegiatan }}</p>
                 <p>Waktu Kegiatan: {{ data.waktu_kegiatan }}</p>
