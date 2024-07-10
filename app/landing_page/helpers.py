@@ -9,9 +9,9 @@ def get_achievements(request):
         # count total activity
         total_activity = ActivityList.objects.all().count()
         context = {
-            'total_member': total_member,
-            'total_mitra': total_mitra,
-            'total_activity': total_activity,
+            'total_member': int(total_member),
+            'total_mitra': int(total_mitra),
+            'total_activity': int(total_activity),
         }
         return context
     except Exception as e:

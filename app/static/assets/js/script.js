@@ -93,7 +93,7 @@ Version      : 1.0
 	if($('.course-count .counterUp').length > 0) {
 		$('.course-count .counterUp, .course-inner-content h4 span, .rate-head span, .rate-head-five h2 span').counterUp({
             delay: 15,
-            time: 1500
+            time: 2500
         });
 	}
 	

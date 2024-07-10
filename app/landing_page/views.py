@@ -30,7 +30,6 @@ def home(request):
         elif customer[:2] == 'me':
             data = get_member_data(request)
         context['data'] = data
-    print(featured_activities_json)
     return render(request, 'landing_page/index.html', context)
 
 @cache_page(60*60*24)

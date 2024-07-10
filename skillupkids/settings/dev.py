@@ -13,14 +13,11 @@ MEDIA_URL='/media/'
 
 ALLOWED_HOSTS = ['*']
 
+# connect with sqlite3
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'skillupkids_db',
-        'USER': 'root',
-        'PASSWORD': 'mysql',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

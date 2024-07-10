@@ -6,5 +6,6 @@ db.sqlite3
 dns.txt
 erd.txt
 data.json
+data.dev.json
 # .env
 staticfiles_build
