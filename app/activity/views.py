@@ -18,7 +18,7 @@ from django.shortcuts import get_object_or_404
 
 
 class ClassList(View):
-    @method_decorator(cache_page(60*60*24))
+    # @method_decorator(cache_page(60*60*6))
     def get(self, request):
         category = request.GET.get('category', 'all')
         keyword = request.GET.get('keyword', None)
@@ -46,7 +46,7 @@ class ClassList(View):
             return render(request, 'activity/class-list.html', {'data': data, 'list_of_activity': list_of_activity, 'category': categories})
 
 
-@cache_page(60*60*24)
+@cache_page(60*60*6)
 def class_detail(request, id, activity_name):
     if request.method == 'GET':        
         data_detail_activity = get_activity_detail(id)

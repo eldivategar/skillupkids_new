@@ -32,7 +32,7 @@ def get_activity_list(category, keyword=None):
     if keyword:
         filter_args['activity_name__icontains'] = keyword
 
-    get_all_activity = ActivityList.objects.filter(**filter_args)
+    get_all_activity = ActivityList.objects.filter(**filter_args).order_by('?')
    
     all_data = []
 

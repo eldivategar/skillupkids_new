@@ -186,6 +186,7 @@ def mitra_create_new_activity(request):
         price = float(request.POST.get('price').replace(',', ''))
         duration = request.POST.get('duration')
         age = request.POST.get('age')
+        age = age.lower().replace('tahun', '')
         learning_method = request.POST.get('learning_method')
         description = request.POST.get('description')
 
