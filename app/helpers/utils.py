@@ -1,45 +1,46 @@
 from datetime import datetime, timedelta
-from app.models import Member, Mitra
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+from app.models import Member, Mitra, OTP
 from datetime import datetime
 from django.core.mail import EmailMessage, send_mail
 from django.template.loader import render_to_string
-from urllib.parse import quote
 from django.utils.html import escape
 from django.shortcuts import redirect
 from django.conf import settings
-import pyotp
 
-def send_otp(request, email):
-    
-    totp = pyotp.TOTP(pyotp.random_base32(), digits=4, interval=60)
-    otp = totp.now()
-    
-    if 'otp_secret_key' in request.session:
-        del request.session['otp_secret_key']
-    if 'otp_valid_until' in request.session:
-        del request.session['otp_valid_until']
-    
-    request.session['otp_secret_key'] = totp.secret
-    valid_date = datetime.now() + timedelta(minutes=1)
-    request.session['otp_valid_until'] = str(valid_date)
+def send_otp(email):
+    otp_code = OTP.generate_code()
+    expiration_time = datetime.now() + timedelta(minutes=5)
 
-    receiver_email = email
+    OTP.objects.create(
+        code=otp_code,
+        email=email,
+        expires_at=expiration_time
+    )
+
     subject = 'Kode OTP SkillUpKids'
-    messages = f'Gunakan kode berikut untuk masuk ke SkillUpKids. Kode: {otp}'
+    message = f'Gunakan kode berikut untuk masuk ke SkillUpKids. Kode: {otp_code}'
 
     try:
         send_mail(
             subject=subject,
-            message=messages,
+            message=message,
             from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[receiver_email],
+            recipient_list=[email],
             fail_silently=False,
-        )        
-        return True        
+        )
+        return True
     except Exception as e:
         print(f'Gagal mengirim email: {str(e)}')
+        return False
+
+def verify_otp(email, user_otp):
+    try:
+        otp_record = OTP.objects.filter(email=email).latest('created_at')
+        if otp_record.is_valid() and otp_record.code == user_otp:
+            return True
+    except OTP.DoesNotExist:
+        pass
+    return False
 
 def send_email(subject, receiver, context, template_name=['success', 'new_activity']):
     receiver_email = receiver

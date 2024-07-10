@@ -3,9 +3,9 @@ from django.http import HttpResponse
 from django.urls import reverse
 from functools import wraps
 
-def user_must_be_registered(view_func):
+def is_registering(view_func):
     def wrapper(request, *args, **kwargs):
-        if 'unique_code' in request.session:
+        if request.session.get('is_registering'):
             return view_func(request, *args, **kwargs)
         else:
             requested_url = request.path

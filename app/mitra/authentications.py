@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import check_password
 from django.contrib import messages
-from app.helpers.decorators import user_must_be_registered
+from app.helpers.decorators import is_registering
 from app.models import Mitra
-from app.helpers.utils import send_otp
-from datetime import datetime
-import pyotp
+from app.helpers.utils import send_otp, verify_otp
 
 def login(request):
     if request.method == 'GET':        
@@ -49,26 +47,22 @@ def register(request):
                         
             if Mitra.objects.filter(number=number).exists():
                 messages.error(request, 'Nomor whatsapp sudah terdaftar!')
-                return redirect('app.mitra:register')
-                        
-            import uuid
-            unique_code = str(uuid.uuid4())
-            request.session['unique_code'] = unique_code 
+                return redirect('app.mitra:register')                        
             
             request.session['name'] = name
             request.session['email'] = email
             request.session['number'] = number
             request.session['password'] = password
-            # request.session.set_expiry(400)
+            request.session['is_registering'] = True
 
-            send_otp(request, email)          
-            messages.success(request, 'Kode berhasil dikirim ke email anda!')
+            if send_otp(email):
+                messages.success(request, 'Kode berhasil dikirim ke email anda!')
+                return redirect('app.mitra:verify')
+            else:
+                messages.error(request, 'Gagal mengirim kode OTP, Coba beberapa saat lagi!')
+                return redirect('app.mitra:register')
 
-            return redirect('app.mitra:verify')
-        else:
-            return redirect('app.mitra:register')
-
-@user_must_be_registered
+@is_registering
 def register_2(request):
     if request.method == 'GET':
         return render(request, 'mitra/auth/register-2.html')
@@ -109,55 +103,39 @@ def register_2(request):
         request.session['customer_id'] = customer_uuid
         return redirect('app.mitra:mitra_profile')         
 
-@user_must_be_registered
+@is_registering
 def verify_account(request):
     
     if request.method == 'GET':        
         return render(request, 'mitra/auth/verify.html')
 
     if request.method == 'POST':
-        user_otp = request.POST.get('digit-1') + request.POST.get('digit-2') + request.POST.get('digit-3') + request.POST.get('digit-4')
-        user_otp = int(user_otp)
-        otp_secret_key = request.session.get('otp_secret_key')
-        otp_valid_until = request.session.get('otp_valid_until')
+        user_otp = ''.join([request.POST.get(f'digit-{i}') for i in range(1, 5)])
+        email = request.session['email']
 
-        if otp_secret_key is not None and otp_valid_until is not None:
-            valid_until = datetime.fromisoformat(otp_valid_until)
-            if valid_until > datetime.now():                
-                totp = pyotp.TOTP(otp_secret_key, digits=4, interval=60)
-
-                if totp.verify(user_otp):
-
-                    name = request.session.get('name')
-                    email = request.session.get('email')
-                    number = request.session.get('number')
-                    password = request.session.get('password')
-
-                    mitra = Mitra(name=name, email=email, number=number, password=password, is_verified=True)
-                    mitra.save()
-
-                    customer_uuid = f'mi{mitra.uuid_str()}'
-                    request.session['customer_id'] = customer_uuid
-                    
-                    return redirect('app.mitra:register_2')
-                
-                else:
-                    messages.error(request, 'Kode OTP salah!')
-                    return redirect('app.mitra:verify')
+        if verify_otp(email, user_otp):
+            name = request.session['name']
+            email = request.session['email']
+            number = request.session['number']
+            password = request.session['password']
             
-            else:
-                messages.error(request, 'Kode OTP sudah kadaluarsa!')
-                return redirect('app.mitra:verify')
-
+            mitra = Mitra(name=name, email=email, number=number, password=password, is_verified=True)
+            mitra.save()
+            
+            customer_uuid = f'mi{mitra.uuid_str()}'
+            request.session['customer_id'] = customer_uuid
+            
+            return redirect('app.mitra:register_2')
+                
         else:
-            messages.error(request, 'Ups...terjadi kesalahan, silahkan coba lagi!')
+            messages.error(request, 'Kode OTP salah atau sudah kadaluarsa!')
             return redirect('app.mitra:verify')
         
-@user_must_be_registered
+@is_registering
 def resend_code(request):
     if request.method == 'GET':
         email = request.session.get('email')
-        send_otp(request, email)
+        send_otp(email)
         messages.success(request, 'Kode berhasil dikirim ke email anda!')
         return redirect('app.mitra:verify')
 

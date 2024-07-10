@@ -343,3 +343,16 @@ class FeaturedActivity(models.Model):
             }
         }        
         return data
+    
+class OTP(models.Model):
+    code = models.CharField(max_length=4)
+    email = models.EmailField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+
+    @staticmethod
+    def generate_code():
+        return str(uuid.uuid4().int)[:4]
+
+    def is_valid(self):
+        return datetime.now() < self.expires_at
